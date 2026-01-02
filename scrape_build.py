@@ -383,7 +383,7 @@ def main():
             print(f" - {p}")
 
         # --- NEW: write missing list to docs/ so you can download it ---
-        import os
+        
         os.makedirs("docs", exist_ok=True)
 
         with open("docs/missing_posts.txt", "w", encoding="utf-8") as f:
