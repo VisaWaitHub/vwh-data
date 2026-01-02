@@ -29,11 +29,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-            - name: Scrape + build JSON
+      - name: Scrape + build JSON
         env:
           CONTROLLED: "0"
-        run: |
-          python scrape_build.py
+        run: python scrape_build.py
 
       - name: Commit updated JSON (if changed)
         run: |
