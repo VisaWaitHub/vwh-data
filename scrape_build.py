@@ -319,14 +319,15 @@ def main():
     overrides = load_overrides()
 
     # Merge overrides into post_map (overrides win)
-    for k, v in overrides.items():
-        if v.get("country") or v.get("country_code"):
-            post_map[k] = {
-                "post": v.get("post", ""),
-                "country": v.get("country", ""),
-                "country_code": v.get("country_code", ""),
-                "source_country_page": "override_csv",
-            }
+for k, v in overrides.items():
+    if v.get("country") and v.get("country_code"):
+        post_map[k] = {
+            "post": v.get("post", ""),
+            "country": v.get("country", ""),
+            "country_code": v.get("country_code", ""),
+            "source_country_page": "override_csv",
+        }
+print(f"[DEBUG] Overrides loaded={len(overrides)} | post_map_after_overrides={len(post_map)}")
 
     pm_out = {
         "generated_utc": now_utc_iso(),
