@@ -3,3 +3,5 @@ lxml==5.2.2
 requests==2.32.3
 python-dateutil==2.9.0.post0
 html5lib
+beautifulsoup4
+pycountry
