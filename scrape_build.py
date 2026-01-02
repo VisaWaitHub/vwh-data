@@ -378,7 +378,7 @@ def main():
 
     if missing:
         print(f"[WARNING] Missing mapping for {len(missing)} posts")
-        print("First 50 missing:")
+        print("Missing list (ALL):")
         for p in missing[:50]:
             print(f" - {p}")
 
