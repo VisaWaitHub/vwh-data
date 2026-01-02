@@ -1,1 +1,11 @@
+name: (DISABLED) Update Visa Wait Data (legacy)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  disabled:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "This workflow is disabled. Use update.yml instead."
 
