@@ -319,15 +319,16 @@ def main():
     overrides = load_overrides()
 
     # Merge overrides into post_map (overrides win)
-for k, v in overrides.items():
-    if v.get("country") and v.get("country_code"):
-        post_map[k] = {
-            "post": v.get("post", ""),
-            "country": v.get("country", ""),
-            "country_code": v.get("country_code", ""),
-            "source_country_page": "override_csv",
-        }
-print(f"[DEBUG] Overrides loaded={len(overrides)} | post_map_after_overrides={len(post_map)}")
+    for k, v in overrides.items():
+        if v.get("country") and v.get("country_code"):
+            post_map[k] = {
+                "post": v.get("post", ""),
+                "country": v.get("country", ""),
+                "country_code": v.get("country_code", ""),
+                "source_country_page": "override_csv",
+            }
+
+    print(f"[DEBUG] Overrides loaded={len(overrides)} | post_map_after_overrides={len(post_map)}")
 
     pm_out = {
         "generated_utc": now_utc_iso(),
@@ -338,6 +339,7 @@ print(f"[DEBUG] Overrides loaded={len(overrides)} | post_map_after_overrides={le
     }
     with open(OUT_POST_MAP, "w", encoding="utf-8") as f:
         json.dump(pm_out, f, ensure_ascii=False, indent=2)
+
 
     meta, df = scrape_global_wait_times()
 
