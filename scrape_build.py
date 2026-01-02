@@ -381,6 +381,21 @@ def main():
         print("First 50 missing:")
         for p in missing[:50]:
             print(f" - {p}")
+
+        # --- NEW: write missing list to docs/ so you can download it ---
+        import os
+        os.makedirs("docs", exist_ok=True)
+
+        with open("docs/missing_posts.txt", "w", encoding="utf-8") as f:
+            for p in missing:
+                f.write(p + "\n")
+
+        with open("docs/missing_posts.json", "w", encoding="utf-8") as f:
+            json.dump({"missing_count": len(missing), "missing_posts": missing}, f, ensure_ascii=False, indent=2)
+
+        print("[OK] Wrote docs/missing_posts.txt and docs/missing_posts.json")
+        # --- END NEW ---
+
         if controlled:
             raise RuntimeError(f"CONTROLLED=1: Missing mapping for {len(missing)} posts")
 
