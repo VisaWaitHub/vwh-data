@@ -1,7 +1,7 @@
 {
-  "generated_utc": "2026-01-03T18:12:33+00:00",
+  "generated_utc": "2026-01-03T18:18:01+00:00",
   "source_index": "https://travel.state.gov/content/travel/en/us-visas/Visa-Reciprocity-and-Civil-Documents-by-Country.html",
-  "count": 1861,
+  "count": 1855,
   "items": {
     "post title": {
       "post": "Post Title",
@@ -6825,42 +6825,6 @@
       "country_code": "LS",
       "source_country_page": "https://travel.state.gov/content/travel/en/us-visas/Visa-Reciprocity-and-Civil-Documents-by-Country/Lesotho.html"
     },
-    "502 benson street": {
-      "post": "502 Benson Street",
-      "country": "Liberia",
-      "country_code": "LR",
-      "source_country_page": "https://travel.state.gov/content/travel/en/us-visas/Visa-Reciprocity-and-Civil-Documents-by-Country/Liberia.html"
-    },
-    "mamba point": {
-      "post": "Mamba Point",
-      "country": "Liberia",
-      "country_code": "LR",
-      "source_country_page": "https://travel.state.gov/content/travel/en/us-visas/Visa-Reciprocity-and-Civil-Documents-by-Country/Liberia.html"
-    },
-    "monrovia liberia": {
-      "post": "Monrovia, Liberia",
-      "country": "Liberia",
-      "country_code": "LR",
-      "source_country_page": "https://travel.state.gov/content/travel/en/us-visas/Visa-Reciprocity-and-Civil-Documents-by-Country/Liberia.html"
-    },
-    "tel (231) 77-677-7000 or (231) 77-677-7001 fax (231) 77-677-6370": {
-      "post": "Tel: (231) 77-677-7000 or (231) 77-677-7001, Fax: (231) 77-677-6370",
-      "country": "Liberia",
-      "country_code": "LR",
-      "source_country_page": "https://travel.state.gov/content/travel/en/us-visas/Visa-Reciprocity-and-Civil-Documents-by-Country/Liberia.html"
-    },
-    "support-liberiaustraveldocscom": {
-      "post": "support-liberia@ustraveldocs.com",
-      "country": "Liberia",
-      "country_code": "LR",
-      "source_country_page": "https://travel.state.gov/content/travel/en/us-visas/Visa-Reciprocity-and-Civil-Documents-by-Country/Liberia.html"
-    },
-    "all visa categories for liberia": {
-      "post": "All visa categories for Liberia",
-      "country": "Liberia",
-      "country_code": "LR",
-      "source_country_page": "https://travel.state.gov/content/travel/en/us-visas/Visa-Reciprocity-and-Civil-Documents-by-Country/Liberia.html"
-    },
     "tunis tunisia": {
       "post": "Tunis, Tunisia",
       "country": "Libya",
@@ -11111,64 +11075,66 @@
     },
     "abidjan": {
       "post": "Abidjan",
-      "country": "CI",
-      "country_code": "CÔTE D’IVOIRE",
+      "country": "Côte d’Ivoire",
+      "country_code": "CI",
       "source_country_page": "override_csv"
     },
     "accra": {
       "post": "Accra",
-      "country": "GH",
-      "country_code": "GHANA",
+      "country": "Ghana",
+      "country_code": "GH",
       "source_country_page": "override_csv"
     },
     "adana": {
       "post": "Adana",
-      "country": "TR",
-      "country_code": "TURKEY",
+      "country": "Turkey",
+      "country_code": "TR",
       "source_country_page": "override_csv"
     },
     "almaty": {
       "post": "Almaty",
-      "country": "KZ",
-      "country_code": "KAZAKHSTAN",
+      "country": "Kazakhstan",
+      "country_code": "KZ",
       "source_country_page": "override_csv"
     },
     "amsterdam": {
       "post": "Amsterdam",
-      "country": "NL",
-      "country_code": "NETHERLANDS",
+      "country": "Netherlands",
+      "country_code": "NL",
       "source_country_page": "override_csv"
     },
     "antananarivo": {
       "post": "Antananarivo",
-      "country": "MG",
-      "country_code": "MADAGASCAR",
+      "country": "Madagascar",
+      "country_code": "MG",
       "source_country_page": "override_csv"
     },
     "apia": {
       "post": "Apia",
-      "country": "WS",
-      "country_code": "SAMOA",
+      "country": "Samoa",
+      "country_code": "WS",
       "source_country_page": "override_csv"
     },
     "ashgabat": {
       "post": "Ashgabat",
-      "country": "TM",
-      "country_code": "TURKMENISTAN",
+      "country": "Turkmenistan",
+      "country_code": "TM",
       "source_country_page": "override_csv"
     },
     "asmara": {
       "post": "Asmara",
-      "country": "ER",
-      "country_code": "ERITREA",
+      "country": "Eritrea",
+      "country_code": "ER",
       "source_country_page": "override_csv"
     },
     "astana": {
       "post": "Astana",
-      "country": "KZ",
-      "country_code": "KAZAKHSTAN",
+      "country": "Kazakhstan",
+      "country_code": "KZ",
       "source_country_page": "override_csv"
     }
   },
-  "warnings": []
+  "warnings": [
+    "WARNING: Failed to fetch country page https://travel.state.gov/content/travel/en/us-visas/Visa-Reciprocity-and-Civil-Documents-by-Country/Liberia.html: Exceeded 30 redirects."
+  ]
 }
