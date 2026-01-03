@@ -1,7 +1,7 @@
 {
-  "generated_utc": "2026-01-03T18:47:47+00:00",
+  "generated_utc": "2026-01-03T18:51:39+00:00",
   "source_index": "https://travel.state.gov/content/travel/en/us-visas/Visa-Reciprocity-and-Civil-Documents-by-Country.html",
-  "count": 1950,
+  "count": 1965,
   "items": {
     "post title": {
       "post": "Post Title",
@@ -11701,6 +11701,96 @@
       "post": "Maseru",
       "country": "Lesotho",
       "country_code": "LS",
+      "source_country_page": "override_csv"
+    },
+    "mbabane": {
+      "post": "Mbabane",
+      "country": "Eswatini",
+      "country_code": "SZ",
+      "source_country_page": "override_csv"
+    },
+    "mexicali tpf": {
+      "post": "Mexicali Tpf",
+      "country": "Mexico",
+      "country_code": "MX",
+      "source_country_page": "override_csv"
+    },
+    "minsk": {
+      "post": "Minsk",
+      "country": "Belarus",
+      "country_code": "BY",
+      "source_country_page": "override_csv"
+    },
+    "monrovia": {
+      "post": "Monrovia",
+      "country": "Liberia",
+      "country_code": "LR",
+      "source_country_page": "override_csv"
+    },
+    "montevideo": {
+      "post": "Montevideo",
+      "country": "Uruguay",
+      "country_code": "UY",
+      "source_country_page": "override_csv"
+    },
+    "moscow": {
+      "post": "Moscow",
+      "country": "Russia",
+      "country_code": "RU",
+      "source_country_page": "override_csv"
+    },
+    "mumbai (bombay)": {
+      "post": "Mumbai (Bombay)",
+      "country": "India",
+      "country_code": "IN",
+      "source_country_page": "override_csv"
+    },
+    "muscat": {
+      "post": "Muscat",
+      "country": "Oman",
+      "country_code": "OM",
+      "source_country_page": "override_csv"
+    },
+    "n'djamena": {
+      "post": "N`Djamena",
+      "country": "Chad",
+      "country_code": "TD",
+      "source_country_page": "override_csv"
+    },
+    "naha": {
+      "post": "Naha",
+      "country": "Japan",
+      "country_code": "JP",
+      "source_country_page": "override_csv"
+    },
+    "nairobi": {
+      "post": "Nairobi",
+      "country": "Kenya",
+      "country_code": "KE",
+      "source_country_page": "override_csv"
+    },
+    "nassau": {
+      "post": "Nassau",
+      "country": "Bahamas",
+      "country_code": "BS",
+      "source_country_page": "override_csv"
+    },
+    "niamey": {
+      "post": "Niamey",
+      "country": "Niger",
+      "country_code": "NE",
+      "source_country_page": "override_csv"
+    },
+    "osakakobe": {
+      "post": "Osaka/Kobe",
+      "country": "Japan",
+      "country_code": "JP",
+      "source_country_page": "override_csv"
+    },
+    "oslo": {
+      "post": "Oslo",
+      "country": "Norway",
+      "country_code": "NO",
       "source_country_page": "override_csv"
     }
   },
