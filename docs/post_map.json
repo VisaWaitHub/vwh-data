@@ -1,7 +1,7 @@
 {
-  "generated_utc": "2026-01-03T18:30:15+00:00",
+  "generated_utc": "2026-01-03T18:35:55+00:00",
   "source_index": "https://travel.state.gov/content/travel/en/us-visas/Visa-Reciprocity-and-Civil-Documents-by-Country.html",
-  "count": 1891,
+  "count": 1905,
   "items": {
     "post title": {
       "post": "Post Title",
@@ -11347,6 +11347,90 @@
       "post": "Copenhagen",
       "country": "Denmark",
       "country_code": "DK",
+      "source_country_page": "override_csv"
+    },
+    "cotonou": {
+      "post": "Cotonou",
+      "country": "Benin",
+      "country_code": "BJ",
+      "source_country_page": "override_csv"
+    },
+    "curacao": {
+      "post": "Curacao",
+      "country": "Curaçao",
+      "country_code": "CW",
+      "source_country_page": "override_csv"
+    },
+    "dakar": {
+      "post": "Dakar",
+      "country": "Senegal",
+      "country_code": "SN",
+      "source_country_page": "override_csv"
+    },
+    "damascus": {
+      "post": "Damascus",
+      "country": "Syria",
+      "country_code": "SY",
+      "source_country_page": "override_csv"
+    },
+    "dar es salaam": {
+      "post": "Dar Es Salaam",
+      "country": "Tanzania",
+      "country_code": "TZ",
+      "source_country_page": "override_csv"
+    },
+    "dhahran": {
+      "post": "Dhahran",
+      "country": "Saudi Arabia",
+      "country_code": "SA",
+      "source_country_page": "override_csv"
+    },
+    "dili": {
+      "post": "Dili",
+      "country": "Timor-Leste",
+      "country_code": "TL",
+      "source_country_page": "override_csv"
+    },
+    "doha": {
+      "post": "Doha",
+      "country": "Qatar",
+      "country_code": "QA",
+      "source_country_page": "override_csv"
+    },
+    "dublin": {
+      "post": "Dublin",
+      "country": "Ireland",
+      "country_code": "IE",
+      "source_country_page": "override_csv"
+    },
+    "durban": {
+      "post": "Durban",
+      "country": "South Africa",
+      "country_code": "ZA",
+      "source_country_page": "override_csv"
+    },
+    "dushanbe": {
+      "post": "Dushanbe",
+      "country": "Tajikistan",
+      "country_code": "TJ",
+      "source_country_page": "override_csv"
+    },
+    "edinburgh": {
+      "post": "Edinburgh",
+      "country": "United Kingdom",
+      "country_code": "GB",
+      "source_country_page": "override_csv"
+    },
+    "erbil": {
+      "post": "Erbil",
+      "country": "Iraq",
+      "country_code": "IQ",
+      "source_country_page": "override_csv"
+    },
+    "fukuoka": {
+      "post": "Fukuoka",
+      "country": "Japan",
+      "country_code": "JP",
       "source_country_page": "override_csv"
     }
   },
