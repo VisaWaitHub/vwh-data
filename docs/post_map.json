@@ -1,7 +1,7 @@
 {
-  "generated_utc": "2026-01-03T18:51:39+00:00",
+  "generated_utc": "2026-01-03T18:54:47+00:00",
   "source_index": "https://travel.state.gov/content/travel/en/us-visas/Visa-Reciprocity-and-Civil-Documents-by-Country.html",
-  "count": 1965,
+  "count": 1980,
   "items": {
     "post title": {
       "post": "Post Title",
@@ -11791,6 +11791,96 @@
       "post": "Oslo",
       "country": "Norway",
       "country_code": "NO",
+      "source_country_page": "override_csv"
+    },
+    "ouagadougou": {
+      "post": "Ouagadougou",
+      "country": "Burkina Faso",
+      "country_code": "BF",
+      "source_country_page": "override_csv"
+    },
+    "panama city": {
+      "post": "Panama City",
+      "country": "Panama",
+      "country_code": "PA",
+      "source_country_page": "override_csv"
+    },
+    "paris": {
+      "post": "Paris",
+      "country": "France",
+      "country_code": "FR",
+      "source_country_page": "override_csv"
+    },
+    "phnom penh": {
+      "post": "Phnom Penh",
+      "country": "Cambodia",
+      "country_code": "KH",
+      "source_country_page": "override_csv"
+    },
+    "ponta delgada": {
+      "post": "Ponta Delgada",
+      "country": "Portugal",
+      "country_code": "PT",
+      "source_country_page": "override_csv"
+    },
+    "port au prince": {
+      "post": "Port Au Prince",
+      "country": "Haiti",
+      "country_code": "HT",
+      "source_country_page": "override_csv"
+    },
+    "port louis": {
+      "post": "Port Louis",
+      "country": "Mauritius",
+      "country_code": "MU",
+      "source_country_page": "override_csv"
+    },
+    "port moresby": {
+      "post": "Port Moresby",
+      "country": "Papua New Guinea",
+      "country_code": "PG",
+      "source_country_page": "override_csv"
+    },
+    "port of spain": {
+      "post": "Port Of Spain",
+      "country": "Trinidad and Tobago",
+      "country_code": "TT",
+      "source_country_page": "override_csv"
+    },
+    "prague": {
+      "post": "Prague",
+      "country": "Czech Republic",
+      "country_code": "CZ",
+      "source_country_page": "override_csv"
+    },
+    "praia": {
+      "post": "Praia",
+      "country": "Cabo Verde",
+      "country_code": "CV",
+      "source_country_page": "override_csv"
+    },
+    "pretoria": {
+      "post": "Pretoria",
+      "country": "South Africa",
+      "country_code": "ZA",
+      "source_country_page": "override_csv"
+    },
+    "pristina": {
+      "post": "Pristina",
+      "country": "Kosovo",
+      "country_code": "XK",
+      "source_country_page": "override_csv"
+    },
+    "rangoon": {
+      "post": "Rangoon",
+      "country": "Myanmar",
+      "country_code": "MM",
+      "source_country_page": "override_csv"
+    },
+    "reykjavik": {
+      "post": "Reykjavik",
+      "country": "Iceland",
+      "country_code": "IS",
       "source_country_page": "override_csv"
     }
   },

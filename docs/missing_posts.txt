@@ -1,19 +1,4 @@
 Department
-Ouagadougou
-Panama City
-Paris
-Phnom Penh
-Ponta Delgada
-Port Au Prince
-Port Louis
-Port Moresby
-Port Of Spain
-Prague
-Praia
-Pretoria
-Pristina
-Rangoon
-Reykjavik
 Riga
 Riyadh
 San Jose
