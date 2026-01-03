@@ -1,19 +1,4 @@
 Department
-Lima
-Lisbon
-Ljubljana
-Lome
-London
-Luanda
-Lusaka
-Luxembourg
-Madrid
-Majuro
-Managua
-Manila
-Maputo
-Marseille
-Maseru
 Mbabane
 Mexicali Tpf
 Minsk
