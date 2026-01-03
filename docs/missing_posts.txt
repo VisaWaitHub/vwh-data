@@ -1,19 +1,4 @@
 Department
-Gaborone
-Georgetown
-Guatemala City
-Hamilton
-Harare
-Havana
-Helsinki
-Hyderabad
-Istanbul
-Jakarta
-Jeddah
-Johannesburg
-Kabul
-Kampala
-Kaohsiung
 Kathmandu
 Khartoum
 Kigali

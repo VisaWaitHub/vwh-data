@@ -1,7 +1,7 @@
 {
-  "generated_utc": "2026-01-03T18:35:55+00:00",
+  "generated_utc": "2026-01-03T18:40:21+00:00",
   "source_index": "https://travel.state.gov/content/travel/en/us-visas/Visa-Reciprocity-and-Civil-Documents-by-Country.html",
-  "count": 1905,
+  "count": 1920,
   "items": {
     "post title": {
       "post": "Post Title",
@@ -11431,6 +11431,96 @@
       "post": "Fukuoka",
       "country": "Japan",
       "country_code": "JP",
+      "source_country_page": "override_csv"
+    },
+    "gaborone": {
+      "post": "Gaborone",
+      "country": "Botswana",
+      "country_code": "BW",
+      "source_country_page": "override_csv"
+    },
+    "georgetown": {
+      "post": "Georgetown",
+      "country": "Guyana",
+      "country_code": "GY",
+      "source_country_page": "override_csv"
+    },
+    "guatemala city": {
+      "post": "Guatemala City",
+      "country": "Guatemala",
+      "country_code": "GT",
+      "source_country_page": "override_csv"
+    },
+    "hamilton": {
+      "post": "Hamilton",
+      "country": "Bermuda",
+      "country_code": "BM",
+      "source_country_page": "override_csv"
+    },
+    "harare": {
+      "post": "Harare",
+      "country": "Zimbabwe",
+      "country_code": "ZW",
+      "source_country_page": "override_csv"
+    },
+    "havana": {
+      "post": "Havana",
+      "country": "Cuba",
+      "country_code": "CU",
+      "source_country_page": "override_csv"
+    },
+    "helsinki": {
+      "post": "Helsinki",
+      "country": "Finland",
+      "country_code": "FI",
+      "source_country_page": "override_csv"
+    },
+    "hyderabad": {
+      "post": "Hyderabad",
+      "country": "India",
+      "country_code": "IN",
+      "source_country_page": "override_csv"
+    },
+    "istanbul": {
+      "post": "Istanbul",
+      "country": "Turkey",
+      "country_code": "TR",
+      "source_country_page": "override_csv"
+    },
+    "jakarta": {
+      "post": "Jakarta",
+      "country": "Indonesia",
+      "country_code": "ID",
+      "source_country_page": "override_csv"
+    },
+    "jeddah": {
+      "post": "Jeddah",
+      "country": "Saudi Arabia",
+      "country_code": "SA",
+      "source_country_page": "override_csv"
+    },
+    "johannesburg": {
+      "post": "Johannesburg",
+      "country": "South Africa",
+      "country_code": "ZA",
+      "source_country_page": "override_csv"
+    },
+    "kabul": {
+      "post": "Kabul",
+      "country": "Afghanistan",
+      "country_code": "AF",
+      "source_country_page": "override_csv"
+    },
+    "kampala": {
+      "post": "Kampala",
+      "country": "Uganda",
+      "country_code": "UG",
+      "source_country_page": "override_csv"
+    },
+    "kaohsiung": {
+      "post": "Kaohsiung",
+      "country": "Taiwan",
+      "country_code": "TW",
       "source_country_page": "override_csv"
     }
   },
