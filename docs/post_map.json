@@ -1,7 +1,7 @@
 {
-  "generated_utc": "2026-01-03T18:57:58+00:00",
+  "generated_utc": "2026-01-03T19:01:06+00:00",
   "source_index": "https://travel.state.gov/content/travel/en/us-visas/Visa-Reciprocity-and-Civil-Documents-by-Country.html",
-  "count": 1995,
+  "count": 2009,
   "items": {
     "post title": {
       "post": "Post Title",
@@ -11971,6 +11971,90 @@
       "post": "Taipei",
       "country": "Taiwan",
       "country_code": "TW",
+      "source_country_page": "override_csv"
+    },
+    "tallinn": {
+      "post": "Tallinn",
+      "country": "Estonia",
+      "country_code": "EE",
+      "source_country_page": "override_csv"
+    },
+    "tashkent": {
+      "post": "Tashkent",
+      "country": "Uzbekistan",
+      "country_code": "UZ",
+      "source_country_page": "override_csv"
+    },
+    "tel aviv": {
+      "post": "Tel Aviv",
+      "country": "Israel",
+      "country_code": "IL",
+      "source_country_page": "override_csv"
+    },
+    "tirana": {
+      "post": "Tirana",
+      "country": "Albania",
+      "country_code": "AL",
+      "source_country_page": "override_csv"
+    },
+    "tokyo": {
+      "post": "Tokyo",
+      "country": "Japan",
+      "country_code": "JP",
+      "source_country_page": "override_csv"
+    },
+    "tripoli": {
+      "post": "Tripoli",
+      "country": "Libya",
+      "country_code": "LY",
+      "source_country_page": "override_csv"
+    },
+    "tunis": {
+      "post": "Tunis",
+      "country": "Tunisia",
+      "country_code": "TN",
+      "source_country_page": "override_csv"
+    },
+    "valletta": {
+      "post": "Valletta",
+      "country": "Malta",
+      "country_code": "MT",
+      "source_country_page": "override_csv"
+    },
+    "vienna": {
+      "post": "Vienna",
+      "country": "Austria",
+      "country_code": "AT",
+      "source_country_page": "override_csv"
+    },
+    "vilnius": {
+      "post": "Vilnius",
+      "country": "Lithuania",
+      "country_code": "LT",
+      "source_country_page": "override_csv"
+    },
+    "vladivostok": {
+      "post": "Vladivostok",
+      "country": "Russia",
+      "country_code": "RU",
+      "source_country_page": "override_csv"
+    },
+    "warsaw": {
+      "post": "Warsaw",
+      "country": "Poland",
+      "country_code": "PL",
+      "source_country_page": "override_csv"
+    },
+    "windhoek": {
+      "post": "Windhoek",
+      "country": "Namibia",
+      "country_code": "NA",
+      "source_country_page": "override_csv"
+    },
+    "yekaterinburg": {
+      "post": "Yekaterinburg",
+      "country": "Russia",
+      "country_code": "RU",
       "source_country_page": "override_csv"
     }
   },

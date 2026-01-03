@@ -1,20 +1,6 @@
 {
-  "missing_count": 15,
+  "missing_count": 1,
   "missing_posts": [
-    "Department",
-    "Tallinn",
-    "Tashkent",
-    "Tel Aviv",
-    "Tirana",
-    "Tokyo",
-    "Tripoli",
-    "Tunis",
-    "Valletta",
-    "Vienna",
-    "Vilnius",
-    "Vladivostok",
-    "Warsaw",
-    "Windhoek",
-    "Yekaterinburg"
+    "Department"
   ]
 }
