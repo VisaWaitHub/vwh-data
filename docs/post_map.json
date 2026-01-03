@@ -1,7 +1,7 @@
 {
-  "generated_utc": "2026-01-03T12:58:42+00:00",
+  "generated_utc": "2026-01-03T18:12:33+00:00",
   "source_index": "https://travel.state.gov/content/travel/en/us-visas/Visa-Reciprocity-and-Civil-Documents-by-Country.html",
-  "count": 1851,
+  "count": 1861,
   "items": {
     "post title": {
       "post": "Post Title",
@@ -11108,6 +11108,66 @@
       "country": "Zimbabwe",
       "country_code": "ZW",
       "source_country_page": "https://travel.state.gov/content/travel/en/us-visas/Visa-Reciprocity-and-Civil-Documents-by-Country/Zimbabwe.html"
+    },
+    "abidjan": {
+      "post": "Abidjan",
+      "country": "CI",
+      "country_code": "CÔTE D’IVOIRE",
+      "source_country_page": "override_csv"
+    },
+    "accra": {
+      "post": "Accra",
+      "country": "GH",
+      "country_code": "GHANA",
+      "source_country_page": "override_csv"
+    },
+    "adana": {
+      "post": "Adana",
+      "country": "TR",
+      "country_code": "TURKEY",
+      "source_country_page": "override_csv"
+    },
+    "almaty": {
+      "post": "Almaty",
+      "country": "KZ",
+      "country_code": "KAZAKHSTAN",
+      "source_country_page": "override_csv"
+    },
+    "amsterdam": {
+      "post": "Amsterdam",
+      "country": "NL",
+      "country_code": "NETHERLANDS",
+      "source_country_page": "override_csv"
+    },
+    "antananarivo": {
+      "post": "Antananarivo",
+      "country": "MG",
+      "country_code": "MADAGASCAR",
+      "source_country_page": "override_csv"
+    },
+    "apia": {
+      "post": "Apia",
+      "country": "WS",
+      "country_code": "SAMOA",
+      "source_country_page": "override_csv"
+    },
+    "ashgabat": {
+      "post": "Ashgabat",
+      "country": "TM",
+      "country_code": "TURKMENISTAN",
+      "source_country_page": "override_csv"
+    },
+    "asmara": {
+      "post": "Asmara",
+      "country": "ER",
+      "country_code": "ERITREA",
+      "source_country_page": "override_csv"
+    },
+    "astana": {
+      "post": "Astana",
+      "country": "KZ",
+      "country_code": "KAZAKHSTAN",
+      "source_country_page": "override_csv"
     }
   },
   "warnings": []
