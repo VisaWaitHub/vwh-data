@@ -1,19 +1,4 @@
 Department
-Riga
-Riyadh
-San Jose
-San Salvador
-Sanaa
-Santiago
-Sapporo
-Sarajevo
-Seoul
-Skopje
-St Georges
-St Petersburg
-Stockholm
-Surabaya
-Taipei
 Tallinn
 Tashkent
 Tel Aviv
