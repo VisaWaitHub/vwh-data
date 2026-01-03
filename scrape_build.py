@@ -354,7 +354,7 @@ def main():
 
         # Filter obvious non-post junk tokens
         if normalize_post_name(post) in ("department",):
-        continue        
+            continue        
 
         post_norm = normalize_post_name(post)
         mapping = post_map.get(post_norm)
