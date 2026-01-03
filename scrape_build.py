@@ -329,6 +329,9 @@ def main():
             }
 
     print(f"[DEBUG] Overrides loaded={len(overrides)} | post_map_after_overrides={len(post_map)}")
+    # DEBUG: check whether specific missing posts are now mapped
+    for t in ["Abidjan","Accra","Adana","Almaty","Amsterdam"]:
+    print("[DEBUG] override_check", t, "->", post_map.get(normalize_post_name(t)))
 
     pm_out = {
         "generated_utc": now_utc_iso(),
