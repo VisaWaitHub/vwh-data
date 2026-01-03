@@ -12,6 +12,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: vwh-data-main
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -36,8 +40,21 @@ jobs:
 
       - name: Commit updated JSON (if changed)
         run: |
+          set -e
           git config user.name "vwh-bot"
           git config user.email "actions@users.noreply.github.com"
+
           git add docs/us_posts.json docs/post_map.json docs/missing_posts.txt docs/missing_posts.json
-          git diff --cached --quiet || git commit -m "Update us_posts.json"
-          git push
+
+          # If nothing staged, do nothing (and DO NOT push)
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
+          git commit -m "Update us_posts.json"
+
+          # Catch up with main in case another run (or you) pushed updates
+          git pull --rebase origin main
+
+          git push origin HEAD:main
