@@ -355,7 +355,7 @@ def visa_category_to_code(label: str) -> Optional[str]:
         # We'll map this grouped column to each of H/L/O later if we want separate,
         # but for now choose ONE behavior:
         # Option 1 (recommended v1): map to "h" as the representative petition bucket
-        return "h"
+        return "petition"
 
     return None
 
