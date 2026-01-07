@@ -427,6 +427,88 @@ def main():
         print(f"[WARN] post_map warnings: {len(pm_warnings)} (see docs/post_map.json warnings)")
 
     print(f"[OK] Parsed global wait table into {len(records)} records across {len(unique_posts)} unique posts")
+    # --- Option D posts[] build (Big Five only) ---
+    posts = []
+    for r in records:
+        visa_code = visa_category_to_code(r.get("visa_category", ""))
+        if not visa_code:
+            continue  # skip non-Big-Five columns
+
+        post_name = (r.get("post") or "").strip()
+        if not post_name:
+            continue
+
+        country_code = (r.get("country_code") or "").strip().upper()
+        country = (r.get("country") or "").strip()
+
+        city_slug = city_to_slug(post_name)
+
+        # Stable ID: cc-city-visa (good enough for v1)
+        stable_id = f"{country_code.lower()}-{city_slug}-{visa_code}"
+
+        wait_days = r.get("wait_days_est")
+        try:
+            wait_days_int = int(wait_days) if wait_days is not None else None
+        except Exception:
+            wait_days_int = None
+
+        wait_display = (r.get("wait_display") or "").strip()
+
+        # Basic availability heuristic
+        raw_status = wait_display
+        is_available = True
+        if (not wait_display) or ("not available" in wait_display.lower()) or (wait_display.strip() in ("—", "-", "N/A")):
+            is_available = False
+
+        posts.append({
+            # identity / location
+            "id": stable_id,
+            "country_code": country_code,
+            "country": country,
+            "region": "",
+            "state_province": "",
+            "city": post_name,
+            "city_slug": city_slug,
+            "embassy_name": post_name,   # placeholder for v1
+            "post_title": post_name,
+            "post_type": "post",
+            "post": post_name,
+
+            # visa
+            "visa_code": visa_code,
+            "visa_label": visa_code.upper(),
+            "visa_group": "big5",
+
+            # live wait-time fields
+            "current_wait_days": wait_days_int,
+            "raw_status": raw_status,
+            "is_available": is_available,
+            "last_updated": r.get("last_checked_utc") or "",
+
+            # history (empty for now)
+            "history_values": [],
+            "history_dates": [],
+            "change_notes": [],
+
+            # scraper metadata
+            "source_url": r.get("source_url") or GLOBAL_URL,
+            "scraped_at": r.get("last_checked_utc") or "",
+            "status": "ok",
+            "note": "",
+        })
+
+    out_posts = {
+        "version": "1.0",
+        "generated_at": now_utc_iso(),
+        "source": "U.S. Department of State (travel.state.gov)",
+        "source_url": GLOBAL_URL,
+        "posts": posts,
+    }
+
+    with open(OUT_POSTS, "w", encoding="utf-8") as f:
+        json.dump(out_posts, f, ensure_ascii=False, indent=2)
+
+    print(f"[OK] Wrote Option D posts[] to {OUT_POSTS} | posts={len(posts)}")
 
     # Always write missing files (even if empty) so they can be committed and served
     with open(OUT_MISSING_TXT, "w", encoding="utf-8") as f:
