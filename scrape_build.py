@@ -20,6 +20,7 @@ RECIPROCITY_INDEX = "https://travel.state.gov/content/travel/en/us-visas/Visa-Re
 
 DOCS_DIR = "docs"
 OUT_POSTS = os.path.join(DOCS_DIR, "us_posts.json")
+OUT_RECORDS = os.path.join(DOCS_DIR, "us_records.json")
 OUT_POST_MAP = os.path.join(DOCS_DIR, "post_map.json")
 OUT_MISSING_TXT = os.path.join(DOCS_DIR, "missing_posts.txt")
 OUT_MISSING_JSON = os.path.join(DOCS_DIR, "missing_posts.json")
@@ -530,7 +531,7 @@ def main():
         print("[OK] No missing mappings. You are complete.")
 
     out = {**meta, "record_count": len(records), "records": records}
-    with open(OUT_POSTS, "w", encoding="utf-8") as f:
+    with open(OUT_RECORDS, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=2)
 
     print(f"[OK] Wrote {OUT_POSTS}")
