@@ -44,7 +44,7 @@ jobs:
           git config user.name "vwh-bot"
           git config user.email "actions@users.noreply.github.com"
 
-          git add docs/us_posts.json docs/post_map.json docs/missing_posts.txt docs/missing_posts.json
+          git add docs/us_posts.json docs/us_records.json docs/post_map.json docs/missing_posts.txt docs/missing_posts.json
 
           # If nothing staged, do nothing (and DO NOT push)
           if git diff --cached --quiet; then
