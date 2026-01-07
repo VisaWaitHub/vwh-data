@@ -307,6 +307,46 @@ def load_overrides() -> Dict[str, dict]:
                 "source": "override_csv",
             }
     return overrides
+import re
+from typing import Optional
+
+def city_to_slug(city: str) -> str:
+    """
+    Convert a post/city display name into a stable URL slug.
+    Examples:
+      "New Delhi" -> "new-delhi"
+      "Chennai (Madras)" -> "chennai-madras"
+      "Osaka/Kobe" -> "osaka-kobe"
+      "N`Djamena" -> "n-djamena"
+    """
+    s = (city or "").strip().lower()
+    s = s.replace("&", " and ")
+    s = re.sub(r"[’'`]", "", s)         # strip apostrophes/backticks
+    s = re.sub(r"[^a-z0-9]+", "-", s)   # non-alnum -> hyphen
+    s = re.sub(r"-{2,}", "-", s).strip("-")
+    return s
+
+def visa_category_to_code(label: str) -> Optional[str]:
+    """
+    Map the global table column header to our Big Five visa_code.
+    We only emit posts for: b1b2, f, h, l, o
+    """
+    t = (label or "").strip().lower()
+
+    # common patterns seen in the travel.state.gov table
+    if "b1/b2" in t or "b1b2" in t or ("visitor" in t and "business" in t):
+        return "b1b2"
+    if t.startswith("f") or "student" in t:
+        return "f"
+    if t.startswith("h") or "temporary worker" in t or "worker" in t:
+        return "h"
+    if t.startswith("l") or "intracompany" in t:
+        return "l"
+    if t.startswith("o") or "extraordinary" in t:
+        return "o"
+
+    return None
+
 
 def main():
     controlled = os.getenv("CONTROLLED", "").strip() in ("1", "true", "TRUE", "yes", "YES")
