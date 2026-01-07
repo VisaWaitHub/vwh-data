@@ -329,24 +329,36 @@ def city_to_slug(city: str) -> str:
 
 def visa_category_to_code(label: str) -> Optional[str]:
     """
-    Map the global table column header to our Big Five visa_code.
-    We only emit posts for: b1b2, f, h, l, o
+    Map the global wait-times table column header to our Big Five visa_code.
+
+    IMPORTANT:
+    - We intentionally prefer "Next available appointment" (not "Average wait times")
+      to match what users usually mean by "current wait".
+    - We only emit Big Five: b1b2, f, h, l, o
     """
     t = (label or "").strip().lower()
 
-    # common patterns seen in the travel.state.gov table
-    if "b1/b2" in t or "b1b2" in t or ("visitor" in t and "business" in t):
+    # We only want "Next available appointment" columns
+    if "next available appointment" not in t:
+        return None
+
+    # B1/B2 (Tourism/Business)
+    if "(b1/b2)" in t or "b1/b2" in t:
         return "b1b2"
-    if t.startswith("f") or "student" in t:
+
+    # F (Student) — State groups as (F,M,J); we only keep F for Big Five
+    if "(f,m,j)" in t or "f,m,j" in t:
         return "f"
-    if t.startswith("h") or "temporary worker" in t or "worker" in t:
+
+    # H / L / O — State groups petition-based as (H,L,O,P,Q); we keep H/L/O for Big Five
+    if "(h,l,o,p,q)" in t or "h,l,o,p,q" in t:
+        # We'll map this grouped column to each of H/L/O later if we want separate,
+        # but for now choose ONE behavior:
+        # Option 1 (recommended v1): map to "h" as the representative petition bucket
         return "h"
-    if t.startswith("l") or "intracompany" in t:
-        return "l"
-    if t.startswith("o") or "extraordinary" in t:
-        return "o"
 
     return None
+
 
 
 def main():
