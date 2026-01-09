@@ -1,7 +1,7 @@
 {
-  "generated_utc": "2026-01-09T13:05:50+00:00",
+  "generated_utc": "2026-01-09T18:49:59+00:00",
   "source_index": "https://travel.state.gov/content/travel/en/us-visas/Visa-Reciprocity-and-Civil-Documents-by-Country.html",
-  "count": 2009,
+  "count": 2010,
   "items": {
     "post title": {
       "post": "Post Title",
@@ -7901,6 +7901,12 @@
     },
     "all visa categories for all of the netherlands": {
       "post": "All visa categories for all of the Netherlands.",
+      "country": "Netherlands",
+      "country_code": "NL",
+      "source_country_page": "https://travel.state.gov/content/travel/en/us-visas/Visa-Reciprocity-and-Civil-Documents-by-Country/Netherlands.html"
+    },
+    "all visa categories for all the netherlands": {
+      "post": "All visa categories for all the Netherlands.",
       "country": "Netherlands",
       "country_code": "NL",
       "source_country_page": "https://travel.state.gov/content/travel/en/us-visas/Visa-Reciprocity-and-Civil-Documents-by-Country/Netherlands.html"
