@@ -265,8 +265,6 @@ def extract_visa_issuing_posts(country_html: str) -> List[str]:
             target = h
             break
 
-    prev_posts_map = _vwh_load_prev_posts_map(OUT_POSTS)
-    today_iso = _vwh_today_iso()
 
 
     posts = []
@@ -540,6 +538,8 @@ def main():
 
     print(f"[OK] Parsed global wait table into {len(records)} records across {len(unique_posts)} unique posts")
     # --- Option D posts[] build (Big Five only) ---
+    prev_posts_map = _vwh_load_prev_posts_map(OUT_POSTS)
+    today_iso = _vwh_today_iso()
     posts = []
     for r in records:
         visa_code = visa_category_to_code(r.get("visa_category", ""))
