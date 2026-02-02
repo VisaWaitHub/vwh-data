@@ -265,6 +265,9 @@ def extract_visa_issuing_posts(country_html: str) -> List[str]:
             target = h
             break
 
+    prev_posts_map = _vwh_load_prev_posts_map(OUT_POSTS)
+    today_iso = _vwh_today_iso()
+
     posts = []
 
     if target:
