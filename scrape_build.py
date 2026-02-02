@@ -15,6 +15,101 @@ try:
 except Exception:
     pycountry = None
 
+# ---------------------------
+# VWH: History + Change Notes helpers (daily)
+# ---------------------------
+
+from datetime import datetime, timezone
+
+def _vwh_today_iso():
+    # Example: "2026-02-02"
+    return datetime.now(timezone.utc).date().isoformat()
+
+def _vwh_load_prev_posts_map(path):
+    """
+    Reads the previous OUT_POSTS JSON (if it exists) and returns:
+      { "post_id": previous_post_dict, ... }
+    If missing or invalid, returns {}.
+    """
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        prev_posts = data.get("posts") or []
+        m = {}
+        for p in prev_posts:
+            pid = p.get("id")
+            if pid is not None:
+                m[str(pid)] = p
+        return m
+    except Exception:
+        return {}
+
+def _vwh_coerce_history(prev_post):
+    """
+    Returns safe (history_values, history_dates, change_notes).
+    Ensures lists + aligned lengths.
+    """
+    if not prev_post:
+        return [], [], []
+
+    hv = prev_post.get("history_values")
+    hd = prev_post.get("history_dates")
+    cn = prev_post.get("change_notes")
+
+    if not isinstance(hv, list): hv = []
+    if not isinstance(hd, list): hd = []
+    if not isinstance(cn, list): cn = []
+
+    # Align history arrays so they are same length
+    n = min(len(hv), len(hd))
+    hv = hv[-n:]
+    hd = hd[-n:]
+
+    return hv, hd, cn
+
+def _vwh_append_daily(hv, hd, cn, today_iso, wait_days_int, visa_label):
+    """
+    Append exactly one history point per day (no duplicates).
+    If today's value changed vs yesterday, append a human-readable change note.
+    """
+    hv = list(hv)
+    hd = list(hd)
+    cn = list(cn)
+
+    # Only append if we have a real integer wait
+    if wait_days_int is None:
+        return hv, hd, cn
+
+    last_date = hd[-1] if hd else None
+    if last_date != today_iso:
+        prev_val = hv[-1] if hv else None
+
+        hd.append(today_iso)
+        hv.append(int(wait_days_int))
+
+        # Change note only if changed vs previous
+        if prev_val is not None and int(wait_days_int) != int(prev_val):
+            direction = "increased" if int(wait_days_int) > int(prev_val) else "decreased"
+            text = f"{visa_label} wait time {direction} from {int(prev_val)} to {int(wait_days_int)} days."
+
+            # Avoid duplicate note for same day
+            last_note_date = None
+            if cn and isinstance(cn[-1], dict):
+                last_note_date = cn[-1].get("date")
+
+            if last_note_date != today_iso:
+                cn.append({"date": today_iso, "text": text})
+
+    # Keep history bounded (optional safety)
+    if len(hv) > 365:
+        hv = hv[-365:]
+        hd = hd[-365:]
+    if len(cn) > 50:
+        cn = cn[-50:]
+
+    return hv, hd, cn
+
+
 GLOBAL_URL = "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/global-visa-wait-times.html"
 RECIPROCITY_INDEX = "https://travel.state.gov/content/travel/en/us-visas/Visa-Reciprocity-and-Civil-Documents-by-Country.html"
 
