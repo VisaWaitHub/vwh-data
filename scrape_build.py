@@ -571,6 +571,22 @@ def main():
         if (not wait_display) or ("not available" in wait_display.lower()) or (wait_display.strip() in ("—", "-", "N/A")):
             is_available = False
 
+        # --- VWH history persistence (per post id) ---
+        prev_post = prev_posts_map.get(str(stable_id))
+        hv_prev, hd_prev, cn_prev = _vwh_coerce_history(prev_post)
+
+        # label used inside change notes
+        visa_label_for_note = (visa_code.upper() if visa_code else "VISA")
+
+        hv_new, hd_new, cn_new = _vwh_append_daily(
+            hv_prev,
+            hd_prev,
+            cn_prev,
+            today_iso,
+            wait_days_int,
+            visa_label_for_note,
+        )
+
         posts.append({
             # identity / location
             "id": stable_id,
@@ -596,10 +612,11 @@ def main():
             "is_available": is_available,
             "last_updated": r.get("last_checked_utc") or "",
 
-            # history (empty for now)
-            "history_values": [],
-            "history_dates": [],
-            "change_notes": [],
+            # history (persisted + daily appended)
+            "history_values": hv_new,
+            "history_dates": hd_new,
+            "change_notes": cn_new,
+
 
             # scraper metadata
             "source_url": r.get("source_url") or GLOBAL_URL,
