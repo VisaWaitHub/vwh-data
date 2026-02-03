@@ -688,9 +688,10 @@ def main():
         json.dump(out_posts, f, ensure_ascii=False, indent=2)
 
     print(f"[OK] Wrote Option D posts[] to {OUT_POSTS} | posts={len(posts)}")
-    # Build Phase-1 pilot sitemap
+    # Build Phase-1 pilot sitemap (detail pages)
     OUT_SITEMAP = os.path.join(DOCS_DIR, "vwh-sitemap-details.xml")
     build_detail_sitemap(posts, OUT_SITEMAP)
+
 
     
     # Always write missing files (even if empty) so they can be committed and served
