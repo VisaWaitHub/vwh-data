@@ -15,6 +15,10 @@ try:
 except Exception:
     pycountry = None
 
+# --- SAFE HTTP FETCH HELPER (prevents GitHub Action from hanging) ---
+
+
+
 # ---------------------------
 # Build detail-page sitemap (Phase 1 pilot)
 # ---------------------------
@@ -213,10 +217,35 @@ def normalize_post_name(s: str) -> str:
     s = re.sub(r"\s+", " ", s).strip()
     return s
 
-def http_get(url: str, timeout=30) -> str:
-    r = requests.get(url, timeout=timeout, headers={"User-Agent": UA})
-    r.raise_for_status()
-    return r.text
+import time
+
+
+def http_get(url: str, headers=None, timeout=(10, 30), retries=2, backoff=2.0) -> str:
+    """
+    timeout=(connect_seconds, read_seconds)
+    retries=2 => up to 3 attempts total
+    """
+    hdrs = headers or {"User-Agent": UA}
+    last_err = None
+
+    for attempt in range(retries + 1):
+        try:
+            print(f"[INFO] Fetching ({attempt+1}/{retries+1}): {url}")
+            r = requests.get(url, headers=hdrs, timeout=timeout)
+            r.raise_for_status()
+            print(f"[INFO] Done: {url} ({len(r.text)} bytes)")
+            return r.text
+        except Exception as e:
+            last_err = e
+            print(f"[WARN] Fetch failed: {url} — {e}")
+            if attempt < retries:
+                sleep_s = backoff * (attempt + 1)
+                print(f"[INFO] Retrying in {sleep_s:.1f}s...")
+                time.sleep(sleep_s)
+
+    raise RuntimeError(f"Failed to fetch after retries: {url}") from last_err
+
+
 
 def country_name_to_iso2(name: str) -> Optional[str]:
     if not name:
@@ -406,7 +435,11 @@ def scrape_global_wait_times() -> Tuple[dict, pd.DataFrame]:
     html = http_get(GLOBAL_URL)
     checked_utc = now_utc_iso()
 
-    tables = pd.read_html(html)
+    print("[INFO] Parsing tables with pandas.read_html...")
+    t0 = time.time()
+    tables = pd.read_html(html, flavor="lxml")
+    print(f"[INFO] pandas.read_html done in {time.time() - t0:.2f}s. tables={len(tables)}")
+
     if not tables:
         raise RuntimeError("No tables found on the Global Visa Wait Times page.")
 
