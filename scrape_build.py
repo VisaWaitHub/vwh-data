@@ -16,6 +16,56 @@ except Exception:
     pycountry = None
 
 # ---------------------------
+# Build detail-page sitemap (Phase 1 pilot)
+# ---------------------------
+def build_detail_sitemap(posts, out_path):
+    """
+    Phase 1 sitemap:
+    Only include selected pilot countries.
+    Later we will remove this filter to include ALL posts.
+    """
+
+    PILOT_COUNTRIES = {"gb", "in", "ca", "au", "mx", "ph"}
+
+    urls = []
+
+    for p in posts:
+        cc = (p.get("country_code") or "").lower()
+        city_slug = p.get("city_slug")
+        visa = (p.get("visa_code") or "").lower()
+
+        if cc not in PILOT_COUNTRIES:
+            continue
+
+        if not cc or not city_slug or not visa:
+            continue
+
+        url = f"https://visawaithub.com/wait-times/{cc}/{city_slug}/us-{visa}/"
+        lastmod = p.get("last_updated") or ""
+
+        urls.append((url, lastmod))
+
+    xml_parts = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+    ]
+
+    for url, lastmod in urls:
+        xml_parts.append("<url>")
+        xml_parts.append(f"<loc>{url}</loc>")
+        if lastmod:
+            xml_parts.append(f"<lastmod>{lastmod}</lastmod>")
+        xml_parts.append("</url>")
+
+    xml_parts.append("</urlset>")
+
+    with open(out_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(xml_parts))
+
+    print(f"[OK] Wrote detail sitemap → {out_path} | urls={len(urls)}")
+
+
+# ---------------------------
 # VWH: History + Change Notes helpers (daily)
 # ---------------------------
 
@@ -638,7 +688,11 @@ def main():
         json.dump(out_posts, f, ensure_ascii=False, indent=2)
 
     print(f"[OK] Wrote Option D posts[] to {OUT_POSTS} | posts={len(posts)}")
+    # Build Phase-1 pilot sitemap
+    OUT_SITEMAP = os.path.join(DOCS_DIR, "vwh-sitemap-details.xml")
+    build_detail_sitemap(posts, OUT_SITEMAP)
 
+    
     # Always write missing files (even if empty) so they can be committed and served
     with open(OUT_MISSING_TXT, "w", encoding="utf-8") as f:
         for p in missing:
