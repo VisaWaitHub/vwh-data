@@ -168,6 +168,8 @@ GLOBAL_URL = "https://travel.state.gov/content/travel/en/us-visas/visa-informati
 RECIPROCITY_INDEX = "https://travel.state.gov/content/travel/en/us-visas/Visa-Reciprocity-and-Civil-Documents-by-Country.html"
 
 DOCS_DIR = "docs"
+CACHE_DIR = os.path.join(DOCS_DIR, "_cache")
+os.makedirs(CACHE_DIR, exist_ok=True)
 OUT_POSTS = os.path.join(DOCS_DIR, "us_posts.json")
 OUT_RECORDS = os.path.join(DOCS_DIR, "us_records.json")
 OUT_POST_MAP = os.path.join(DOCS_DIR, "post_map.json")
@@ -244,6 +246,27 @@ def http_get(url: str, headers=None, timeout=(10, 30), retries=2, backoff=2.0) -
                 time.sleep(sleep_s)
 
     raise RuntimeError(f"Failed to fetch after retries: {url}") from last_err
+    # --- CACHE HELPER FOR RECIPROCITY PAGES ---
+def cached_get(url: str, cache_key: str, max_age_hours: int = 168) -> str:
+    """
+    Disk cache for expensive reciprocity pages.
+    max_age_hours=168 means refresh once every 7 days.
+    """
+    path = os.path.join(CACHE_DIR, cache_key)
+
+    if os.path.exists(path):
+        age_s = time.time() - os.path.getmtime(path)
+        if age_s < max_age_hours * 3600:
+            print(f"[CACHE] Hit: {cache_key} ({age_s/3600:.1f}h old)")
+            with open(path, "r", encoding="utf-8") as f:
+                return f.read()
+
+    print(f"[CACHE] Miss: {cache_key} — fetching")
+    html = http_get(url)
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(html)
+    return html
+
 
 
 
@@ -383,7 +406,7 @@ def extract_visa_issuing_posts(country_html: str) -> List[str]:
 
 def build_post_map(controlled: bool) -> Tuple[Dict[str, dict], List[str]]:
     warnings = []
-    index_html = http_get(RECIPROCITY_INDEX)
+    index_html = cached_get(RECIPROCITY_INDEX, "recip_index.html", max_age_hours=168)
 
     country_links = extract_country_links(index_html)
     if not country_links:
@@ -397,7 +420,9 @@ def build_post_map(controlled: bool) -> Tuple[Dict[str, dict], List[str]]:
 
     for i, (country_name, country_url) in enumerate(country_links, start=1):
         try:
-            html = http_get(country_url)
+            cache_key = "recip_" + re.sub(r"[^a-zA-Z0-9]+", "_", country_url.split("/")[-1])[:80] + ".html"
+            html = cached_get(country_url, cache_key, max_age_hours=168)
+
         except Exception as e:
             warnings.append(f"WARNING: Failed to fetch country page {country_url}: {e}")
             continue
