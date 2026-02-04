@@ -462,7 +462,8 @@ def scrape_global_wait_times() -> Tuple[dict, pd.DataFrame]:
 
     print("[INFO] Parsing tables with pandas.read_html...")
     t0 = time.time()
-    tables = pd.read_html(html, flavor="lxml")
+    from io import StringIO
+    tables = pd.read_html(StringIO(html), flavor="lxml")
     print(f"[INFO] pandas.read_html done in {time.time() - t0:.2f}s. tables={len(tables)}")
 
     if not tables:
