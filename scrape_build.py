@@ -749,6 +749,11 @@ def main():
     # Build Phase-1 pilot sitemap (detail pages)
     OUT_SITEMAP = os.path.join(DOCS_DIR, "vwh-sitemap-details.xml")
     build_detail_sitemap(posts, OUT_SITEMAP)
+    print(f"[INFO] Expected sitemap path: {OUT_SITEMAP}")
+    if not os.path.exists(OUT_SITEMAP):
+        raise RuntimeError(f"Sitemap was not created at {OUT_SITEMAP}")
+    print(f"[INFO] Sitemap created OK: {OUT_SITEMAP} ({os.path.getsize(OUT_SITEMAP)} bytes)")
+
 
 
     
