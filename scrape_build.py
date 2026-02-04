@@ -575,6 +575,8 @@ def main():
 
     # 1) Auto map from reciprocity pages (best-effort)
     POST_MAP_CACHE_JSON = os.path.join(DOCS_DIR, "_cache", "post_map_cache.json")
+    POST_MAP_JSON = os.path.join(DOCS_DIR, "post_map.json")
+
 
     post_map = None
     pm_warnings = []
