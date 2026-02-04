@@ -595,6 +595,41 @@ def main():
         with open(POST_MAP_JSON, "w", encoding="utf-8") as f:
             json.dump(post_map, f, ensure_ascii=False, indent=2)
         print(f"[OK] Wrote post_map → {POST_MAP_JSON} | posts={len(post_map)}")
+    # 1b) Always apply overrides (even when reusing cached post_map)
+    try:
+        overrides = load_overrides()
+    except Exception as e:
+        overrides = {}
+        print(f"[WARN] Failed to load overrides CSV: {e}")
+
+    applied = 0
+    if overrides:
+        for norm, rec in overrides.items():
+            if not norm:
+                continue
+
+            base = post_map.get(norm)
+            if not base:
+                post_map[norm] = dict(rec)
+                applied += 1
+                continue
+
+            changed = False
+            for k in ("post", "country", "country_code"):
+                if rec.get(k) and not base.get(k):
+                    base[k] = rec[k]
+                    changed = True
+            if changed:
+                applied += 1
+
+    print(f"[OK] Applied overrides to post_map: {applied} entries")
+
+    # If overrides changed anything, persist back so future runs are stable
+    if applied > 0:
+        with open(POST_MAP_JSON, "w", encoding="utf-8") as f:
+            json.dump(post_map, f, ensure_ascii=False, indent=2)
+        print(f"[OK] Updated cached post_map → {POST_MAP_JSON} | posts={len(post_map)}")
+
 
 
     # 2) Manual overrides (makes system complete)
