@@ -569,7 +569,9 @@ def visa_category_to_code(label: str) -> Optional[str]:
 
 def main():
     controlled = os.getenv("CONTROLLED", "").strip() in ("1", "true", "TRUE", "yes", "YES")
+    FORCE_POST_MAP = os.getenv("FORCE_POST_MAP", "0") == "1"
     os.makedirs(DOCS_DIR, exist_ok=True)
+
 
     # 1) Auto map from reciprocity pages (best-effort)
     POST_MAP_JSON = os.path.join(DOCS_DIR, "post_map.json")
@@ -578,7 +580,7 @@ def main():
     pm_warnings = []
 
     # Reuse existing post_map to save GitHub minutes (rebuild only if missing)
-    if os.path.exists(POST_MAP_JSON):
+    if os.path.exists(POST_MAP_JSON) and not FORCE_POST_MAP:
         try:
             with open(POST_MAP_JSON, "r", encoding="utf-8") as f:
                 post_map = json.load(f)
