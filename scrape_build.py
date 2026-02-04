@@ -572,7 +572,28 @@ def main():
     os.makedirs(DOCS_DIR, exist_ok=True)
 
     # 1) Auto map from reciprocity pages (best-effort)
-    post_map, pm_warnings = build_post_map(controlled)
+    POST_MAP_JSON = os.path.join(DOCS_DIR, "post_map.json")
+
+    post_map = None
+    pm_warnings = []
+
+    # Reuse existing post_map to save GitHub minutes (rebuild only if missing)
+    if os.path.exists(POST_MAP_JSON):
+        try:
+            with open(POST_MAP_JSON, "r", encoding="utf-8") as f:
+                post_map = json.load(f)
+            print(f"[OK] Loaded cached post_map from {POST_MAP_JSON} | posts={len(post_map)}")
+        except Exception as e:
+            print(f"[WARN] Failed to load {POST_MAP_JSON}, rebuilding: {e}")
+            post_map = None
+
+    # Build fresh only when needed
+    if post_map is None:
+        post_map, pm_warnings = build_post_map(controlled)
+        with open(POST_MAP_JSON, "w", encoding="utf-8") as f:
+            json.dump(post_map, f, ensure_ascii=False, indent=2)
+        print(f"[OK] Wrote post_map → {POST_MAP_JSON} | posts={len(post_map)}")
+
 
     # 2) Manual overrides (makes system complete)
     overrides = load_overrides()
