@@ -574,27 +574,28 @@ def main():
 
 
     # 1) Auto map from reciprocity pages (best-effort)
-    POST_MAP_JSON = os.path.join(DOCS_DIR, "post_map.json")
+    POST_MAP_CACHE_JSON = os.path.join(DOCS_DIR, "_cache", "post_map_cache.json")
 
     post_map = None
     pm_warnings = []
 
-    # Reuse existing post_map to save GitHub minutes (rebuild only if missing)
-    if os.path.exists(POST_MAP_JSON) and not FORCE_POST_MAP:
+    # Reuse existing post_map cache to save GitHub minutes (rebuild only if missing)
+    if os.path.exists(POST_MAP_CACHE_JSON) and not FORCE_POST_MAP:
         try:
-            with open(POST_MAP_JSON, "r", encoding="utf-8") as f:
+            with open(POST_MAP_CACHE_JSON, "r", encoding="utf-8") as f:
                 post_map = json.load(f)
-            print(f"[OK] Loaded cached post_map from {POST_MAP_JSON} | posts={len(post_map)}")
+            print(f"[OK] Loaded cached post_map from {POST_MAP_CACHE_JSON} | posts={len(post_map)}")
         except Exception as e:
-            print(f"[WARN] Failed to load {POST_MAP_JSON}, rebuilding: {e}")
+            print(f"[WARN] Failed to load {POST_MAP_CACHE_JSON}, rebuilding: {e}")
             post_map = None
 
     # Build fresh only when needed
     if post_map is None:
         post_map, pm_warnings = build_post_map(controlled)
-        with open(POST_MAP_JSON, "w", encoding="utf-8") as f:
+        with open(POST_MAP_CACHE_JSON, "w", encoding="utf-8") as f:
             json.dump(post_map, f, ensure_ascii=False, indent=2)
-        print(f"[OK] Wrote post_map → {POST_MAP_JSON} | posts={len(post_map)}")
+        print(f"[OK] Wrote post_map cache → {POST_MAP_CACHE_JSON} | posts={len(post_map)}")
+
     # 1b) Always apply overrides (even when reusing cached post_map)
     try:
         overrides = load_overrides()
@@ -626,7 +627,7 @@ def main():
 
     # If overrides changed anything, persist back so future runs are stable
     if applied > 0:
-        with open(POST_MAP_JSON, "w", encoding="utf-8") as f:
+        with open(POST_MAP_CACHE_JSON, "w", encoding="utf-8") as f:
             json.dump(post_map, f, ensure_ascii=False, indent=2)
         print(f"[OK] Updated cached post_map → {POST_MAP_JSON} | posts={len(post_map)}")
 
