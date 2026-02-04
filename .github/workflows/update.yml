@@ -37,8 +37,7 @@ jobs:
 
       - name: Scrape + build JSON
         env:
-          CONTROLLED: "0"
-          FORCE_POST_MAP: "1"
+          CONTROLLED: "0"          
         run: python scrape_build.py
       - name: Commit and push generated files (docs/)
         run: |
