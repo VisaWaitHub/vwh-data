@@ -29,7 +29,14 @@ def build_detail_sitemap(posts, out_path):
     Later we will remove this filter to include ALL posts.
     """
 
-    PILOT_COUNTRIES = {"gb", "in", "ca", "au", "mx", "ph"}
+    # ---------------------------
+# Build detail-page sitemap (FULL — all detail pages)
+# ---------------------------
+def build_detail_sitemap(posts, out_path):
+    """
+    Full sitemap:
+    Includes ALL detail pages (no country filtering).
+    """
 
     urls = []
 
@@ -37,9 +44,6 @@ def build_detail_sitemap(posts, out_path):
         cc = (p.get("country_code") or "").lower()
         city_slug = p.get("city_slug")
         visa = (p.get("visa_code") or "").lower()
-
-        if cc not in PILOT_COUNTRIES:
-            continue
 
         if not cc or not city_slug or not visa:
             continue
@@ -66,8 +70,7 @@ def build_detail_sitemap(posts, out_path):
     with open(out_path, "w", encoding="utf-8") as f:
         f.write("\n".join(xml_parts))
 
-    print(f"[OK] Wrote detail sitemap → {out_path} | urls={len(urls)}")
-
+    print(f"[OK] Wrote FULL detail sitemap → {out_path} | urls={len(urls)}")
 
 # ---------------------------
 # VWH: History + Change Notes helpers (daily)
