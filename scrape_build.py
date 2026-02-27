@@ -902,11 +902,36 @@ def main():
 
     print("[OK] Derived fields added: delta_7d, delta_30d, last_change_at, has_recent_change, trend_direction")
     # ---- END DERIVED FIELDS ----
+    # ---- HOMEPAGE HIGHLIGHTS (Phase 2) ----
+
+    # Fastest available (lowest wait days)
+    fastest_available = [
+        p for p in posts
+        if p.get("is_available") and isinstance(p.get("current_wait_days"), int)
+    ]
+    fastest_available.sort(key=lambda x: x["current_wait_days"])
+    highlights_fastest = fastest_available[:10]
+
+    # Recently changed (most recent change first)
+    recently_changed = [
+        p for p in posts
+        if p.get("has_recent_change") and p.get("last_change_at")
+    ]
+    recently_changed.sort(key=lambda x: x["last_change_at"], reverse=True)
+    highlights_recent = recently_changed[:10]
+
+    print("[OK] Homepage highlight lists built")
+
+    # ---- END HOMEPAGE HIGHLIGHTS ----    
     out_posts = {
         "version": "1.0",
         "generated_at": now_utc_iso(),
         "source": "U.S. Department of State (travel.state.gov)",
         "source_url": GLOBAL_URL,
+
+        "highlights_fastest_available": highlights_fastest,
+        "highlights_recently_changed": highlights_recent,
+
         "posts": posts,
     }
 
