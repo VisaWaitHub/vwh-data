@@ -798,18 +798,109 @@ def main():
             "status": "ok",
             "note": "",
         })
-    # ---- DERIVED FIELDS (Phase 1 stub test) ----
+    # ---- DERIVED FIELDS (Phase 1: per-post deltas + last change) ----
+    from datetime import datetime
+
+    def _iso_to_date(s):
+        try:
+            if not s:
+                return None
+            # Accept "YYYY-MM-DD" or full ISO "YYYY-MM-DDTHH:MM:SS+00:00"
+            return datetime.fromisoformat(str(s).replace("Z", "+00:00")).date()
+        except Exception:
+            return None
+
+    def _find_value_on_or_before(history_dates, history_values, target_date):
+        """
+        Returns value for the latest snapshot on or before target_date.
+        Assumes history_dates is oldest->newest and aligned with history_values.
+        """
+        if (not history_dates) or (not history_values) or (len(history_dates) != len(history_values)):
+            return None
+
+        best = None
+        for ds, vs in zip(history_dates, history_values):
+            d = _iso_to_date(ds)
+            if not d:
+                continue
+            if d <= target_date:
+                best = vs
+            else:
+                # dates are ascending; once we pass target_date we can stop
+                break
+        return best
+
     def _compute_post_derivatives(p):
+        hv = p.get("history_values") or []
+        hd = p.get("history_dates") or []
+
+        # defaults
         p["delta_7d"] = None
         p["delta_30d"] = None
         p["last_change_at"] = ""
         p["has_recent_change"] = False
         p["trend_direction"] = "unknown"
 
+        if (not hv) or (not hd) or (len(hv) != len(hd)):
+            return
+
+        last_date = _iso_to_date(hd[-1])
+        try:
+            last_val = int(hv[-1])
+        except Exception:
+            return
+
+        if not last_date:
+            return
+
+        # target dates
+        d7 = last_date.fromordinal(last_date.toordinal() - 7)
+        d30 = last_date.fromordinal(last_date.toordinal() - 30)
+
+        v7 = _find_value_on_or_before(hd, hv, d7)
+        v30 = _find_value_on_or_before(hd, hv, d30)
+
+        # positive = worse (wait increased); negative = improved
+        try:
+            p["delta_7d"] = (last_val - int(v7)) if v7 is not None else None
+        except Exception:
+            p["delta_7d"] = None
+
+        try:
+            p["delta_30d"] = (last_val - int(v30)) if v30 is not None else None
+        except Exception:
+            p["delta_30d"] = None
+
+        # last_change_at: most recent snapshot where value changed vs prior
+        last_change = ""
+        for i in range(len(hv) - 1, 0, -1):
+            try:
+                a = int(hv[i])
+                b = int(hv[i - 1])
+            except Exception:
+                continue
+            if a != b:
+                last_change = str(hd[i])
+                break
+
+        p["last_change_at"] = last_change
+        p["has_recent_change"] = bool(last_change)
+
+        # trend_direction uses delta_7d if available else delta_30d
+        d_primary = p["delta_7d"] if p["delta_7d"] is not None else p["delta_30d"]
+        if d_primary is None:
+            p["trend_direction"] = "unknown"
+        elif d_primary > 0:
+            p["trend_direction"] = "up"
+        elif d_primary < 0:
+            p["trend_direction"] = "down"
+        else:
+            p["trend_direction"] = "flat"
+
     for p in posts:
         _compute_post_derivatives(p)
 
-    print("[OK] Derived fields stub added")
+    print("[OK] Derived fields added: delta_7d, delta_30d, last_change_at, has_recent_change, trend_direction")
     # ---- END DERIVED FIELDS ----
     out_posts = {
         "version": "1.0",
