@@ -798,7 +798,19 @@ def main():
             "status": "ok",
             "note": "",
         })
+    # ---- DERIVED FIELDS (Phase 1 stub test) ----
+    def _compute_post_derivatives(p):
+        p["delta_7d"] = None
+        p["delta_30d"] = None
+        p["last_change_at"] = ""
+        p["has_recent_change"] = False
+        p["trend_direction"] = "unknown"
 
+    for p in posts:
+        _compute_post_derivatives(p)
+
+    print("[OK] Derived fields stub added")
+    # ---- END DERIVED FIELDS ----
     out_posts = {
         "version": "1.0",
         "generated_at": now_utc_iso(),
