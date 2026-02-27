@@ -901,7 +901,7 @@ for p in posts:
     _compute_post_derivatives(p)
 
 print("[OK] Derived fields added: delta_7d, delta_30d, last_change_at, has_recent_change, trend_direction")
-    out_posts = {
+out_posts = {
         "version": "1.0",
         "generated_at": now_utc_iso(),
         "source": "U.S. Department of State (travel.state.gov)",
