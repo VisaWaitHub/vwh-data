@@ -923,11 +923,264 @@ def main():
     print("[OK] Homepage highlight lists built")
 
     # ---- END HOMEPAGE HIGHLIGHTS ----    
+    # ---------------------------
+    # INSIGHTS (Global Intelligence Layer) — v1
+    # ---------------------------
+    import math
+    from datetime import datetime, timezone
+
+    def _iso_to_dt(s: str):
+        if not s:
+            return None
+        try:
+            # Handles: 2026-02-26T19:07:00+00:00
+            return datetime.fromisoformat(s.replace("Z", "+00:00"))
+        except Exception:
+            return None
+
+    def _pct(values, p):
+        """Percentile (0-100) with linear interpolation; returns None if empty."""
+        if not values:
+            return None
+        xs = sorted(values)
+        if len(xs) == 1:
+            return xs[0]
+        k = (len(xs) - 1) * (p / 100.0)
+        f = math.floor(k)
+        c = math.ceil(k)
+        if f == c:
+            return xs[int(k)]
+        d0 = xs[f] * (c - k)
+        d1 = xs[c] * (k - f)
+        return d0 + d1
+
+    def _summary_stats(rows):
+        """
+        rows: list of post dicts
+        returns: robust stats for waits + delta_7d + delta_30d + availability rate
+        """
+        waits = [r["current_wait_days"] for r in rows if isinstance(r.get("current_wait_days"), int)]
+        d7 = [r["delta_7d"] for r in rows if isinstance(r.get("delta_7d"), int)]
+        d30 = [r["delta_30d"] for r in rows if isinstance(r.get("delta_30d"), int)]
+        avail = [r.get("is_available") for r in rows if isinstance(r.get("is_available"), bool)]
+
+        def _rates(arr):
+            if not arr:
+                return {"up_rate": None, "down_rate": None, "flat_rate": None}
+            up = sum(1 for x in arr if x > 0)
+            down = sum(1 for x in arr if x < 0)
+            flat = sum(1 for x in arr if x == 0)
+            n = len(arr)
+            return {
+                "up_rate": round(up / n, 4),
+                "down_rate": round(down / n, 4),
+                "flat_rate": round(flat / n, 4),
+            }
+
+        def _delta_block(arr):
+            if not arr:
+                return {
+                    "avg": None, "median": None, "p90_abs": None,
+                    "up_rate": None, "down_rate": None, "flat_rate": None
+                }
+            abs_arr = [abs(x) for x in arr]
+            return {
+                "avg": round(sum(arr) / len(arr), 4),
+                "median": _pct(arr, 50),
+                "p90_abs": _pct(abs_arr, 90),
+                **_rates(arr)
+            }
+
+        wait_block = None
+        if waits:
+            wait_block = {
+                "avg": round(sum(waits) / len(waits), 4),
+                "median": _pct(waits, 50),
+                "p10": _pct(waits, 10),
+                "p25": _pct(waits, 25),
+                "p75": _pct(waits, 75),
+                "p90": _pct(waits, 90),
+                "min": min(waits),
+                "max": max(waits),
+            }
+
+        available_rate = None
+        if avail:
+            available_rate = round(sum(1 for x in avail if x) / len(avail), 4)
+
+        return {
+            "count": len(rows),
+            "available_rate": available_rate,
+            "wait_days": wait_block,
+            "delta_7d": _delta_block(d7),
+            "delta_30d": _delta_block(d30),
+        }
+
+    def _compact(p):
+        """Compact ranking entry; keep file size sane."""
+        cc = (p.get("country_code") or "").lower()
+        city = p.get("city") or ""
+        city_slug = p.get("city_slug") or ""
+        visa = (p.get("visa_code") or "").lower()
+        href = f"/wait-times/{cc}/{city_slug}/us-{visa}/"
+        return {
+            "cc": cc,
+            "city": city,
+            "city_slug": city_slug,
+            "visa": visa,
+            "wait": p.get("current_wait_days"),
+            "available": p.get("is_available"),
+            "last_updated": p.get("last_updated") or "",
+            "href": href,
+            "delta_7d": p.get("delta_7d"),
+            "delta_30d": p.get("delta_30d"),
+            "last_change_at": p.get("last_change_at") or "",
+        }
+
+    def _top_n(rows, key_fn, n=20, reverse=False, where_fn=None):
+        xs = rows
+        if where_fn:
+            xs = [r for r in xs if where_fn(r)]
+        xs = sorted(xs, key=key_fn, reverse=reverse)
+        return [_compact(r) for r in xs[:n]]
+
+    # Totals
+    posts_total = len(posts)
+    posts_with_wait = sum(1 for p in posts if isinstance(p.get("current_wait_days"), int))
+    posts_available = sum(1 for p in posts if p.get("is_available") is True)
+    posts_unavailable = sum(1 for p in posts if p.get("is_available") is False)
+    countries_total = len(set((p.get("country_code") or "").lower() for p in posts if p.get("country_code")))
+    cities_total = len(set((p.get("city_slug") or "").lower() for p in posts if p.get("city_slug")))
+
+    # By visa (all + each visa_code)
+    posts_all = posts[:]
+    visa_codes = sorted(set((p.get("visa_code") or "").lower() for p in posts if p.get("visa_code")))
+    by_visa = {"all": _summary_stats(posts_all)}
+    for v in visa_codes:
+        by_visa[v] = _summary_stats([p for p in posts if (p.get("visa_code") or "").lower() == v])
+
+    # Time diagnostics (latest last_updated; history span)
+    latest_last_updated = ""
+    last_updated_vals = [p.get("last_updated") for p in posts if p.get("last_updated")]
+    if last_updated_vals:
+        latest_last_updated = sorted(last_updated_vals)[-1]
+
+    span_min = None
+    span_max = None
+    for p in posts:
+        hd = p.get("history_dates") or []
+        if not isinstance(hd, list) or len(hd) < 2:
+            continue
+        a = _iso_to_dt(hd[0])
+        b = _iso_to_dt(hd[-1])
+        if not a or not b:
+            continue
+        days = int((b - a).total_seconds() // 86400)
+        if span_min is None or days < span_min:
+            span_min = days
+        if span_max is None or days > span_max:
+            span_max = days
+
+    # Rankings (Top 20 each)
+    # NOTE: these intentionally use simple filters and rely on your computed delta fields.
+    rankings = {
+        "top_longest_wait": _top_n(posts, key_fn=lambda r: (r.get("current_wait_days") is None, r.get("current_wait_days", -1)), n=20, reverse=True,
+                                   where_fn=lambda r: isinstance(r.get("current_wait_days"), int)),
+        "top_shortest_wait": _top_n(posts, key_fn=lambda r: r.get("current_wait_days", 10**9), n=20, reverse=False,
+                                    where_fn=lambda r: isinstance(r.get("current_wait_days"), int)),
+        "top_fastest_available": _top_n(posts, key_fn=lambda r: r.get("current_wait_days", 10**9), n=20, reverse=False,
+                                        where_fn=lambda r: r.get("is_available") is True and isinstance(r.get("current_wait_days"), int)),
+
+        "top_increase_30d": _top_n(posts, key_fn=lambda r: r.get("delta_30d", -10**9), n=20, reverse=True,
+                                   where_fn=lambda r: isinstance(r.get("delta_30d"), int) and r.get("delta_30d") > 0),
+        "top_decrease_30d": _top_n(posts, key_fn=lambda r: r.get("delta_30d", 10**9), n=20, reverse=False,
+                                   where_fn=lambda r: isinstance(r.get("delta_30d"), int) and r.get("delta_30d") < 0),
+        "top_movers_30d_abs": _top_n(posts, key_fn=lambda r: abs(r.get("delta_30d", 0)), n=20, reverse=True,
+                                     where_fn=lambda r: isinstance(r.get("delta_30d"), int) and r.get("delta_30d") != 0),
+
+        "top_increase_7d": _top_n(posts, key_fn=lambda r: r.get("delta_7d", -10**9), n=20, reverse=True,
+                                  where_fn=lambda r: isinstance(r.get("delta_7d"), int) and r.get("delta_7d") > 0),
+        "top_decrease_7d": _top_n(posts, key_fn=lambda r: r.get("delta_7d", 10**9), n=20, reverse=False,
+                                  where_fn=lambda r: isinstance(r.get("delta_7d"), int) and r.get("delta_7d") < 0),
+        "top_movers_7d_abs": _top_n(posts, key_fn=lambda r: abs(r.get("delta_7d", 0)), n=20, reverse=True,
+                                    where_fn=lambda r: isinstance(r.get("delta_7d"), int) and r.get("delta_7d") != 0),
+
+        "most_recently_changed": _top_n(posts, key_fn=lambda r: (r.get("last_change_at") or ""), n=20, reverse=True,
+                                        where_fn=lambda r: bool(r.get("last_change_at"))),
+        "most_unavailable_now": _top_n(posts, key_fn=lambda r: r.get("current_wait_days", 10**9), n=20, reverse=True,
+                                       where_fn=lambda r: r.get("is_available") is False and isinstance(r.get("current_wait_days"), int)),
+    }
+
+    # Region mapping (DICT-based; v1 defaults to unknown; we’ll fill this out next step)
+    REGION_BY_CC = {
+        # We'll expand this mapping in the next baby step without changing schema.
+        # Example entries (not exhaustive):
+        "us": "north_america",
+        "ca": "north_america",
+        "mx": "north_america",
+        "gb": "europe",
+        "fr": "europe",
+        "de": "europe",
+        "in": "asia",
+        "ph": "asia",
+        "ng": "africa",
+        "za": "africa",
+        "au": "oceania",
+        "nz": "oceania",
+        "br": "south_america",
+        "ar": "south_america",
+    }
+
+    def _region_for_cc(cc):
+        cc = (cc or "").lower()
+        return REGION_BY_CC.get(cc, "unknown")
+
+    # By region (v1, will be more complete as REGION_BY_CC fills out)
+    region_buckets = {}
+    for p in posts:
+        cc = (p.get("country_code") or "").lower()
+        r = _region_for_cc(cc)
+        region_buckets.setdefault(r, []).append(p)
+
+    by_region = {}
+    for r, rows in region_buckets.items():
+        by_region[r] = _summary_stats(rows)
+
+    insights = {
+        "meta": {
+            "schema_version": "insights-1.0",
+            "window_days": {"d7": 7, "d30": 30, "d90": 90},
+            "notes": [
+                "All waits are in days.",
+                "Deltas: positive means longer waits; negative means shorter waits."
+            ]
+        },
+        "totals": {
+            "posts_total": posts_total,
+            "posts_with_wait": posts_with_wait,
+            "posts_available": posts_available,
+            "posts_unavailable": posts_unavailable,
+            "countries_total": countries_total,
+            "cities_total": cities_total
+        },
+        "time": {
+            "generated_at": now_utc_iso(),
+            "latest_post_last_updated": latest_last_updated,
+            "history_span_days": {"min": span_min, "max": span_max}
+        },
+        "by_visa": by_visa,
+        "by_region": by_region,
+        "rankings": rankings
+    }
+
+    print(f"[OK] insights built: visa={len(by_visa)} regions={len(by_region)} rankings={len(rankings)}")
     out_posts = {
         "version": "1.0",
         "generated_at": now_utc_iso(),
         "source": "U.S. Department of State (travel.state.gov)",
         "source_url": GLOBAL_URL,
+
+        "insights": insights,
 
         "highlights_fastest_available": highlights_fastest,
         "highlights_recently_changed": highlights_recent,
