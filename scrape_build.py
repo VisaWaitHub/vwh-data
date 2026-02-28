@@ -1112,28 +1112,49 @@ def main():
     }
 
     # Region mapping (DICT-based; v1 defaults to unknown; we’ll fill this out next step)
-    REGION_BY_CC = {
-        # We'll expand this mapping in the next baby step without changing schema.
-        # Example entries (not exhaustive):
-        "us": "north_america",
-        "ca": "north_america",
-        "mx": "north_america",
-        "gb": "europe",
-        "fr": "europe",
-        "de": "europe",
-        "in": "asia",
-        "ph": "asia",
-        "ng": "africa",
-        "za": "africa",
-        "au": "oceania",
-        "nz": "oceania",
-        "br": "south_america",
-        "ar": "south_america",
+    # ---------------------------
+    # Region mapping (SET-based, no deps)
+    # ---------------------------
+    AFRICA = {
+        "dz","ao","bj","bw","bf","bi","cv","cm","cf","td","km","cg","cd","ci","dj","eg","gq","er","sz","et",
+        "ga","gm","gh","gn","gw","ke","ls","lr","ly","mg","mw","ml","mr","mu","ma","mz","na","ne","ng","rw",
+        "st","sn","sc","sl","so","za","ss","sd","tz","tg","tn","ug","zm","zw"
+    }
+
+    ASIA = {
+        "af","am","az","bh","bd","bt","bn","kh","cn","cy","ge","in","id","ir","iq","il","jp","jo","kz","kw",
+        "kg","la","lb","my","mv","mn","mm","np","kp","om","pk","ps","ph","qa","sa","sg","kr","lk","sy","tw",
+        "tj","th","tl","tr","tm","ae","uz","vn","ye","hk","mo"
+    }
+
+    EUROPE = {
+        "al","ad","at","by","be","ba","bg","hr","cz","dk","ee","fi","fr","de","gr","hu","is","ie","it","lv",
+        "li","lt","lu","mt","md","mc","me","nl","mk","no","pl","pt","ro","ru","sm","rs","sk","si","es","se",
+        "ch","ua","gb","va","xk"
+    }
+
+    NORTH_AMERICA = {
+        "ag","bs","bb","bz","ca","cr","cu","dm","do","sv","gd","gt","ht","hn","jm","mx","ni","pa","kn","lc",
+        "vc","tt","us"
+    }
+
+    SOUTH_AMERICA = {
+        "ar","bo","br","cl","co","ec","gy","py","pe","sr","uy","ve","fk"
+    }
+
+    OCEANIA = {
+        "au","fj","ki","mh","fm","nr","nz","pw","pg","ws","sb","to","tv","vu"
     }
 
     def _region_for_cc(cc):
         cc = (cc or "").lower()
-        return REGION_BY_CC.get(cc, "unknown")
+        if cc in AFRICA: return "africa"
+        if cc in ASIA: return "asia"
+        if cc in EUROPE: return "europe"
+        if cc in NORTH_AMERICA: return "north_america"
+        if cc in SOUTH_AMERICA: return "south_america"
+        if cc in OCEANIA: return "oceania"
+        return "unknown"
 
     # By region (v1, will be more complete as REGION_BY_CC fills out)
     region_buckets = {}
