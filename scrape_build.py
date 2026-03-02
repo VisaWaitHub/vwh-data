@@ -1254,7 +1254,12 @@ def main():
 
     with open(OUT_POSTS, "w", encoding="utf-8") as f:
         json.dump(out_posts, f, ensure_ascii=False, indent=2)
-
+    # B3: archive immutable monthly snapshot (no posts[] inside)
+    snap_path = archive_monthly_snapshot(out_posts, docs_dir=DOCS_DIR)
+    if snap_path:
+        print(f"[snapshots] wrote {snap_path}")
+    else:
+        print("[snapshots] no write (already exists or missing generated_at)")
     print(f"[OK] Wrote Option D posts[] to {OUT_POSTS} | posts={len(posts)}")
     # Build Phase-1 pilot sitemap (detail pages)
     OUT_SITEMAP = os.path.join(DOCS_DIR, "vwh-sitemap-details.xml")
