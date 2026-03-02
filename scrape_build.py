@@ -1126,6 +1126,59 @@ def main():
 
     # Rankings (Top 20 each)
     # NOTE: these intentionally use simple filters and rely on your computed delta fields.
+    # -------------------------------------------------
+    # GLOBAL TIE INTELLIGENCE (Authority-grade context)
+    # -------------------------------------------------
+
+    # All posts with numeric wait
+    posts_with_wait = [
+        r for r in posts
+        if isinstance(r.get("current_wait_days"), int)
+    ]
+
+    # Available posts with numeric wait
+    posts_available_with_wait = [
+        r for r in posts
+        if r.get("is_available") is True
+        and isinstance(r.get("current_wait_days"), int)
+    ]
+
+    rankings_meta = {}
+
+    # ---- Shortest wait (global) ----
+    if posts_with_wait:
+        min_wait = min(r["current_wait_days"] for r in posts_with_wait)
+        ties = [r for r in posts_with_wait if r["current_wait_days"] == min_wait]
+
+        tie_by_visa = {}
+        for r in ties:
+            vc = r.get("visa_code", "unknown")
+            tie_by_visa[vc] = tie_by_visa.get(vc, 0) + 1
+
+        rankings_meta["shortest_wait"] = {
+            "min_wait_days": min_wait,
+            "tie_posts_total": len(ties),
+            "tie_by_visa": tie_by_visa,
+        }
+
+    # ---- Fastest available ----
+    if posts_available_with_wait:
+        min_wait_avail = min(r["current_wait_days"] for r in posts_available_with_wait)
+        ties_avail = [
+            r for r in posts_available_with_wait
+            if r["current_wait_days"] == min_wait_avail
+        ]
+
+        tie_by_visa_avail = {}
+        for r in ties_avail:
+            vc = r.get("visa_code", "unknown")
+            tie_by_visa_avail[vc] = tie_by_visa_avail.get(vc, 0) + 1
+
+        rankings_meta["fastest_available"] = {
+            "min_wait_days": min_wait_avail,
+            "tie_posts_total": len(ties_avail),
+            "tie_by_visa": tie_by_visa_avail,
+        }
     rankings = {
         "top_longest_wait": _top_n(posts, key_fn=lambda r: (r.get("current_wait_days") is None, r.get("current_wait_days", -1)), n=20, reverse=True,
                                    where_fn=lambda r: isinstance(r.get("current_wait_days"), int)),
@@ -1237,6 +1290,8 @@ def main():
         "rankings": rankings
     }
 
+    insights["rankings_meta"] = rankings_meta
+    
     print(f"[OK] insights built: visa={len(by_visa)} regions={len(by_region)} rankings={len(rankings)}")
     out_posts = {
         "version": "1.0",
