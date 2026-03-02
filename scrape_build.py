@@ -14,6 +14,49 @@ try:
     import pycountry
 except Exception:
     pycountry = None
+# ==============================
+# B3 SNAPSHOT ARCHIVE HELPERS
+# ==============================
+
+def vwh_month_key_from_iso(iso_str: str) -> str:
+    s = (iso_str or "").strip()
+    if s.endswith("Z"):
+        s = s[:-1] + "+00:00"
+    dt = datetime.fromisoformat(s)
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    dt = dt.astimezone(timezone.utc)
+    return dt.strftime("%Y-%m")
+
+def write_json_file(path: str, data: dict) -> None:
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+
+def archive_monthly_snapshot(live_root: dict, docs_dir: str = "docs") -> str | None:
+    generated_at = (live_root or {}).get("generated_at")
+    if not generated_at:
+        return None
+
+    month_key = vwh_month_key_from_iso(generated_at)
+    snap_path = os.path.join(docs_dir, "snapshots", f"{month_key}.json")
+
+    # Do NOT overwrite existing month
+    if os.path.exists(snap_path):
+        return None
+
+    snap = {
+        "version": live_root.get("version"),
+        "generated_at": live_root.get("generated_at"),
+        "source": live_root.get("source"),
+        "source_url": live_root.get("source_url"),
+        "insights": live_root.get("insights", {}),
+        "highlights_fastest_available": live_root.get("highlights_fastest_available", []),
+        "highlights_recently_changed": live_root.get("highlights_recently_changed", []),
+    }
+
+    write_json_file(snap_path, snap)
+    return snap_path
 
 # --- SAFE HTTP FETCH HELPER (prevents GitHub Action from hanging) ---
 
