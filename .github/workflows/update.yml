@@ -43,7 +43,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/us_posts.json docs/post_map.json docs/vwh-sitemap-details.xml docs/_cache/post_map_cache.json
+          git add docs/us_posts.json docs/post_map.json docs/vwh-sitemap-details.xml docs/_cache/post_map_cache.json docs/snapshots
           git commit -m "Update dataset + detail sitemap" || echo "No changes to commit"
           git push
  
@@ -55,7 +55,7 @@ jobs:
           git config user.name "vwh-bot"
           git config user.email "actions@users.noreply.github.com"
 
-          git add docs/us_posts.json docs/us_records.json docs/post_map.json docs/missing_posts.txt docs/missing_posts.json
+          git add docs/us_posts.json docs/us_records.json docs/post_map.json docs/missing_posts.txt docs/missing_posts.json docs/snapshots
 
           # If nothing staged, do nothing (and DO NOT push)
           if git diff --cached --quiet; then
