@@ -1295,30 +1295,17 @@ def main():
     region_buckets = {}
     for p in posts:
         cc = (p.get("country_code") or "").lower()
-        r = _region_for_cc(cc)
-        region_buckets.setdefault(r, []).append(p)
+        rgn = _region_for_cc(cc)
+        region_buckets.setdefault(rgn, []).append(p)
 
     by_region = {}
-    for r, rows in region_buckets.items():
-        by_region[r] = _agg_block(rows)
+    for rgn, rows in region_buckets.items():
+        by_region[rgn] = _agg_block(rows)
 
     # -------------------------
     # Insights object (now complete)
+    # IMPORTANT: insights MUST be built before out_posts
     # -------------------------
-    print(f"[OK] insights built: visa={len(by_visa)} regions={len(by_region)} rankings={len(rankings)}")
-    out_posts = {
-        "version": "1.0",
-        "generated_at": now_utc_iso(),
-        "source": "U.S. Department of State (travel.state.gov)",
-        "source_url": GLOBAL_URL,
-
-        "insights": insights,
-
-        "highlights_fastest_available": highlights_fastest,
-        "highlights_recently_changed": highlights_recent,
-
-        "posts": posts,
-    }    
     insights = {
         "meta": {
             "schema_version": "insights-1.1",
@@ -1348,12 +1335,32 @@ def main():
         "rankings_meta": rankings_meta,
     }
 
+    print(f"[OK] insights built: visa={len(by_visa)} regions={len(by_region)} rankings={len(rankings)}")
 
+    # -------------------------
+    # Build final dataset JSON
+    # -------------------------
+    out_posts = {
+        "version": "1.0",
+        "generated_at": now_utc_iso(),
+        "source": "U.S. Department of State (travel.state.gov)",
+        "source_url": GLOBAL_URL,
+
+        "insights": insights,
+
+        "highlights_fastest_available": highlights_fastest,
+        "highlights_recently_changed": highlights_recent,
+
+        "posts": posts,
+    }
 
     with open(OUT_POSTS, "w", encoding="utf-8") as f:
         json.dump(out_posts, f, ensure_ascii=False, indent=2)
+
     # B3: archive immutable monthly snapshot (no posts[] inside)
     snap_path = archive_monthly_snapshot(out_posts, docs_dir=DOCS_DIR)
+    if snap_path:
+        print(f"[snapshots] wrote {snap_path}")
     if snap_path:
         print(f"[snapshots] wrote {snap_path}")
     else:
