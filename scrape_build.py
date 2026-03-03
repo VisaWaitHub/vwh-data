@@ -1293,6 +1293,7 @@ def main():
     insights["rankings_meta"] = rankings_meta
     
     print(f"[OK] insights built: visa={len(by_visa)} regions={len(by_region)} rankings={len(rankings)}")
+    insights["rankings_meta"] = rankings_meta
     out_posts = {
         "version": "1.0",
         "generated_at": now_utc_iso(),
