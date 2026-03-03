@@ -1305,6 +1305,20 @@ def main():
     # -------------------------
     # Insights object (now complete)
     # -------------------------
+    print(f"[OK] insights built: visa={len(by_visa)} regions={len(by_region)} rankings={len(rankings)}")
+    out_posts = {
+        "version": "1.0",
+        "generated_at": now_utc_iso(),
+        "source": "U.S. Department of State (travel.state.gov)",
+        "source_url": GLOBAL_URL,
+
+        "insights": insights,
+
+        "highlights_fastest_available": highlights_fastest,
+        "highlights_recently_changed": highlights_recent,
+
+        "posts": posts,
+    }    
     insights = {
         "meta": {
             "schema_version": "insights-1.1",
@@ -1334,20 +1348,7 @@ def main():
         "rankings_meta": rankings_meta,
     }
 
-    print(f"[OK] insights built: visa={len(by_visa)} regions={len(by_region)} rankings={len(rankings)}")
-    out_posts = {
-        "version": "1.0",
-        "generated_at": now_utc_iso(),
-        "source": "U.S. Department of State (travel.state.gov)",
-        "source_url": GLOBAL_URL,
 
-        "insights": insights,
-
-        "highlights_fastest_available": highlights_fastest,
-        "highlights_recently_changed": highlights_recent,
-
-        "posts": posts,
-    }
 
     with open(OUT_POSTS, "w", encoding="utf-8") as f:
         json.dump(out_posts, f, ensure_ascii=False, indent=2)
