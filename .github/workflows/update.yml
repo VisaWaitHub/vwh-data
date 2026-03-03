@@ -24,6 +24,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           persist-credentials: true
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -46,6 +47,9 @@ jobs:
           git config user.name "vwh-bot"
           git config user.email "actions@users.noreply.github.com"
 
+          # Make sure we're up to date BEFORE staging/committing
+          git pull --rebase origin main
+
           # Stage everything the build may generate
           git add \
             docs/us_posts.json \
@@ -62,9 +66,6 @@ jobs:
             echo "No changes to commit."
             exit 0
           fi
-
-          # Catch up with main in case another run (or you) pushed updates
-          git pull --rebase origin main
 
           git commit -m "Update dataset (posts, insights, sitemap, snapshots)"
 
