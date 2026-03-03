@@ -1087,22 +1087,83 @@ def main():
         xs = sorted(xs, key=key_fn, reverse=reverse)
         return [_compact(r) for r in xs[:n]]
 
-    # Totals
+    # -------------------------------------------------
+    # AGGREGATES (Global / Visa / Region / Movement)
+    # -------------------------------------------------
+
+    def _pctl(vals, p: float):
+        """Nearest-rank percentile (stable, no numpy). p in [0,1]."""
+        if not vals:
+            return None
+        s = sorted(vals)
+        if len(s) == 1:
+            return s[0]
+        # nearest-rank: ceil(p*n)
+        import math
+        k = int(math.ceil(p * len(s)))
+        k = max(1, min(len(s), k))
+        return s[k - 1]
+
+    def _wait_ints(rows):
+        return [r.get("current_wait_days") for r in rows if isinstance(r.get("current_wait_days"), int)]
+
+    def _count_available(rows):
+        return sum(1 for r in rows if r.get("is_available") is True)
+
+    def _count_unavailable(rows):
+        return sum(1 for r in rows if r.get("is_available") is False)
+
+    def _agg_block(rows):
+        """Returns an 'aggregates' dict for any group of posts."""
+        total_posts = len(rows)
+        waits = _wait_ints(rows)
+        posts_with_wait = len(waits)
+
+        posts_available = _count_available(rows)
+        posts_unavailable = _count_unavailable(rows)
+
+        availability_rate = (posts_available / total_posts) if total_posts else None
+
+        # Use your existing summary stats (avg/median) + extend
+        base = _summary_stats(rows)  # should already return avg_wait/median_wait (etc.)
+
+        shortest_wait = min(waits) if waits else None
+        longest_wait = max(waits) if waits else None
+        p90_wait = _pctl(waits, 0.90) if waits else None
+
+        base.update({
+            "total_posts": total_posts,
+            "posts_with_wait": posts_with_wait,
+            "posts_available": posts_available,
+            "posts_unavailable": posts_unavailable,
+            "availability_rate": availability_rate,
+            "p90_wait": p90_wait,
+            "shortest_wait": shortest_wait,
+            "longest_wait": longest_wait,
+        })
+        return base
+
+    # -------------------------
+    # Global totals (basic)
+    # -------------------------
     posts_total = len(posts)
-    posts_with_wait = sum(1 for p in posts if isinstance(p.get("current_wait_days"), int))
+    posts_with_wait_count = sum(1 for p in posts if isinstance(p.get("current_wait_days"), int))
     posts_available = sum(1 for p in posts if p.get("is_available") is True)
     posts_unavailable = sum(1 for p in posts if p.get("is_available") is False)
     countries_total = len(set((p.get("country_code") or "").lower() for p in posts if p.get("country_code")))
     cities_total = len(set((p.get("city_slug") or "").lower() for p in posts if p.get("city_slug")))
 
-    # By visa (all + each visa_code)
-    posts_all = posts[:]
+    # -------------------------
+    # By visa (all + each visa_code) with completed aggregates
+    # -------------------------
     visa_codes = sorted(set((p.get("visa_code") or "").lower() for p in posts if p.get("visa_code")))
-    by_visa = {"all": _summary_stats(posts_all)}
+    by_visa = {"all": _agg_block(posts)}
     for v in visa_codes:
-        by_visa[v] = _summary_stats([p for p in posts if (p.get("visa_code") or "").lower() == v])
+        by_visa[v] = _agg_block([p for p in posts if (p.get("visa_code") or "").lower() == v])
 
-    # Time diagnostics (latest last_updated; history span)
+    # -------------------------
+    # Diagnostics (latest last_updated; history span)
+    # -------------------------
     latest_last_updated = ""
     last_updated_vals = [p.get("last_updated") for p in posts if p.get("last_updated")]
     if last_updated_vals:
@@ -1124,135 +1185,70 @@ def main():
         if span_max is None or days > span_max:
             span_max = days
 
-    # Rankings (Top 20 each)
-    # NOTE: these intentionally use simple filters and rely on your computed delta fields.
+    # -------------------------
+    # Movement aggregates (global)
+    # -------------------------
+    d30_vals = [p.get("delta_30d") for p in posts if isinstance(p.get("delta_30d"), int)]
+    total_with_delta_30d = len(d30_vals)
+    avg_delta_30d = (sum(d30_vals) / total_with_delta_30d) if total_with_delta_30d else None
+
+    inc = sum(1 for x in d30_vals if x > 0)
+    dec = sum(1 for x in d30_vals if x < 0)
+    same = sum(1 for x in d30_vals if x == 0)
+
+    pct_increasing_30d = (inc / total_with_delta_30d) if total_with_delta_30d else None
+    pct_decreasing_30d = (dec / total_with_delta_30d) if total_with_delta_30d else None
+    pct_unchanged_30d = (same / total_with_delta_30d) if total_with_delta_30d else None
+
+    movement = {
+        "total_with_delta_30d": total_with_delta_30d,
+        "avg_delta_30d": avg_delta_30d,
+        "pct_increasing_30d": pct_increasing_30d,
+        "pct_decreasing_30d": pct_decreasing_30d,
+        "pct_unchanged_30d": pct_unchanged_30d,
+    }
+
     # -------------------------------------------------
     # GLOBAL TIE INTELLIGENCE (Authority-grade context)
+    # (IMPORTANT: do NOT overwrite posts_with_wait_count)
     # -------------------------------------------------
-
-    # All posts with numeric wait
-    posts_with_wait = [
+    posts_with_wait_rows = [r for r in posts if isinstance(r.get("current_wait_days"), int)]
+    posts_available_with_wait_rows = [
         r for r in posts
-        if isinstance(r.get("current_wait_days"), int)
-    ]
-
-    # Available posts with numeric wait
-    posts_available_with_wait = [
-        r for r in posts
-        if r.get("is_available") is True
-        and isinstance(r.get("current_wait_days"), int)
+        if r.get("is_available") is True and isinstance(r.get("current_wait_days"), int)
     ]
 
     rankings_meta = {}
 
-    # ---- Shortest wait (global) ----
-    if posts_with_wait:
-        min_wait = min(r["current_wait_days"] for r in posts_with_wait)
-        ties = [r for r in posts_with_wait if r["current_wait_days"] == min_wait]
-
+    if posts_with_wait_rows:
+        min_wait = min(r["current_wait_days"] for r in posts_with_wait_rows)
+        ties = [r for r in posts_with_wait_rows if r["current_wait_days"] == min_wait]
         tie_by_visa = {}
         for r in ties:
-            vc = r.get("visa_code", "unknown")
+            vc = (r.get("visa_code") or "unknown").lower()
             tie_by_visa[vc] = tie_by_visa.get(vc, 0) + 1
-
         rankings_meta["shortest_wait"] = {
             "min_wait_days": min_wait,
             "tie_posts_total": len(ties),
             "tie_by_visa": tie_by_visa,
         }
 
-    # ---- Fastest available ----
-    if posts_available_with_wait:
-        min_wait_avail = min(r["current_wait_days"] for r in posts_available_with_wait)
-        ties_avail = [
-            r for r in posts_available_with_wait
-            if r["current_wait_days"] == min_wait_avail
-        ]
-
+    if posts_available_with_wait_rows:
+        min_wait_avail = min(r["current_wait_days"] for r in posts_available_with_wait_rows)
+        ties_avail = [r for r in posts_available_with_wait_rows if r["current_wait_days"] == min_wait_avail]
         tie_by_visa_avail = {}
         for r in ties_avail:
-            vc = r.get("visa_code", "unknown")
+            vc = (r.get("visa_code") or "unknown").lower()
             tie_by_visa_avail[vc] = tie_by_visa_avail.get(vc, 0) + 1
-
         rankings_meta["fastest_available"] = {
             "min_wait_days": min_wait_avail,
             "tie_posts_total": len(ties_avail),
             "tie_by_visa": tie_by_visa_avail,
         }
-    rankings = {
-        "top_longest_wait": _top_n(posts, key_fn=lambda r: (r.get("current_wait_days") is None, r.get("current_wait_days", -1)), n=20, reverse=True,
-                                   where_fn=lambda r: isinstance(r.get("current_wait_days"), int)),
-        "top_shortest_wait": _top_n(posts, key_fn=lambda r: r.get("current_wait_days", 10**9), n=20, reverse=False,
-                                    where_fn=lambda r: isinstance(r.get("current_wait_days"), int)),
-        "top_fastest_available": _top_n(posts, key_fn=lambda r: r.get("current_wait_days", 10**9), n=20, reverse=False,
-                                        where_fn=lambda r: r.get("is_available") is True and isinstance(r.get("current_wait_days"), int)),
 
-        "top_increase_30d": _top_n(posts, key_fn=lambda r: r.get("delta_30d", -10**9), n=20, reverse=True,
-                                   where_fn=lambda r: isinstance(r.get("delta_30d"), int) and r.get("delta_30d") > 0),
-        "top_decrease_30d": _top_n(posts, key_fn=lambda r: r.get("delta_30d", 10**9), n=20, reverse=False,
-                                   where_fn=lambda r: isinstance(r.get("delta_30d"), int) and r.get("delta_30d") < 0),
-        "top_movers_30d_abs": _top_n(posts, key_fn=lambda r: abs(r.get("delta_30d", 0)), n=20, reverse=True,
-                                     where_fn=lambda r: isinstance(r.get("delta_30d"), int) and r.get("delta_30d") != 0),
-
-        "top_increase_7d": _top_n(posts, key_fn=lambda r: r.get("delta_7d", -10**9), n=20, reverse=True,
-                                  where_fn=lambda r: isinstance(r.get("delta_7d"), int) and r.get("delta_7d") > 0),
-        "top_decrease_7d": _top_n(posts, key_fn=lambda r: r.get("delta_7d", 10**9), n=20, reverse=False,
-                                  where_fn=lambda r: isinstance(r.get("delta_7d"), int) and r.get("delta_7d") < 0),
-        "top_movers_7d_abs": _top_n(posts, key_fn=lambda r: abs(r.get("delta_7d", 0)), n=20, reverse=True,
-                                    where_fn=lambda r: isinstance(r.get("delta_7d"), int) and r.get("delta_7d") != 0),
-
-        "most_recently_changed": _top_n(posts, key_fn=lambda r: (r.get("last_change_at") or ""), n=20, reverse=True,
-                                        where_fn=lambda r: bool(r.get("last_change_at"))),
-        "most_unavailable_now": _top_n(posts, key_fn=lambda r: r.get("current_wait_days", 10**9), n=20, reverse=True,
-                                       where_fn=lambda r: r.get("is_available") is False and isinstance(r.get("current_wait_days"), int)),
-    }
-
-    # Region mapping (DICT-based; v1 defaults to unknown; we’ll fill this out next step)
-    # ---------------------------
-    # Region mapping (SET-based, no deps)
-    # ---------------------------
-    AFRICA = {
-        "dz","ao","bj","bw","bf","bi","cv","cm","cf","td","km","cg","cd","ci","dj","eg","gq","er","sz","et",
-        "ga","gm","gh","gn","gw","ke","ls","lr","ly","mg","mw","ml","mr","mu","ma","mz","na","ne","ng","rw",
-        "st","sn","sc","sl","so","za","ss","sd","tz","tg","tn","ug","zm","zw"
-    }
-
-    ASIA = {
-        "af","am","az","bh","bd","bt","bn","kh","cn","cy","ge","in","id","ir","iq","il","jp","jo","kz","kw",
-        "kg","la","lb","my","mv","mn","mm","np","kp","om","pk","ps","ph","qa","sa","sg","kr","lk","sy","tw",
-        "tj","th","tl","tr","tm","ae","uz","vn","ye","hk","mo"
-    }
-
-    EUROPE = {
-        "al","ad","at","by","be","ba","bg","hr","cz","dk","ee","fi","fr","de","gr","hu","is","ie","it","lv",
-        "li","lt","lu","mt","md","mc","me","nl","mk","no","pl","pt","ro","ru","sm","rs","sk","si","es","se",
-        "ch","ua","gb","va","xk"
-    }
-
-    NORTH_AMERICA = {
-        "ag","bs","bb","bz","ca","cr","cu","dm","do","sv","gd","gt","ht","hn","jm","mx","ni","pa","kn","lc",
-        "vc","tt","us"
-    }
-
-    SOUTH_AMERICA = {
-        "ar","bo","br","cl","co","ec","gy","py","pe","sr","uy","ve","fk"
-    }
-
-    OCEANIA = {
-        "au","fj","ki","mh","fm","nr","nz","pw","pg","ws","sb","to","tv","vu"
-    }
-
-    def _region_for_cc(cc):
-        cc = (cc or "").lower()
-        if cc in AFRICA: return "africa"
-        if cc in ASIA: return "asia"
-        if cc in EUROPE: return "europe"
-        if cc in NORTH_AMERICA: return "north_america"
-        if cc in SOUTH_AMERICA: return "south_america"
-        if cc in OCEANIA: return "oceania"
-        return "unknown"
-
-    # By region (v1, will be more complete as REGION_BY_CC fills out)
+    # -------------------------
+    # By region with completed aggregates
+    # -------------------------
     region_buckets = {}
     for p in posts:
         cc = (p.get("country_code") or "").lower()
@@ -1261,11 +1257,14 @@ def main():
 
     by_region = {}
     for r, rows in region_buckets.items():
-        by_region[r] = _summary_stats(rows)
+        by_region[r] = _agg_block(rows)
 
+    # -------------------------
+    # Insights object (now complete)
+    # -------------------------
     insights = {
         "meta": {
-            "schema_version": "insights-1.0",
+            "schema_version": "insights-1.1",
             "window_days": {"d7": 7, "d30": 30, "d90": 90},
             "notes": [
                 "All waits are in days.",
@@ -1274,7 +1273,7 @@ def main():
         },
         "totals": {
             "posts_total": posts_total,
-            "posts_with_wait": posts_with_wait,
+            "posts_with_wait": posts_with_wait_count,
             "posts_available": posts_available,
             "posts_unavailable": posts_unavailable,
             "countries_total": countries_total,
@@ -1285,15 +1284,14 @@ def main():
             "latest_post_last_updated": latest_last_updated,
             "history_span_days": {"min": span_min, "max": span_max}
         },
+        "movement": movement,
         "by_visa": by_visa,
         "by_region": by_region,
-        "rankings": rankings
+        "rankings": rankings,
+        "rankings_meta": rankings_meta,
     }
 
-    insights["rankings_meta"] = rankings_meta
-    
     print(f"[OK] insights built: visa={len(by_visa)} regions={len(by_region)} rankings={len(rankings)}")
-    insights["rankings_meta"] = rankings_meta
     out_posts = {
         "version": "1.0",
         "generated_at": now_utc_iso(),
