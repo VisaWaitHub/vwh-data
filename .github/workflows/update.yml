@@ -37,25 +37,25 @@ jobs:
 
       - name: Scrape + build JSON
         env:
-          CONTROLLED: "0"          
+          CONTROLLED: "0"
         run: python scrape_build.py
-      - name: Commit and push generated files (docs/)
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/us_posts.json docs/post_map.json docs/vwh-sitemap-details.xml docs/_cache/post_map_cache.json docs/snapshots
-          git commit -m "Update dataset + detail sitemap" || echo "No changes to commit"
-          git push
- 
-  
 
-      - name: Commit updated JSON (if changed)
+      - name: Commit updated data files (if changed)
         run: |
           set -e
           git config user.name "vwh-bot"
           git config user.email "actions@users.noreply.github.com"
 
-          git add docs/us_posts.json docs/us_records.json docs/post_map.json docs/missing_posts.txt docs/missing_posts.json docs/snapshots
+          # Stage everything the build may generate
+          git add \
+            docs/us_posts.json \
+            docs/us_records.json \
+            docs/post_map.json \
+            docs/missing_posts.txt \
+            docs/missing_posts.json \
+            docs/vwh-sitemap-details.xml \
+            docs/_cache/post_map_cache.json \
+            docs/snapshots
 
           # If nothing staged, do nothing (and DO NOT push)
           if git diff --cached --quiet; then
@@ -63,9 +63,9 @@ jobs:
             exit 0
           fi
 
-          git commit -m "Update us_posts.json"
-
           # Catch up with main in case another run (or you) pushed updates
           git pull --rebase origin main
+
+          git commit -m "Update dataset (posts, insights, sitemap, snapshots)"
 
           git push origin HEAD:main
