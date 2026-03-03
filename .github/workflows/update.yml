@@ -26,6 +26,13 @@ jobs:
           persist-credentials: true
           fetch-depth: 0
 
+      - name: Sync with main (before generating files)
+        run: |
+          set -e
+          git config user.name "vwh-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git pull --rebase origin main
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -46,9 +53,6 @@ jobs:
           set -e
           git config user.name "vwh-bot"
           git config user.email "actions@users.noreply.github.com"
-
-          # Make sure we're up to date BEFORE staging/committing
-          git pull --rebase origin main
 
           # Stage everything the build may generate
           git add \
