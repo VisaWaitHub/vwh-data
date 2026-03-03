@@ -33,29 +33,41 @@ def write_json_file(path: str, data: dict) -> None:
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
-def archive_monthly_snapshot(live_root: dict, docs_dir: str = "docs") -> str | None:
-    generated_at = (live_root or {}).get("generated_at")
-    if not generated_at:
+def archive_monthly_snapshot(out_posts: dict, docs_dir: str = "docs"):
+    """
+    Write an immutable monthly snapshot JSON (no posts[] inside).
+    Snapshot should preserve ALL insights fields so report pages stay consistent
+    as insights evolve over time.
+    """
+    import copy
+
+    # Determine month from out_posts["generated_at"] if present, else now_utc_iso()
+    gen = (out_posts or {}).get("generated_at") or now_utc_iso()
+    month = str(gen)[:7]  # "YYYY-MM"
+
+    snapshots_dir = os.path.join(docs_dir, "snapshots")
+    os.makedirs(snapshots_dir, exist_ok=True)
+
+    snap_path = os.path.join(snapshots_dir, f"{month}.json")
+
+    # Immutability by default (do not overwrite)
+    force = os.environ.get("VWH_SNAPSHOT_FORCE", "").strip() == "1"
+    if os.path.exists(snap_path) and not force:
+        print(f"[snapshots] exists (immutable) → {snap_path} (set VWH_SNAPSHOT_FORCE=1 to overwrite)")
         return None
 
-    month_key = vwh_month_key_from_iso(generated_at)
-    snap_path = os.path.join(docs_dir, "snapshots", f"{month_key}.json")
+    # Snapshot = full out_posts minus posts[] (keeps all insights, rankings_meta, movement, etc.)
+    snap = copy.deepcopy(out_posts) if out_posts else {}
+    if "posts" in snap:
+        snap.pop("posts", None)
 
-    # Do NOT overwrite existing month
-    if os.path.exists(snap_path):
-        return None
+    # Optional: keep highlights (small), but you can remove them if you want an even slimmer file.
+    # snap.pop("highlights_fastest_available", None)
+    # snap.pop("highlights_recently_changed", None)
 
-    snap = {
-        "version": live_root.get("version"),
-        "generated_at": live_root.get("generated_at"),
-        "source": live_root.get("source"),
-        "source_url": live_root.get("source_url"),
-        "insights": live_root.get("insights", {}),
-        "highlights_fastest_available": live_root.get("highlights_fastest_available", []),
-        "highlights_recently_changed": live_root.get("highlights_recently_changed", []),
-    }
+    with open(snap_path, "w", encoding="utf-8") as f:
+        json.dump(snap, f, ensure_ascii=False, indent=2)
 
-    write_json_file(snap_path, snap)
     return snap_path
 
 # --- SAFE HTTP FETCH HELPER (prevents GitHub Action from hanging) ---
