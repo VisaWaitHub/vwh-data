@@ -1288,7 +1288,93 @@ def main():
         if cc in SOUTH_AMERICA: return "south_america"
         if cc in OCEANIA: return "oceania"
         return "unknown"
-    
+        
+    # -------------------------
+    # Rankings (Top 20 each)
+    # NOTE: these intentionally use simple filters and rely on your computed delta fields.
+    # -------------------------
+    rankings = {
+        "top_longest_wait": _top_n(
+            posts,
+            key_fn=lambda r: (r.get("current_wait_days") is None, r.get("current_wait_days", -1)),
+            n=20,
+            reverse=True,
+            where_fn=lambda r: isinstance(r.get("current_wait_days"), int),
+        ),
+        "top_shortest_wait": _top_n(
+            posts,
+            key_fn=lambda r: r.get("current_wait_days", 10**9),
+            n=20,
+            reverse=False,
+            where_fn=lambda r: isinstance(r.get("current_wait_days"), int),
+        ),
+        "top_fastest_available": _top_n(
+            posts,
+            key_fn=lambda r: r.get("current_wait_days", 10**9),
+            n=20,
+            reverse=False,
+            where_fn=lambda r: r.get("is_available") is True and isinstance(r.get("current_wait_days"), int),
+        ),
+
+        "top_increase_30d": _top_n(
+            posts,
+            key_fn=lambda r: r.get("delta_30d", -10**9),
+            n=20,
+            reverse=True,
+            where_fn=lambda r: isinstance(r.get("delta_30d"), int) and r.get("delta_30d") > 0,
+        ),
+        "top_decrease_30d": _top_n(
+            posts,
+            key_fn=lambda r: r.get("delta_30d", 10**9),
+            n=20,
+            reverse=False,
+            where_fn=lambda r: isinstance(r.get("delta_30d"), int) and r.get("delta_30d") < 0,
+        ),
+        "top_movers_30d_abs": _top_n(
+            posts,
+            key_fn=lambda r: abs(r.get("delta_30d", 0)),
+            n=20,
+            reverse=True,
+            where_fn=lambda r: isinstance(r.get("delta_30d"), int) and r.get("delta_30d") != 0,
+        ),
+
+        "top_increase_7d": _top_n(
+            posts,
+            key_fn=lambda r: r.get("delta_7d", -10**9),
+            n=20,
+            reverse=True,
+            where_fn=lambda r: isinstance(r.get("delta_7d"), int) and r.get("delta_7d") > 0,
+        ),
+        "top_decrease_7d": _top_n(
+            posts,
+            key_fn=lambda r: r.get("delta_7d", 10**9),
+            n=20,
+            reverse=False,
+            where_fn=lambda r: isinstance(r.get("delta_7d"), int) and r.get("delta_7d") < 0,
+        ),
+        "top_movers_7d_abs": _top_n(
+            posts,
+            key_fn=lambda r: abs(r.get("delta_7d", 0)),
+            n=20,
+            reverse=True,
+            where_fn=lambda r: isinstance(r.get("delta_7d"), int) and r.get("delta_7d") != 0,
+        ),
+
+        "most_recently_changed": _top_n(
+            posts,
+            key_fn=lambda r: (r.get("last_change_at") or ""),
+            n=20,
+            reverse=True,
+            where_fn=lambda r: bool(r.get("last_change_at")),
+        ),
+        "most_unavailable_now": _top_n(
+            posts,
+            key_fn=lambda r: r.get("current_wait_days", 10**9),
+            n=20,
+            reverse=True,
+            where_fn=lambda r: r.get("is_available") is False and isinstance(r.get("current_wait_days"), int),
+        ),
+    }    
     # -------------------------
     # By region with completed aggregates
     # -------------------------
