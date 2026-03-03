@@ -46,7 +46,6 @@ jobs:
       - name: Scrape + build JSON
         env:
           CONTROLLED: "0"
-          VWH_SNAPSHOT_FORCE: "1"
         run: python scrape_build.py
 
       - name: Commit updated data files (if changed)
