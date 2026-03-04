@@ -1009,76 +1009,76 @@ def main():
         d1 = xs[c] * (k - f)
         return d0 + d1
 
-def _summary_stats(rows):
-    """
-    Canonical aggregate stats for a list of post records.
-    """
+    def _summary_stats(rows):
+        """
+        Canonical aggregate stats for a list of post records.
+        """
 
-    waits = []
-    posts_available = 0
-    posts_unavailable = 0
+        waits = []
+        posts_available = 0
+        posts_unavailable = 0
 
-    for r in (rows or []):
-        w = r.get("current_wait_days")
-        if isinstance(w, int):
-            waits.append(w)
+        for r in (rows or []):
+            w = r.get("current_wait_days")
+            if isinstance(w, int):
+                waits.append(w)
 
-        if r.get("is_available") is True:
-            posts_available += 1
-        elif r.get("is_available") is False:
-            posts_unavailable += 1
+            if r.get("is_available") is True:
+                posts_available += 1
+            elif r.get("is_available") is False:
+                posts_unavailable += 1
 
-    total_posts = len(rows or [])
-    posts_with_wait = len(waits)
+        total_posts = len(rows or [])
+        posts_with_wait = len(waits)
 
-    def _pct(x, denom):
-        if denom <= 0:
-            return None
-        return float(x) / float(denom)
+        def _pct(x, denom):
+            if denom <= 0:
+                return None
+            return float(x) / float(denom)
 
-    def _median(nums):
-        if not nums:
-            return None
-        s = sorted(nums)
-        n = len(s)
-        mid = n // 2
-        if n % 2 == 1:
-            return float(s[mid])
-        return (float(s[mid - 1]) + float(s[mid])) / 2.0
+        def _median(nums):
+            if not nums:
+                return None
+            s = sorted(nums)
+            n = len(s)
+            mid = n // 2
+            if n % 2 == 1:
+                return float(s[mid])
+            return (float(s[mid - 1]) + float(s[mid])) / 2.0
 
-    def _pctl(nums, p):
-        if not nums:
-            return None
-        s = sorted(nums)
-        if len(s) == 1:
-            return float(s[0])
-        k = int(round((p / 100.0) * (len(s) - 1)))
-        k = max(0, min(k, len(s) - 1))
-        return float(s[k])
+        def _pctl(nums, p):
+            if not nums:
+                return None
+            s = sorted(nums)
+            if len(s) == 1:
+                return float(s[0])
+            k = int(round((p / 100.0) * (len(s) - 1)))
+            k = max(0, min(k, len(s) - 1))
+            return float(s[k])
 
-    avg_wait = (sum(waits) / float(len(waits))) if waits else None
-    median_wait = _median(waits)
-    p90_wait = _pctl(waits, 90)
+        avg_wait = (sum(waits) / float(len(waits))) if waits else None
+        median_wait = _median(waits)
+        p90_wait = _pctl(waits, 90)
 
-    availability_rate = _pct(posts_available, total_posts)
+        availability_rate = _pct(posts_available, total_posts)
 
-    longest_wait = float(max(waits)) if waits else None
-    shortest_wait = float(min(waits)) if waits else None
+        longest_wait = float(max(waits)) if waits else None
+        shortest_wait = float(min(waits)) if waits else None
 
-    return {
-        "avg_wait": avg_wait,
-        "median_wait": median_wait,
-        "p90_wait": p90_wait,
-        "availability_rate": availability_rate,
+        return {
+            "avg_wait": avg_wait,
+            "median_wait": median_wait,
+            "p90_wait": p90_wait,
+            "availability_rate": availability_rate,
 
-        "total_posts": total_posts,
-        "posts_with_wait": posts_with_wait,
-        "posts_available": posts_available,
-        "posts_unavailable": posts_unavailable,
+            "total_posts": total_posts,
+            "posts_with_wait": posts_with_wait,
+            "posts_available": posts_available,
+            "posts_unavailable": posts_unavailable,
 
-        "longest_wait": longest_wait,
-        "shortest_wait": shortest_wait,
-    }
+            "longest_wait": longest_wait,
+            "shortest_wait": shortest_wait,
+        }
 
     def _compact(p):
         """Compact ranking entry; keep file size sane."""
