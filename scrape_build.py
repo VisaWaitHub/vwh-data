@@ -1009,67 +1009,76 @@ def main():
         d1 = xs[c] * (k - f)
         return d0 + d1
 
-    def _summary_stats(rows):
-        """
-        rows: list of post dicts
-        returns: robust stats for waits + delta_7d + delta_30d + availability rate
-        """
-        waits = [r["current_wait_days"] for r in rows if isinstance(r.get("current_wait_days"), int)]
-        d7 = [r["delta_7d"] for r in rows if isinstance(r.get("delta_7d"), int)]
-        d30 = [r["delta_30d"] for r in rows if isinstance(r.get("delta_30d"), int)]
-        avail = [r.get("is_available") for r in rows if isinstance(r.get("is_available"), bool)]
+def _summary_stats(rows):
+    """
+    Canonical aggregate stats for a list of post records.
+    """
 
-        def _rates(arr):
-            if not arr:
-                return {"up_rate": None, "down_rate": None, "flat_rate": None}
-            up = sum(1 for x in arr if x > 0)
-            down = sum(1 for x in arr if x < 0)
-            flat = sum(1 for x in arr if x == 0)
-            n = len(arr)
-            return {
-                "up_rate": round(up / n, 4),
-                "down_rate": round(down / n, 4),
-                "flat_rate": round(flat / n, 4),
-            }
+    waits = []
+    posts_available = 0
+    posts_unavailable = 0
 
-        def _delta_block(arr):
-            if not arr:
-                return {
-                    "avg": None, "median": None, "p90_abs": None,
-                    "up_rate": None, "down_rate": None, "flat_rate": None
-                }
-            abs_arr = [abs(x) for x in arr]
-            return {
-                "avg": round(sum(arr) / len(arr), 4),
-                "median": _pct(arr, 50),
-                "p90_abs": _pct(abs_arr, 90),
-                **_rates(arr)
-            }
+    for r in (rows or []):
+        w = r.get("current_wait_days")
+        if isinstance(w, int):
+            waits.append(w)
 
-        wait_block = None
-        if waits:
-            wait_block = {
-                "avg": round(sum(waits) / len(waits), 4),
-                "median": _pct(waits, 50),
-                "p10": _pct(waits, 10),
-                "p25": _pct(waits, 25),
-                "p75": _pct(waits, 75),
-                "p90": _pct(waits, 90),
-                "min": min(waits),
-                "max": max(waits),
-            }
+        if r.get("is_available") is True:
+            posts_available += 1
+        elif r.get("is_available") is False:
+            posts_unavailable += 1
 
-        available_rate = None
-        if avail:
-            available_rate = round(sum(1 for x in avail if x) / len(avail), 4)
+    total_posts = len(rows or [])
+    posts_with_wait = len(waits)
 
-        return {
-            "count": len(rows),
-            "available_rate": available_rate,
-            "wait_days": wait_block,
-            "delta_7d": _delta_block(d7),
-            "delta_30d": _delta_block(d30),
-        }
+    def _pct(x, denom):
+        if denom <= 0:
+            return None
+        return float(x) / float(denom)
+
+    def _median(nums):
+        if not nums:
+            return None
+        s = sorted(nums)
+        n = len(s)
+        mid = n // 2
+        if n % 2 == 1:
+            return float(s[mid])
+        return (float(s[mid - 1]) + float(s[mid])) / 2.0
+
+    def _pctl(nums, p):
+        if not nums:
+            return None
+        s = sorted(nums)
+        if len(s) == 1:
+            return float(s[0])
+        k = int(round((p / 100.0) * (len(s) - 1)))
+        k = max(0, min(k, len(s) - 1))
+        return float(s[k])
+
+    avg_wait = (sum(waits) / float(len(waits))) if waits else None
+    median_wait = _median(waits)
+    p90_wait = _pctl(waits, 90)
+
+    availability_rate = _pct(posts_available, total_posts)
+
+    longest_wait = float(max(waits)) if waits else None
+    shortest_wait = float(min(waits)) if waits else None
+
+    return {
+        "avg_wait": avg_wait,
+        "median_wait": median_wait,
+        "p90_wait": p90_wait,
+        "availability_rate": availability_rate,
+
+        "total_posts": total_posts,
+        "posts_with_wait": posts_with_wait,
+        "posts_available": posts_available,
+        "posts_unavailable": posts_unavailable,
+
+        "longest_wait": longest_wait,
+        "shortest_wait": shortest_wait,
+    }
 
     def _compact(p):
         """Compact ranking entry; keep file size sane."""
@@ -1126,34 +1135,8 @@ def main():
         return sum(1 for r in rows if r.get("is_available") is False)
 
     def _agg_block(rows):
-        """Returns an 'aggregates' dict for any group of posts."""
-        total_posts = len(rows)
-        waits = _wait_ints(rows)
-        posts_with_wait = len(waits)
-
-        posts_available = _count_available(rows)
-        posts_unavailable = _count_unavailable(rows)
-
-        availability_rate = (posts_available / total_posts) if total_posts else None
-
-        # Use your existing summary stats (avg/median) + extend
-        base = _summary_stats(rows)  # should already return avg_wait/median_wait (etc.)
-
-        shortest_wait = min(waits) if waits else None
-        longest_wait = max(waits) if waits else None
-        p90_wait = _pctl(waits, 0.90) if waits else None
-
-        base.update({
-            "total_posts": total_posts,
-            "posts_with_wait": posts_with_wait,
-            "posts_available": posts_available,
-            "posts_unavailable": posts_unavailable,
-            "availability_rate": availability_rate,
-            "p90_wait": p90_wait,
-            "shortest_wait": shortest_wait,
-            "longest_wait": longest_wait,
-        })
-        return base
+        # Backwards-compatible alias (older code may still call _agg_block)
+        return _summary_stats(rows)
 
     # -------------------------
     # Global totals (basic)
