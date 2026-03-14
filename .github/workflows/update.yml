@@ -46,7 +46,6 @@ jobs:
       - name: Scrape + build JSON
         env:
           CONTROLLED: "0"
-          
         run: python scrape_build.py
 
       - name: Commit updated data files (if changed)
@@ -71,7 +70,7 @@ jobs:
             docs/_cache/post_map_cache.json \
             docs/snapshots
 
-          # If nothing staged, do nothing (and DO NOT push)
+          # If nothing staged, do nothing
           if git diff --cached --quiet; then
             echo "No changes to commit."
             exit 0
@@ -79,7 +78,7 @@ jobs:
 
           git commit -m "Update dataset (posts, insights, sitemap, snapshots)"
 
-          # Push with retries (handles occasional GitHub 500s)
+          # Push with retries
           for i in 1 2 3 4 5; do
             echo "Push attempt $i..."
             if git push origin HEAD:main; then
@@ -92,8 +91,3 @@ jobs:
 
           echo "Push failed after retries."
           exit 1
-          fi
-
-          git commit -m "Update dataset (posts, insights, sitemap, snapshots)"
-
-          git push origin HEAD:main
