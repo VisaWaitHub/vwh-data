@@ -1442,8 +1442,6 @@ def main():
     snap_path = archive_monthly_snapshot(out_posts, docs_dir=DOCS_DIR)
     if snap_path:
         print(f"[snapshots] wrote {snap_path}")
-    if snap_path:
-        print(f"[snapshots] wrote {snap_path}")
     else:
         print("[snapshots] no write (already exists or missing generated_at)")
     print(f"[OK] Wrote Option D posts[] to {OUT_POSTS} | posts={len(posts)}")
