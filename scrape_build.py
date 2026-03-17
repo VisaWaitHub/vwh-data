@@ -951,7 +951,18 @@ def main():
             p["trend_direction"] = "down"
         else:
             p["trend_direction"] = "flat"
+    # ---- DEDUPLICATE POSTS BY ID (CRITICAL FIX) ----
+    deduped = {}
+    for p in posts:
+        pid = str(p.get("id") or "")
+        if not pid:
+            continue
+        deduped[pid] = p  # last occurrence wins
 
+    posts = list(deduped.values())
+
+    print(f"[OK] Deduplicated posts: {len(posts)} remaining")
+    # ---- END DEDUP ----
     for p in posts:
         _compute_post_derivatives(p)
 
