@@ -769,6 +769,7 @@ def main():
     prev_posts_map = _vwh_load_prev_posts_map(OUT_POSTS)
     today_iso = _vwh_today_iso()
     posts = []
+    seen_ids = {}
     for r in records:
         visa_code = visa_category_to_code(r.get("visa_category", ""))
         if not visa_code:
@@ -777,7 +778,26 @@ def main():
         post_name = (r.get("post") or "").strip()
         if not post_name:
             continue
+        # --- TEMP DEBUG: inspect selected raw records before posts[] build ---
+        debug_targets = {
+            ("Abu Dhabi", "f"),
+            ("Abuja", "b1b2"),
+            ("Accra", "b1b2"),
+            ("Asuncion", "b1b2"),
+        }
 
+        if (post_name, visa_code) in debug_targets:
+            print("[DEBUG raw record]", {
+                "post": r.get("post"),
+                "visa_category": r.get("visa_category"),
+                "visa_code": visa_code,
+                "country": r.get("country"),
+                "country_code": r.get("country_code"),
+                "wait_days_est": r.get("wait_days_est"),
+                "wait_display": r.get("wait_display"),
+                "last_checked_utc": r.get("last_checked_utc"),
+                "source_url": r.get("source_url"),
+            })
         country_code = (r.get("country_code") or "").strip().upper()
         country = (r.get("country") or "").strip()
 
@@ -785,7 +805,18 @@ def main():
 
         # Stable ID: cc-city-visa (good enough for v1)
         stable_id = f"{country_code.lower()}-{city_slug}-{visa_code}"
-
+        seen_ids[stable_id] = seen_ids.get(stable_id, 0) + 1
+        if seen_ids[stable_id] > 1:
+            print("[DEBUG duplicate stable_id]", {
+                "stable_id": stable_id,
+                "count": seen_ids[stable_id],
+                "post": post_name,
+                "visa_code": visa_code,
+                "country": country,
+                "country_code": country_code,
+                "wait_days_est": r.get("wait_days_est"),
+                "wait_display": r.get("wait_display"),
+            })
         wait_days = r.get("wait_days_est")
         try:
             wait_days_int = int(wait_days) if wait_days is not None else None
