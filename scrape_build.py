@@ -32,7 +32,36 @@ def write_json_file(path: str, data: dict) -> None:
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
+def archive_daily_raw_records(records: list, meta: dict, docs_dir: str = "docs"):
+    """
+    Write an immutable daily raw-records snapshot before posts/history logic.
+    This is the audit truth source for what the parser produced on a given day.
+    """
+    day = str((meta or {}).get("last_checked_utc") or now_utc_iso())[:10]  # YYYY-MM-DD
+    out_dir = os.path.join(docs_dir, "daily-raw")
+    os.makedirs(out_dir, exist_ok=True)
 
+    out_path = os.path.join(out_dir, f"{day}-records.json")
+
+    force = os.environ.get("VWH_DAILY_RAW_FORCE", "").strip() == "1"
+    if os.path.exists(out_path) and not force:
+        print(f"[daily-raw] exists (immutable) → {out_path} (set VWH_DAILY_RAW_FORCE=1 to overwrite)")
+        return out_path
+
+    payload = {
+        "generated_at": now_utc_iso(),
+        "source": "U.S. Department of State (travel.state.gov)",
+        "source_url": GLOBAL_URL,
+        "last_checked_utc": (meta or {}).get("last_checked_utc"),
+        "record_count": len(records or []),
+        "records": records or [],
+    }
+
+    with open(out_path, "w", encoding="utf-8") as f:
+        json.dump(payload, f, ensure_ascii=False, indent=2)
+
+    print(f"[daily-raw] wrote {out_path} | records={len(records or [])}")
+    return out_path
 def archive_monthly_snapshot(out_posts: dict, docs_dir: str = "docs"):
     """
     Write an immutable monthly snapshot JSON (no posts[] inside).
@@ -753,7 +782,8 @@ def main():
                 "country_code": (mapping or {}).get("country_code", ""),
             }
             records.append(rec)
-
+    archive_daily_raw_records(records, meta, docs_dir=DOCS_DIR)
+    
     unique_posts = sorted(set(r["post"] for r in records))
     missing = []
     for p in unique_posts:
