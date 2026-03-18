@@ -69,7 +69,8 @@ jobs:
             docs/vwh-sitemap-details.xml \
             docs/_cache/post_map_cache.json \
             docs/snapshots \
-            docs/daily-raw
+            docs/daily-raw \
+            docs/audit
 
           # If nothing staged, do nothing
           if git diff --cached --quiet; then
