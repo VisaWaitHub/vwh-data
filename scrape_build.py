@@ -62,6 +62,134 @@ def archive_daily_raw_records(records: list, meta: dict, docs_dir: str = "docs")
 
     print(f"[daily-raw] wrote {out_path} | records={len(records or [])}")
     return out_path
+def build_daily_raw_audit_report(records: list, meta: dict, docs_dir: str = "docs", days_back: int = 7):
+    """
+    Compare today's raw records to the raw snapshot from N days ago.
+    Writes a compact audit report showing whether raw source rows changed.
+    """
+    from datetime import timedelta
+
+    last_checked = str((meta or {}).get("last_checked_utc") or now_utc_iso())
+    today_date = datetime.fromisoformat(last_checked.replace("Z", "+00:00")).date()
+    prior_date = today_date - timedelta(days=days_back)
+
+    raw_dir = os.path.join(docs_dir, "daily-raw")
+    prior_path = os.path.join(raw_dir, f"{prior_date.isoformat()}-records.json")
+
+    out_dir = os.path.join(docs_dir, "audit")
+    os.makedirs(out_dir, exist_ok=True)
+    out_path = os.path.join(out_dir, f"{today_date.isoformat()}-vs-{days_back}d.json")
+
+    def rec_key(r):
+        return (
+            str(r.get("post") or "").strip(),
+            str(r.get("visa_category") or "").strip(),
+        )
+
+    def rec_sig(r):
+        return {
+            "wait_display": str(r.get("wait_display") or "").strip(),
+            "wait_days_est": r.get("wait_days_est"),
+            "country": str(r.get("country") or "").strip(),
+            "country_code": str(r.get("country_code") or "").strip(),
+        }
+
+    today_map = {rec_key(r): rec_sig(r) for r in (records or [])}
+
+    if not os.path.exists(prior_path):
+        payload = {
+            "generated_at": now_utc_iso(),
+            "days_back": days_back,
+            "today_date": today_date.isoformat(),
+            "prior_date": prior_date.isoformat(),
+            "prior_snapshot_found": False,
+            "today_record_count": len(today_map),
+            "summary": {
+                "changed": 0,
+                "unchanged": 0,
+                "new": len(today_map),
+                "missing": 0,
+            },
+            "examples": {
+                "changed": [],
+                "new": [],
+                "missing": [],
+            },
+        }
+        with open(out_path, "w", encoding="utf-8") as f:
+            json.dump(payload, f, ensure_ascii=False, indent=2)
+        print(f"[audit] wrote {out_path} (no prior snapshot found)")
+        return out_path
+
+    with open(prior_path, "r", encoding="utf-8") as f:
+        prior_payload = json.load(f)
+
+    prior_records = prior_payload.get("records") or []
+    prior_map = {rec_key(r): rec_sig(r) for r in prior_records}
+
+    changed = []
+    unchanged = 0
+    new = []
+    missing = []
+
+    all_keys = set(today_map.keys()) | set(prior_map.keys())
+
+    for k in sorted(all_keys):
+        t = today_map.get(k)
+        p = prior_map.get(k)
+
+        if t is None and p is not None:
+            missing.append({
+                "post": k[0],
+                "visa_category": k[1],
+                "prior": p,
+            })
+            continue
+
+        if t is not None and p is None:
+            new.append({
+                "post": k[0],
+                "visa_category": k[1],
+                "today": t,
+            })
+            continue
+
+        if t == p:
+            unchanged += 1
+        else:
+            changed.append({
+                "post": k[0],
+                "visa_category": k[1],
+                "today": t,
+                "prior": p,
+            })
+
+    payload = {
+        "generated_at": now_utc_iso(),
+        "days_back": days_back,
+        "today_date": today_date.isoformat(),
+        "prior_date": prior_date.isoformat(),
+        "prior_snapshot_found": True,
+        "today_record_count": len(today_map),
+        "prior_record_count": len(prior_map),
+        "summary": {
+            "changed": len(changed),
+            "unchanged": unchanged,
+            "new": len(new),
+            "missing": len(missing),
+        },
+        "examples": {
+            "changed": changed[:25],
+            "new": new[:25],
+            "missing": missing[:25],
+        },
+    }
+
+    with open(out_path, "w", encoding="utf-8") as f:
+        json.dump(payload, f, ensure_ascii=False, indent=2)
+
+    print(f"[audit] wrote {out_path} | changed={len(changed)} unchanged={unchanged} new={len(new)} missing={len(missing)}")
+    return out_path    
 def archive_monthly_snapshot(out_posts: dict, docs_dir: str = "docs"):
     """
     Write an immutable monthly snapshot JSON (no posts[] inside).
@@ -783,7 +911,7 @@ def main():
             }
             records.append(rec)
     archive_daily_raw_records(records, meta, docs_dir=DOCS_DIR)
-    
+    build_daily_raw_audit_report(records, meta, docs_dir=DOCS_DIR, days_back=7)
     unique_posts = sorted(set(r["post"] for r in records))
     missing = []
     for p in unique_posts:
