@@ -1,13 +1,5 @@
 {
-  "generated_at": "2026-03-19T13:10:49+00:00",
-  "suspect_count": 1,
-  "suspects": [
-    {
-      "post": "Jerusalem",
-      "post_norm": "jerusalem",
-      "country": "Israel, Jerusalem, the West Bank and Gaza",
-      "country_code": "",
-      "reason": "missing_country_mapping"
-    }
-  ]
+  "generated_at": "2026-03-19T13:14:41+00:00",
+  "suspect_count": 0,
+  "suspects": []
 }

@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-03-19T13:10:49+00:00",
+  "generated_utc": "2026-03-19T13:14:41+00:00",
   "source_index": "https://travel.state.gov/content/travel/en/us-visas/Visa-Reciprocity-and-Civil-Documents-by-Country.html",
   "count": 2011,
   "items": {
@@ -5620,10 +5620,10 @@
       "source_country_page": "https://travel.state.gov/content/travel/en/us-visas/Visa-Reciprocity-and-Civil-Documents-by-Country/Ireland.html"
     },
     "jerusalem": {
-      "post": "U.S. Embassy Jerusalem",
-      "country": "Israel, Jerusalem, the West Bank and Gaza",
-      "country_code": "",
-      "source_country_page": "https://travel.state.gov/content/travel/en/us-visas/Visa-Reciprocity-and-Civil-Documents-by-Country/Israel.html"
+      "post": "Jerusalem",
+      "country": "Israel",
+      "country_code": "IL",
+      "source_country_page": "override_csv"
     },
     "6350 jerusalem place": {
       "post": "6350 Jerusalem Place",
