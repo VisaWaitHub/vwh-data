@@ -971,6 +971,7 @@ def main():
             records.append(rec)
     archive_daily_raw_records(records, meta, docs_dir=DOCS_DIR)
     build_daily_raw_audit_report(records, meta, docs_dir=DOCS_DIR, days_back=7)
+    build_daily_raw_audit_report(records, meta, docs_dir=DOCS_DIR, days_back=1)
     write_mapping_suspects_report(records, overrides, os.path.join(DOCS_DIR, "audit", "mapping-suspects.json"))
     unique_posts = sorted(set(r["post"] for r in records))
     missing = []
