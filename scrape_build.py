@@ -780,7 +780,66 @@ def visa_category_to_code(label: str) -> Optional[str]:
 
     return None
 
+def write_mapping_suspects_report(records: list, overrides: Dict[str, dict], out_path: str):
+    """
+    Write a simple mapping audit report for manual review.
+    This is a first-pass sanity checker, not a full geocoder.
+    """
+    suspects = []
 
+    override_keys = set((overrides or {}).keys())
+
+    # Known suspicious patterns we want to surface for manual review
+    known_post_country_mismatches = {
+        ("abu dhabi", "IR"),
+    }
+
+    seen = set()
+
+    for r in (records or []):
+        post = str(r.get("post") or "").strip()
+        post_norm = str(r.get("post_norm") or "").strip()
+        country = str(r.get("country") or "").strip()
+        cc = str(r.get("country_code") or "").strip().upper()
+
+        key = (post, cc)
+        if key in seen:
+            continue
+        seen.add(key)
+
+        reason = None
+
+        if not post:
+            continue
+
+        if post_norm in override_keys:
+            continue  # trusted by explicit override
+
+        if not country or not cc:
+            reason = "missing_country_mapping"
+        elif (post.lower(), cc) in known_post_country_mismatches:
+            reason = "known_post_country_mismatch"
+
+        if reason:
+            suspects.append({
+                "post": post,
+                "post_norm": post_norm,
+                "country": country,
+                "country_code": cc,
+                "reason": reason,
+            })
+
+    payload = {
+        "generated_at": now_utc_iso(),
+        "suspect_count": len(suspects),
+        "suspects": suspects,
+    }
+
+    os.makedirs(os.path.dirname(out_path), exist_ok=True)
+    with open(out_path, "w", encoding="utf-8") as f:
+        json.dump(payload, f, ensure_ascii=False, indent=2)
+
+    print(f"[audit] wrote {out_path} | suspects={len(suspects)}")
 
 def main():
     controlled = os.getenv("CONTROLLED", "").strip() in ("1", "true", "TRUE", "yes", "YES")
@@ -912,6 +971,7 @@ def main():
             records.append(rec)
     archive_daily_raw_records(records, meta, docs_dir=DOCS_DIR)
     build_daily_raw_audit_report(records, meta, docs_dir=DOCS_DIR, days_back=7)
+    write_mapping_suspects_report(records, overrides, os.path.join(DOCS_DIR, "audit", "mapping-suspects.json"))
     unique_posts = sorted(set(r["post"] for r in records))
     missing = []
     for p in unique_posts:
