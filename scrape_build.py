@@ -1190,7 +1190,17 @@ def main():
 
         p["last_change_at"] = last_change
         p["has_recent_change"] = bool(last_change)
+        # --- days_since_last_change ---
+        p["days_since_last_change"] = None
 
+        if last_change:
+            lc_date = _iso_to_date(last_change)
+            if lc_date and last_date:
+                try:
+                    p["days_since_last_change"] = (last_date - lc_date).days
+                except Exception:
+                    p["days_since_last_change"] = None
+        
         # trend_direction uses delta_7d if available else delta_30d
         d_primary = p["delta_7d"] if p["delta_7d"] is not None else p["delta_30d"]
         if d_primary is None:
