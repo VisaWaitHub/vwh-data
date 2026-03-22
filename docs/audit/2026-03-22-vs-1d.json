@@ -1,0 +1,20 @@
+{
+  "generated_at": "2026-03-22T03:18:51+00:00",
+  "days_back": 1,
+  "today_date": "2026-03-22",
+  "prior_date": "2026-03-21",
+  "prior_snapshot_found": true,
+  "today_record_count": 1210,
+  "prior_record_count": 1210,
+  "summary": {
+    "changed": 0,
+    "unchanged": 1210,
+    "new": 0,
+    "missing": 0
+  },
+  "examples": {
+    "changed": [],
+    "new": [],
+    "missing": []
+  }
+}
