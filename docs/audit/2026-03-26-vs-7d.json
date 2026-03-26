@@ -1,0 +1,101 @@
+{
+  "generated_at": "2026-03-26T03:24:07+00:00",
+  "days_back": 7,
+  "today_date": "2026-03-26",
+  "prior_date": "2026-03-19",
+  "prior_snapshot_found": true,
+  "today_record_count": 1210,
+  "prior_record_count": 1210,
+  "summary": {
+    "changed": 5,
+    "unchanged": 1205,
+    "new": 0,
+    "missing": 0
+  },
+  "examples": {
+    "changed": [
+      {
+        "post": "Jerusalem",
+        "visa_category": "Interview Required (B1/B2) Average wait times",
+        "today": {
+          "wait_display": "2.5 Months",
+          "wait_days_est": 75,
+          "country": "Israel",
+          "country_code": "IL"
+        },
+        "prior": {
+          "wait_display": "2.5 Months",
+          "wait_days_est": 75,
+          "country": "Israel, Jerusalem, the West Bank and Gaza",
+          "country_code": ""
+        }
+      },
+      {
+        "post": "Jerusalem",
+        "visa_category": "Interview Required (B1/B2) Next available appointment",
+        "today": {
+          "wait_display": "4 Months",
+          "wait_days_est": 120,
+          "country": "Israel",
+          "country_code": "IL"
+        },
+        "prior": {
+          "wait_display": "4 Months",
+          "wait_days_est": 120,
+          "country": "Israel, Jerusalem, the West Bank and Gaza",
+          "country_code": ""
+        }
+      },
+      {
+        "post": "Jerusalem",
+        "visa_category": "Interview Required (F,M,J) Next available appointment",
+        "today": {
+          "wait_display": "1 Month",
+          "wait_days_est": 30,
+          "country": "Israel",
+          "country_code": "IL"
+        },
+        "prior": {
+          "wait_display": "1 Month",
+          "wait_days_est": 30,
+          "country": "Israel, Jerusalem, the West Bank and Gaza",
+          "country_code": ""
+        }
+      },
+      {
+        "post": "Jerusalem",
+        "visa_category": "Interview Required Crew and Transit (C,D,C1/D) Next available appointment",
+        "today": {
+          "wait_display": "4 Months",
+          "wait_days_est": 120,
+          "country": "Israel",
+          "country_code": "IL"
+        },
+        "prior": {
+          "wait_display": "4 Months",
+          "wait_days_est": 120,
+          "country": "Israel, Jerusalem, the West Bank and Gaza",
+          "country_code": ""
+        }
+      },
+      {
+        "post": "Jerusalem",
+        "visa_category": "Interview Required Petition-Base (H,L,O,P,Q) Next available appointment",
+        "today": {
+          "wait_display": "2 Months",
+          "wait_days_est": 60,
+          "country": "Israel",
+          "country_code": "IL"
+        },
+        "prior": {
+          "wait_display": "2 Months",
+          "wait_days_est": 60,
+          "country": "Israel, Jerusalem, the West Bank and Gaza",
+          "country_code": ""
+        }
+      }
+    ],
+    "new": [],
+    "missing": []
+  }
+}
