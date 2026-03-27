@@ -132,8 +132,20 @@ def build_daily_raw_audit_report(records: list, meta: dict, docs_dir: str = "doc
     new = []
     missing = []
 
-    all_keys = set(today_map.keys()) | set(prior_map.keys())
+    wait_value_changed = []
+    mapping_changed_only = []
+    text_changed_only = []
+    other_changed = []
 
+    def _country_identity(rec):
+        if not rec:
+            return ("", "")
+        return (
+            (rec.get("country_code") or "").strip().upper(),
+            (rec.get("country") or "").strip(),
+        )
+
+    all_keys = set(today_map.keys()) | set(prior_map.keys())
     for k in sorted(all_keys):
         t = today_map.get(k)
         p = prior_map.get(k)
@@ -157,12 +169,29 @@ def build_daily_raw_audit_report(records: list, meta: dict, docs_dir: str = "doc
         if t == p:
             unchanged += 1
         else:
-            changed.append({
+            today_wait = t.get("wait_days") if t else None
+            prior_wait = p.get("wait_days") if p else None
+
+            today_ident = _country_identity(t)
+            prior_ident = _country_identity(p)
+
+            item = {
                 "post": k[0],
                 "visa_category": k[1],
                 "today": t,
                 "prior": p,
-            })
+            }
+
+            if today_wait != prior_wait:
+                wait_value_changed.append(item)
+            elif today_ident != prior_ident:
+                mapping_changed_only.append(item)
+            elif (t.get("wait_display") if t else None) != (p.get("wait_display") if p else None):
+                text_changed_only.append(item)
+            else:
+                other_changed.append(item)
+
+            changed.append(item)
 
     payload = {
         "generated_at": now_utc_iso(),
@@ -177,9 +206,17 @@ def build_daily_raw_audit_report(records: list, meta: dict, docs_dir: str = "doc
             "unchanged": unchanged,
             "new": len(new),
             "missing": len(missing),
+            "wait_value_changed": len(wait_value_changed),
+            "mapping_changed_only": len(mapping_changed_only),
+            "text_changed_only": len(text_changed_only),
+            "other_changed": len(other_changed),
         },
         "examples": {
             "changed": changed[:25],
+            "wait_value_changed": wait_value_changed[:25],
+            "mapping_changed_only": mapping_changed_only[:25],
+            "text_changed_only": text_changed_only[:25],
+            "other_changed": other_changed[:25],
             "new": new[:25],
             "missing": missing[:25],
         },
