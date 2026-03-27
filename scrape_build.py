@@ -104,16 +104,24 @@ def build_daily_raw_audit_report(records: list, meta: dict, docs_dir: str = "doc
             "prior_date": prior_date.isoformat(),
             "prior_snapshot_found": False,
             "today_record_count": len(today_map),
-            "summary": {
-                "changed": 0,
-                "unchanged": 0,
-                "new": len(today_map),
-                "missing": 0,
-            },
-            "examples": {
-                "changed": [],
-                "new": [],
-                "missing": [],
+        "summary": {
+            "changed": 0,
+            "unchanged": 0,
+            "new": len(today_map),
+            "missing": 0,
+            "wait_value_changed": 0,
+            "mapping_changed_only": 0,
+            "text_changed_only": 0,
+            "other_changed": 0,
+        },
+        "examples": {
+            "changed": [],
+            "wait_value_changed": [],
+            "mapping_changed_only": [],
+            "text_changed_only": [],
+            "other_changed": [],
+            "new": [],
+            "missing": [],
             },
         }
         with open(out_path, "w", encoding="utf-8") as f:
