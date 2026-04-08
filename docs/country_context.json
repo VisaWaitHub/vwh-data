@@ -1,0 +1,17 @@
+{
+  "IN": {
+    "country": "India",
+    "issuance_volume": "1,050,000+",
+    "refusal_rate": "28%"
+  },
+  "BR": {
+    "country": "Brazil",
+    "issuance_volume": "650,000+",
+    "refusal_rate": "12%"
+  },
+  "NG": {
+    "country": "Nigeria",
+    "issuance_volume": "300,000+",
+    "refusal_rate": "35%"
+  }
+}
