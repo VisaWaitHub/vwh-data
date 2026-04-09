@@ -1,0 +1,10 @@
+{
+  "petition": {
+    "processing_time": "4.5 months",
+    "processing_time_value": 4.5,
+    "processing_time_unit": "months",
+    "period": "latest available",
+    "scope": "petition-based case processing",
+    "source": "U.S. Citizenship and Immigration Services"
+  }
+}
