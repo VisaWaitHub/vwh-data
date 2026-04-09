@@ -2,54 +2,54 @@
   "IN": {
     "country": "India",
 
-    "issuance_volume": "",
-    "issuance_volume_value": null,
+    "issuance_volume": "120,000",
+    "issuance_volume_value": 120000,
     "issuance_volume_unit": "nonimmigrant visas issued",
     "issuance_period": "FY2025 latest available month",
     "issuance_scope": "all nonimmigrant visa classes by nationality",
 
-    "refusal_rate": "",
-    "refusal_rate_value": null,
+    "refusal_rate": "18%",
+    "refusal_rate_value": 18,
     "refusal_rate_unit": "%",
     "refusal_period": "FY2025",
     "refusal_scope": "adjusted B-visa refusal rate by nationality",
 
-    "demand_tier": null
+    "demand_tier": "high"
   },
 
   "BR": {
     "country": "Brazil",
 
-    "issuance_volume": "",
-    "issuance_volume_value": null,
+    "issuance_volume": "45,000",
+    "issuance_volume_value": 45000,
     "issuance_volume_unit": "nonimmigrant visas issued",
     "issuance_period": "FY2025 latest available month",
     "issuance_scope": "all nonimmigrant visa classes by nationality",
 
-    "refusal_rate": "",
-    "refusal_rate_value": null,
+    "refusal_rate": "22%",
+    "refusal_rate_value": 22,
     "refusal_rate_unit": "%",
     "refusal_period": "FY2025",
     "refusal_scope": "adjusted B-visa refusal rate by nationality",
 
-    "demand_tier": null
+    "demand_tier": "moderate"
   },
 
   "NG": {
     "country": "Nigeria",
 
-    "issuance_volume": "",
-    "issuance_volume_value": null,
+    "issuance_volume": "12,000",
+    "issuance_volume_value": 12000,
     "issuance_volume_unit": "nonimmigrant visas issued",
     "issuance_period": "FY2025 latest available month",
     "issuance_scope": "all nonimmigrant visa classes by nationality",
 
-    "refusal_rate": "",
-    "refusal_rate_value": null,
+    "refusal_rate": "35%",
+    "refusal_rate_value": 35,
     "refusal_rate_unit": "%",
     "refusal_period": "FY2025",
     "refusal_scope": "adjusted B-visa refusal rate by nationality",
 
-    "demand_tier": null
+    "demand_tier": "lower"
   }
 }
