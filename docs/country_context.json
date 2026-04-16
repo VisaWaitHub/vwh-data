@@ -22,5 +22,80 @@
     "demand_tier": "lower",
     "refusal_rate": "57.00%",
     "refusal_rate_value": 57.00
+  },
+
+  "MX": {
+    "country": "Mexico",
+    "issuance_volume": "120,000",
+    "issuance_volume_value": 120000,
+    "demand_tier": "high",
+    "refusal_rate": "10.00%",
+    "refusal_rate_value": 10.0
+  },
+  "CN": {
+    "country": "China",
+    "issuance_volume": "65,000",
+    "issuance_volume_value": 65000,
+    "demand_tier": "high",
+    "refusal_rate": "20.00%",
+    "refusal_rate_value": 20.0
+  },
+  "PH": {
+    "country": "Philippines",
+    "issuance_volume": "55,000",
+    "issuance_volume_value": 55000,
+    "demand_tier": "high",
+    "refusal_rate": "18.00%",
+    "refusal_rate_value": 18.0
+  },
+
+  "CO": {
+    "country": "Colombia",
+    "issuance_volume": "35,000",
+    "issuance_volume_value": 35000,
+    "demand_tier": "moderate",
+    "refusal_rate": "25.00%",
+    "refusal_rate_value": 25.0
+  },
+  "AR": {
+    "country": "Argentina",
+    "issuance_volume": "28,000",
+    "issuance_volume_value": 28000,
+    "demand_tier": "moderate",
+    "refusal_rate": "12.00%",
+    "refusal_rate_value": 12.0
+  },
+  "TR": {
+    "country": "Turkey",
+    "issuance_volume": "22,000",
+    "issuance_volume_value": 22000,
+    "demand_tier": "moderate",
+    "refusal_rate": "15.00%",
+    "refusal_rate_value": 15.0
+  },
+  "ZA": {
+    "country": "South Africa",
+    "issuance_volume": "18,000",
+    "issuance_volume_value": 18000,
+    "demand_tier": "moderate",
+    "refusal_rate": "11.00%",
+    "refusal_rate_value": 11.0
+  },
+
+  "KE": {
+    "country": "Kenya",
+    "issuance_volume": "6,500",
+    "issuance_volume_value": 6500,
+    "demand_tier": "lower",
+    "refusal_rate": "35.00%",
+    "refusal_rate_value": 35.0
+  },
+  "GH": {
+    "country": "Ghana",
+    "issuance_volume": "5,800",
+    "issuance_volume_value": 5800,
+    "demand_tier": "lower",
+    "refusal_rate": "40.00%",
+    "refusal_rate_value": 40.0
   }
 }
