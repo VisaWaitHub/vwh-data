@@ -3,6 +3,7 @@
     "country": "India",
     "issuance_volume": "91,404",
     "issuance_volume_value": 91404,
+    "demand_tier": "high",
     "refusal_rate": "22.04%",
     "refusal_rate_value": 22.04
   },
@@ -10,6 +11,7 @@
     "country": "Brazil",
     "issuance_volume": "84,178",
     "issuance_volume_value": 84178,
+    "demand_tier": "high",
     "refusal_rate": "14.87%",
     "refusal_rate_value": 14.87
   },
@@ -17,6 +19,7 @@
     "country": "Nigeria",
     "issuance_volume": "1,822",
     "issuance_volume_value": 1822,
+    "demand_tier": "lower",
     "refusal_rate": "57.00%",
     "refusal_rate_value": 57.00
   }
