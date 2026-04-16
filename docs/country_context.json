@@ -1,23 +1,23 @@
 {
   "IN": {
     "country": "India",
-    "issuance_volume": "REPLACE_ME",
-    "issuance_volume_value": 0,
-    "refusal_rate": "REPLACE_ME",
-    "refusal_rate_value": 0
+    "issuance_volume": "91,404",
+    "issuance_volume_value": 91404,
+    "refusal_rate": "22.04%",
+    "refusal_rate_value": 22.04
   },
   "BR": {
     "country": "Brazil",
-    "issuance_volume": "REPLACE_ME",
-    "issuance_volume_value": 0,
-    "refusal_rate": "REPLACE_ME",
-    "refusal_rate_value": 0
+    "issuance_volume": "84,178",
+    "issuance_volume_value": 84178,
+    "refusal_rate": "14.87%",
+    "refusal_rate_value": 14.87
   },
   "NG": {
     "country": "Nigeria",
-    "issuance_volume": "REPLACE_ME",
-    "issuance_volume_value": 0,
-    "refusal_rate": "REPLACE_ME",
-    "refusal_rate_value": 0
+    "issuance_volume": "1,822",
+    "issuance_volume_value": 1822,
+    "refusal_rate": "57.00%",
+    "refusal_rate_value": 57.00
   }
 }
