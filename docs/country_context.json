@@ -51,7 +51,7 @@
     "country": "Colombia",
     "issuance_volume": "473,250",
     "issuance_volume_value": 473250,
-    "demand_tier": "high",
+    "demand_tier": "moderate",
     "refusal_rate": "32.84%",
     "refusal_rate_value": 32.84
   },
@@ -67,7 +67,7 @@
     "country": "Turkey",
     "issuance_volume": "134,521",
     "issuance_volume_value": 134521,
-    "demand_tier": "moderate",
+    "demand_tier": "lower",
     "refusal_rate": "22.25%",
     "refusal_rate_value": 22.25
   },
