@@ -1,10 +1,29 @@
 {
-  "petition": {
-    "processing_time": "4.5 months",
-    "processing_time_value": 4.5,
+  "h": {
+    "label": "H petition-based visas",
+    "processing_time": "REPLACE_ME",
+    "processing_time_value": 0,
     "processing_time_unit": "months",
     "period": "latest available",
-    "scope": "petition-based case processing",
+    "scope": "USCIS processing for H petition-based cases",
+    "source": "U.S. Citizenship and Immigration Services"
+  },
+  "l": {
+    "label": "L petition-based visas",
+    "processing_time": "REPLACE_ME",
+    "processing_time_value": 0,
+    "processing_time_unit": "months",
+    "period": "latest available",
+    "scope": "USCIS processing for L petition-based cases",
+    "source": "U.S. Citizenship and Immigration Services"
+  },
+  "o": {
+    "label": "O petition-based visas",
+    "processing_time": "REPLACE_ME",
+    "processing_time_value": 0,
+    "processing_time_unit": "months",
+    "period": "latest available",
+    "scope": "USCIS processing for O petition-based cases",
     "source": "U.S. Citizenship and Immigration Services"
   }
 }
