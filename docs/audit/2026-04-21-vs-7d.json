@@ -1,0 +1,830 @@
+{
+  "generated_at": "2026-04-21T03:42:03+00:00",
+  "days_back": 7,
+  "today_date": "2026-04-21",
+  "prior_date": "2026-04-14",
+  "prior_snapshot_found": true,
+  "today_record_count": 1210,
+  "prior_record_count": 1210,
+  "summary": {
+    "changed": 259,
+    "unchanged": 951,
+    "new": 0,
+    "missing": 0,
+    "wait_value_changed": 0,
+    "mapping_changed_only": 0,
+    "text_changed_only": 259,
+    "other_changed": 0
+  },
+  "examples": {
+    "changed": [
+      {
+        "post": "Abidjan",
+        "visa_category": "Interview Required (B1/B2) Average wait times",
+        "today": {
+          "wait_display": "7 Months",
+          "wait_days_est": 210,
+          "country": "Côte d’Ivoire",
+          "country_code": "CI"
+        },
+        "prior": {
+          "wait_display": "< 0.5 Month",
+          "wait_days_est": 14,
+          "country": "Côte d’Ivoire",
+          "country_code": "CI"
+        }
+      },
+      {
+        "post": "Abuja",
+        "visa_category": "Interview Required (B1/B2) Next available appointment",
+        "today": {
+          "wait_display": "6.5 Months",
+          "wait_days_est": 195,
+          "country": "Nigeria",
+          "country_code": "NG"
+        },
+        "prior": {
+          "wait_display": "< 0.5 Month",
+          "wait_days_est": 14,
+          "country": "Nigeria",
+          "country_code": "NG"
+        }
+      },
+      {
+        "post": "Abuja",
+        "visa_category": "Interview Required (F,M,J) Next available appointment",
+        "today": {
+          "wait_display": "6.5 Months",
+          "wait_days_est": 195,
+          "country": "Nigeria",
+          "country_code": "NG"
+        },
+        "prior": {
+          "wait_display": "< 0.5 Month",
+          "wait_days_est": 14,
+          "country": "Nigeria",
+          "country_code": "NG"
+        }
+      },
+      {
+        "post": "Abuja",
+        "visa_category": "Interview Required Petition-Base (H,L,O,P,Q) Next available appointment",
+        "today": {
+          "wait_display": "6.5 Months",
+          "wait_days_est": 195,
+          "country": "Nigeria",
+          "country_code": "NG"
+        },
+        "prior": {
+          "wait_display": "< 0.5 Month",
+          "wait_days_est": 14,
+          "country": "Nigeria",
+          "country_code": "NG"
+        }
+      },
+      {
+        "post": "Addis Ababa",
+        "visa_category": "Interview Required (B1/B2) Next available appointment",
+        "today": {
+          "wait_display": "2 Months",
+          "wait_days_est": 60,
+          "country": "Ethiopia",
+          "country_code": "ET"
+        },
+        "prior": {
+          "wait_display": "1 Month",
+          "wait_days_est": 30,
+          "country": "Ethiopia",
+          "country_code": "ET"
+        }
+      },
+      {
+        "post": "Addis Ababa",
+        "visa_category": "Interview Required (F,M,J) Next available appointment",
+        "today": {
+          "wait_display": "2.5 Months",
+          "wait_days_est": 75,
+          "country": "Ethiopia",
+          "country_code": "ET"
+        },
+        "prior": {
+          "wait_display": "1 Month",
+          "wait_days_est": 30,
+          "country": "Ethiopia",
+          "country_code": "ET"
+        }
+      },
+      {
+        "post": "Addis Ababa",
+        "visa_category": "Interview Required Crew and Transit (C,D,C1/D) Next available appointment",
+        "today": {
+          "wait_display": "2 Months",
+          "wait_days_est": 60,
+          "country": "Ethiopia",
+          "country_code": "ET"
+        },
+        "prior": {
+          "wait_display": "< 0.5 Month",
+          "wait_days_est": 14,
+          "country": "Ethiopia",
+          "country_code": "ET"
+        }
+      },
+      {
+        "post": "Addis Ababa",
+        "visa_category": "Interview Required Petition-Base (H,L,O,P,Q) Next available appointment",
+        "today": {
+          "wait_display": "2 Months",
+          "wait_days_est": 60,
+          "country": "Ethiopia",
+          "country_code": "ET"
+        },
+        "prior": {
+          "wait_display": "1 Month",
+          "wait_days_est": 30,
+          "country": "Ethiopia",
+          "country_code": "ET"
+        }
+      },
+      {
+        "post": "Algiers",
+        "visa_category": "Interview Required (B1/B2) Average wait times",
+        "today": {
+          "wait_display": "5.5 Months",
+          "wait_days_est": 165,
+          "country": "Algeria",
+          "country_code": "DZ"
+        },
+        "prior": {
+          "wait_display": "",
+          "wait_days_est": null,
+          "country": "Algeria",
+          "country_code": "DZ"
+        }
+      },
+      {
+        "post": "Almaty",
+        "visa_category": "Interview Required (F,M,J) Next available appointment",
+        "today": {
+          "wait_display": "2.5 Months",
+          "wait_days_est": 75,
+          "country": "Kazakhstan",
+          "country_code": "KZ"
+        },
+        "prior": {
+          "wait_display": "1.5 Months",
+          "wait_days_est": 45,
+          "country": "Kazakhstan",
+          "country_code": "KZ"
+        }
+      },
+      {
+        "post": "Almaty",
+        "visa_category": "Interview Required Crew and Transit (C,D,C1/D) Next available appointment",
+        "today": {
+          "wait_display": "1 Month",
+          "wait_days_est": 30,
+          "country": "Kazakhstan",
+          "country_code": "KZ"
+        },
+        "prior": {
+          "wait_display": "1.5 Months",
+          "wait_days_est": 45,
+          "country": "Kazakhstan",
+          "country_code": "KZ"
+        }
+      },
+      {
+        "post": "Almaty",
+        "visa_category": "Interview Required Petition-Base (H,L,O,P,Q) Next available appointment",
+        "today": {
+          "wait_display": "1 Month",
+          "wait_days_est": 30,
+          "country": "Kazakhstan",
+          "country_code": "KZ"
+        },
+        "prior": {
+          "wait_display": "1.5 Months",
+          "wait_days_est": 45,
+          "country": "Kazakhstan",
+          "country_code": "KZ"
+        }
+      },
+      {
+        "post": "Amsterdam",
+        "visa_category": "Interview Required (B1/B2) Next available appointment",
+        "today": {
+          "wait_display": "2.5 Months",
+          "wait_days_est": 75,
+          "country": "Netherlands",
+          "country_code": "NL"
+        },
+        "prior": {
+          "wait_display": "2 Months",
+          "wait_days_est": 60,
+          "country": "Netherlands",
+          "country_code": "NL"
+        }
+      },
+      {
+        "post": "Amsterdam",
+        "visa_category": "Interview Required Crew and Transit (C,D,C1/D) Next available appointment",
+        "today": {
+          "wait_display": "2 Months",
+          "wait_days_est": 60,
+          "country": "Netherlands",
+          "country_code": "NL"
+        },
+        "prior": {
+          "wait_display": "1 Month",
+          "wait_days_est": 30,
+          "country": "Netherlands",
+          "country_code": "NL"
+        }
+      },
+      {
+        "post": "Ankara",
+        "visa_category": "Interview Required (B1/B2) Average wait times",
+        "today": {
+          "wait_display": "1 Month",
+          "wait_days_est": 30,
+          "country": "Iran, Islamic Republic of",
+          "country_code": "IR"
+        },
+        "prior": {
+          "wait_display": "",
+          "wait_days_est": null,
+          "country": "Iran, Islamic Republic of",
+          "country_code": "IR"
+        }
+      },
+      {
+        "post": "Astana",
+        "visa_category": "Interview Required (B1/B2) Next available appointment",
+        "today": {
+          "wait_display": "3 Months",
+          "wait_days_est": 90,
+          "country": "Kazakhstan",
+          "country_code": "KZ"
+        },
+        "prior": {
+          "wait_display": "3.5 Months",
+          "wait_days_est": 105,
+          "country": "Kazakhstan",
+          "country_code": "KZ"
+        }
+      },
+      {
+        "post": "Astana",
+        "visa_category": "Interview Required Crew and Transit (C,D,C1/D) Next available appointment",
+        "today": {
+          "wait_display": "1 Month",
+          "wait_days_est": 30,
+          "country": "Kazakhstan",
+          "country_code": "KZ"
+        },
+        "prior": {
+          "wait_display": "< 0.5 Month",
+          "wait_days_est": 14,
+          "country": "Kazakhstan",
+          "country_code": "KZ"
+        }
+      },
+      {
+        "post": "Astana",
+        "visa_category": "Interview Required Petition-Base (H,L,O,P,Q) Next available appointment",
+        "today": {
+          "wait_display": "1 Month",
+          "wait_days_est": 30,
+          "country": "Kazakhstan",
+          "country_code": "KZ"
+        },
+        "prior": {
+          "wait_display": "< 0.5 Month",
+          "wait_days_est": 14,
+          "country": "Kazakhstan",
+          "country_code": "KZ"
+        }
+      },
+      {
+        "post": "Athens",
+        "visa_category": "Interview Required (B1/B2) Next available appointment",
+        "today": {
+          "wait_display": "1.5 Months",
+          "wait_days_est": 45,
+          "country": "Greece",
+          "country_code": "GR"
+        },
+        "prior": {
+          "wait_display": "2 Months",
+          "wait_days_est": 60,
+          "country": "Greece",
+          "country_code": "GR"
+        }
+      },
+      {
+        "post": "Athens",
+        "visa_category": "Interview Required (F,M,J) Next available appointment",
+        "today": {
+          "wait_display": "2 Months",
+          "wait_days_est": 60,
+          "country": "Greece",
+          "country_code": "GR"
+        },
+        "prior": {
+          "wait_display": "< 0.5 Month",
+          "wait_days_est": 14,
+          "country": "Greece",
+          "country_code": "GR"
+        }
+      },
+      {
+        "post": "Athens",
+        "visa_category": "Interview Required Crew and Transit (C,D,C1/D) Next available appointment",
+        "today": {
+          "wait_display": "1 Month",
+          "wait_days_est": 30,
+          "country": "Greece",
+          "country_code": "GR"
+        },
+        "prior": {
+          "wait_display": "1.5 Months",
+          "wait_days_est": 45,
+          "country": "Greece",
+          "country_code": "GR"
+        }
+      },
+      {
+        "post": "Auckland",
+        "visa_category": "Interview Required (B1/B2) Average wait times",
+        "today": {
+          "wait_display": "2.5 Months",
+          "wait_days_est": 75,
+          "country": "New Zealand",
+          "country_code": "NZ"
+        },
+        "prior": {
+          "wait_display": "1 Month",
+          "wait_days_est": 30,
+          "country": "New Zealand",
+          "country_code": "NZ"
+        }
+      },
+      {
+        "post": "Auckland",
+        "visa_category": "Interview Required Crew and Transit (C,D,C1/D) Next available appointment",
+        "today": {
+          "wait_display": "2.5 Months",
+          "wait_days_est": 75,
+          "country": "New Zealand",
+          "country_code": "NZ"
+        },
+        "prior": {
+          "wait_display": "2 Months",
+          "wait_days_est": 60,
+          "country": "New Zealand",
+          "country_code": "NZ"
+        }
+      },
+      {
+        "post": "Baghdad",
+        "visa_category": "Interview Required (B1/B2) Next available appointment",
+        "today": {
+          "wait_display": "4 Months",
+          "wait_days_est": 120,
+          "country": "Iraq",
+          "country_code": "IQ"
+        },
+        "prior": {
+          "wait_display": "2 Months",
+          "wait_days_est": 60,
+          "country": "Iraq",
+          "country_code": "IQ"
+        }
+      },
+      {
+        "post": "Baghdad",
+        "visa_category": "Interview Required (F,M,J) Next available appointment",
+        "today": {
+          "wait_display": "4 Months",
+          "wait_days_est": 120,
+          "country": "Iraq",
+          "country_code": "IQ"
+        },
+        "prior": {
+          "wait_display": "",
+          "wait_days_est": null,
+          "country": "Iraq",
+          "country_code": "IQ"
+        }
+      }
+    ],
+    "wait_value_changed": [],
+    "mapping_changed_only": [],
+    "text_changed_only": [
+      {
+        "post": "Abidjan",
+        "visa_category": "Interview Required (B1/B2) Average wait times",
+        "today": {
+          "wait_display": "7 Months",
+          "wait_days_est": 210,
+          "country": "Côte d’Ivoire",
+          "country_code": "CI"
+        },
+        "prior": {
+          "wait_display": "< 0.5 Month",
+          "wait_days_est": 14,
+          "country": "Côte d’Ivoire",
+          "country_code": "CI"
+        }
+      },
+      {
+        "post": "Abuja",
+        "visa_category": "Interview Required (B1/B2) Next available appointment",
+        "today": {
+          "wait_display": "6.5 Months",
+          "wait_days_est": 195,
+          "country": "Nigeria",
+          "country_code": "NG"
+        },
+        "prior": {
+          "wait_display": "< 0.5 Month",
+          "wait_days_est": 14,
+          "country": "Nigeria",
+          "country_code": "NG"
+        }
+      },
+      {
+        "post": "Abuja",
+        "visa_category": "Interview Required (F,M,J) Next available appointment",
+        "today": {
+          "wait_display": "6.5 Months",
+          "wait_days_est": 195,
+          "country": "Nigeria",
+          "country_code": "NG"
+        },
+        "prior": {
+          "wait_display": "< 0.5 Month",
+          "wait_days_est": 14,
+          "country": "Nigeria",
+          "country_code": "NG"
+        }
+      },
+      {
+        "post": "Abuja",
+        "visa_category": "Interview Required Petition-Base (H,L,O,P,Q) Next available appointment",
+        "today": {
+          "wait_display": "6.5 Months",
+          "wait_days_est": 195,
+          "country": "Nigeria",
+          "country_code": "NG"
+        },
+        "prior": {
+          "wait_display": "< 0.5 Month",
+          "wait_days_est": 14,
+          "country": "Nigeria",
+          "country_code": "NG"
+        }
+      },
+      {
+        "post": "Addis Ababa",
+        "visa_category": "Interview Required (B1/B2) Next available appointment",
+        "today": {
+          "wait_display": "2 Months",
+          "wait_days_est": 60,
+          "country": "Ethiopia",
+          "country_code": "ET"
+        },
+        "prior": {
+          "wait_display": "1 Month",
+          "wait_days_est": 30,
+          "country": "Ethiopia",
+          "country_code": "ET"
+        }
+      },
+      {
+        "post": "Addis Ababa",
+        "visa_category": "Interview Required (F,M,J) Next available appointment",
+        "today": {
+          "wait_display": "2.5 Months",
+          "wait_days_est": 75,
+          "country": "Ethiopia",
+          "country_code": "ET"
+        },
+        "prior": {
+          "wait_display": "1 Month",
+          "wait_days_est": 30,
+          "country": "Ethiopia",
+          "country_code": "ET"
+        }
+      },
+      {
+        "post": "Addis Ababa",
+        "visa_category": "Interview Required Crew and Transit (C,D,C1/D) Next available appointment",
+        "today": {
+          "wait_display": "2 Months",
+          "wait_days_est": 60,
+          "country": "Ethiopia",
+          "country_code": "ET"
+        },
+        "prior": {
+          "wait_display": "< 0.5 Month",
+          "wait_days_est": 14,
+          "country": "Ethiopia",
+          "country_code": "ET"
+        }
+      },
+      {
+        "post": "Addis Ababa",
+        "visa_category": "Interview Required Petition-Base (H,L,O,P,Q) Next available appointment",
+        "today": {
+          "wait_display": "2 Months",
+          "wait_days_est": 60,
+          "country": "Ethiopia",
+          "country_code": "ET"
+        },
+        "prior": {
+          "wait_display": "1 Month",
+          "wait_days_est": 30,
+          "country": "Ethiopia",
+          "country_code": "ET"
+        }
+      },
+      {
+        "post": "Algiers",
+        "visa_category": "Interview Required (B1/B2) Average wait times",
+        "today": {
+          "wait_display": "5.5 Months",
+          "wait_days_est": 165,
+          "country": "Algeria",
+          "country_code": "DZ"
+        },
+        "prior": {
+          "wait_display": "",
+          "wait_days_est": null,
+          "country": "Algeria",
+          "country_code": "DZ"
+        }
+      },
+      {
+        "post": "Almaty",
+        "visa_category": "Interview Required (F,M,J) Next available appointment",
+        "today": {
+          "wait_display": "2.5 Months",
+          "wait_days_est": 75,
+          "country": "Kazakhstan",
+          "country_code": "KZ"
+        },
+        "prior": {
+          "wait_display": "1.5 Months",
+          "wait_days_est": 45,
+          "country": "Kazakhstan",
+          "country_code": "KZ"
+        }
+      },
+      {
+        "post": "Almaty",
+        "visa_category": "Interview Required Crew and Transit (C,D,C1/D) Next available appointment",
+        "today": {
+          "wait_display": "1 Month",
+          "wait_days_est": 30,
+          "country": "Kazakhstan",
+          "country_code": "KZ"
+        },
+        "prior": {
+          "wait_display": "1.5 Months",
+          "wait_days_est": 45,
+          "country": "Kazakhstan",
+          "country_code": "KZ"
+        }
+      },
+      {
+        "post": "Almaty",
+        "visa_category": "Interview Required Petition-Base (H,L,O,P,Q) Next available appointment",
+        "today": {
+          "wait_display": "1 Month",
+          "wait_days_est": 30,
+          "country": "Kazakhstan",
+          "country_code": "KZ"
+        },
+        "prior": {
+          "wait_display": "1.5 Months",
+          "wait_days_est": 45,
+          "country": "Kazakhstan",
+          "country_code": "KZ"
+        }
+      },
+      {
+        "post": "Amsterdam",
+        "visa_category": "Interview Required (B1/B2) Next available appointment",
+        "today": {
+          "wait_display": "2.5 Months",
+          "wait_days_est": 75,
+          "country": "Netherlands",
+          "country_code": "NL"
+        },
+        "prior": {
+          "wait_display": "2 Months",
+          "wait_days_est": 60,
+          "country": "Netherlands",
+          "country_code": "NL"
+        }
+      },
+      {
+        "post": "Amsterdam",
+        "visa_category": "Interview Required Crew and Transit (C,D,C1/D) Next available appointment",
+        "today": {
+          "wait_display": "2 Months",
+          "wait_days_est": 60,
+          "country": "Netherlands",
+          "country_code": "NL"
+        },
+        "prior": {
+          "wait_display": "1 Month",
+          "wait_days_est": 30,
+          "country": "Netherlands",
+          "country_code": "NL"
+        }
+      },
+      {
+        "post": "Ankara",
+        "visa_category": "Interview Required (B1/B2) Average wait times",
+        "today": {
+          "wait_display": "1 Month",
+          "wait_days_est": 30,
+          "country": "Iran, Islamic Republic of",
+          "country_code": "IR"
+        },
+        "prior": {
+          "wait_display": "",
+          "wait_days_est": null,
+          "country": "Iran, Islamic Republic of",
+          "country_code": "IR"
+        }
+      },
+      {
+        "post": "Astana",
+        "visa_category": "Interview Required (B1/B2) Next available appointment",
+        "today": {
+          "wait_display": "3 Months",
+          "wait_days_est": 90,
+          "country": "Kazakhstan",
+          "country_code": "KZ"
+        },
+        "prior": {
+          "wait_display": "3.5 Months",
+          "wait_days_est": 105,
+          "country": "Kazakhstan",
+          "country_code": "KZ"
+        }
+      },
+      {
+        "post": "Astana",
+        "visa_category": "Interview Required Crew and Transit (C,D,C1/D) Next available appointment",
+        "today": {
+          "wait_display": "1 Month",
+          "wait_days_est": 30,
+          "country": "Kazakhstan",
+          "country_code": "KZ"
+        },
+        "prior": {
+          "wait_display": "< 0.5 Month",
+          "wait_days_est": 14,
+          "country": "Kazakhstan",
+          "country_code": "KZ"
+        }
+      },
+      {
+        "post": "Astana",
+        "visa_category": "Interview Required Petition-Base (H,L,O,P,Q) Next available appointment",
+        "today": {
+          "wait_display": "1 Month",
+          "wait_days_est": 30,
+          "country": "Kazakhstan",
+          "country_code": "KZ"
+        },
+        "prior": {
+          "wait_display": "< 0.5 Month",
+          "wait_days_est": 14,
+          "country": "Kazakhstan",
+          "country_code": "KZ"
+        }
+      },
+      {
+        "post": "Athens",
+        "visa_category": "Interview Required (B1/B2) Next available appointment",
+        "today": {
+          "wait_display": "1.5 Months",
+          "wait_days_est": 45,
+          "country": "Greece",
+          "country_code": "GR"
+        },
+        "prior": {
+          "wait_display": "2 Months",
+          "wait_days_est": 60,
+          "country": "Greece",
+          "country_code": "GR"
+        }
+      },
+      {
+        "post": "Athens",
+        "visa_category": "Interview Required (F,M,J) Next available appointment",
+        "today": {
+          "wait_display": "2 Months",
+          "wait_days_est": 60,
+          "country": "Greece",
+          "country_code": "GR"
+        },
+        "prior": {
+          "wait_display": "< 0.5 Month",
+          "wait_days_est": 14,
+          "country": "Greece",
+          "country_code": "GR"
+        }
+      },
+      {
+        "post": "Athens",
+        "visa_category": "Interview Required Crew and Transit (C,D,C1/D) Next available appointment",
+        "today": {
+          "wait_display": "1 Month",
+          "wait_days_est": 30,
+          "country": "Greece",
+          "country_code": "GR"
+        },
+        "prior": {
+          "wait_display": "1.5 Months",
+          "wait_days_est": 45,
+          "country": "Greece",
+          "country_code": "GR"
+        }
+      },
+      {
+        "post": "Auckland",
+        "visa_category": "Interview Required (B1/B2) Average wait times",
+        "today": {
+          "wait_display": "2.5 Months",
+          "wait_days_est": 75,
+          "country": "New Zealand",
+          "country_code": "NZ"
+        },
+        "prior": {
+          "wait_display": "1 Month",
+          "wait_days_est": 30,
+          "country": "New Zealand",
+          "country_code": "NZ"
+        }
+      },
+      {
+        "post": "Auckland",
+        "visa_category": "Interview Required Crew and Transit (C,D,C1/D) Next available appointment",
+        "today": {
+          "wait_display": "2.5 Months",
+          "wait_days_est": 75,
+          "country": "New Zealand",
+          "country_code": "NZ"
+        },
+        "prior": {
+          "wait_display": "2 Months",
+          "wait_days_est": 60,
+          "country": "New Zealand",
+          "country_code": "NZ"
+        }
+      },
+      {
+        "post": "Baghdad",
+        "visa_category": "Interview Required (B1/B2) Next available appointment",
+        "today": {
+          "wait_display": "4 Months",
+          "wait_days_est": 120,
+          "country": "Iraq",
+          "country_code": "IQ"
+        },
+        "prior": {
+          "wait_display": "2 Months",
+          "wait_days_est": 60,
+          "country": "Iraq",
+          "country_code": "IQ"
+        }
+      },
+      {
+        "post": "Baghdad",
+        "visa_category": "Interview Required (F,M,J) Next available appointment",
+        "today": {
+          "wait_display": "4 Months",
+          "wait_days_est": 120,
+          "country": "Iraq",
+          "country_code": "IQ"
+        },
+        "prior": {
+          "wait_display": "",
+          "wait_days_est": null,
+          "country": "Iraq",
+          "country_code": "IQ"
+        }
+      }
+    ],
+    "other_changed": [],
+    "new": [],
+    "missing": []
+  }
+}
