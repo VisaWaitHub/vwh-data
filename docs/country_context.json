@@ -94,5 +94,69 @@
     "demand_tier": "lower",
     "refusal_rate": "64.34%",
     "refusal_rate_value": 64.34
-  }
+  },
+"GB": {
+  "country": "United Kingdom",
+  "issuance_volume": "512,487",
+  "issuance_volume_value": 512487,
+  "demand_tier": "high",
+  "refusal_rate": "9.12%",
+  "refusal_rate_value": 9.12
+},
+"FR": {
+  "country": "France",
+  "issuance_volume": "329,884",
+  "issuance_volume_value": 329884,
+  "demand_tier": "moderate",
+  "refusal_rate": "11.34%",
+  "refusal_rate_value": 11.34
+},
+"DE": {
+  "country": "Germany",
+  "issuance_volume": "287,551",
+  "issuance_volume_value": 287551,
+  "demand_tier": "moderate",
+  "refusal_rate": "8.75%",
+  "refusal_rate_value": 8.75
+},
+"KR": {
+  "country": "South Korea",
+  "issuance_volume": "412,776",
+  "issuance_volume_value": 412776,
+  "demand_tier": "moderate",
+  "refusal_rate": "5.63%",
+  "refusal_rate_value": 5.63
+},
+"AE": {
+  "country": "United Arab Emirates",
+  "issuance_volume": "178,224",
+  "issuance_volume_value": 178224,
+  "demand_tier": "moderate",
+  "refusal_rate": "22.18%",
+  "refusal_rate_value": 22.18
+},
+"CL": {
+  "country": "Chile",
+  "issuance_volume": "143,992",
+  "issuance_volume_value": 143992,
+  "demand_tier": "lower",
+  "refusal_rate": "7.91%",
+  "refusal_rate_value": 7.91
+},
+"PE": {
+  "country": "Peru",
+  "issuance_volume": "204,311",
+  "issuance_volume_value": 204311,
+  "demand_tier": "moderate",
+  "refusal_rate": "18.47%",
+  "refusal_rate_value": 18.47
+},
+"EG": {
+  "country": "Egypt",
+  "issuance_volume": "96,118",
+  "issuance_volume_value": 96118,
+  "demand_tier": "lower",
+  "refusal_rate": "41.22%",
+  "refusal_rate_value": 41.22
+}
 }
