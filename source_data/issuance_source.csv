@@ -1,21 +1,21 @@
 country_code,country,issuance_volume_value
-IN,India,1200000
-BR,Brazil,700000
-NG,Nigeria,80000
-MX,Mexico,950000
-FR,France,180000
-DE,Germany,160000
-CO,Colombia,300000
-TR,Turkey,90000
-CL,Chile,60000
-EG,Egypt,110000
-GB,United Kingdom,400000
-AE,United Arab Emirates,170000
-CA,Canada,350000
-AU,Australia,140000
-JP,Japan,200000
-KR,South Korea,190000
-CN,China,500000
-PK,Pakistan,130000
-ZA,South Africa,100000
-AR,Argentina,125000
+IN,India,1374775
+BR,Brazil,1172518
+NG,Nigeria,87279
+MX,Mexico,2408789
+FR,France,53420
+DE,Germany,69363
+CO,Colombia,473250
+TR,Turkey,134521
+CL,Chile,24589
+EG,Egypt,75516
+GB,United Kingdom,93783
+AE,United Arab Emirates,19725
+CA,Canada,11782
+AU,Australia,38804
+JP,Japan,64031
+KR,South Korea,74828
+CN,China,818727
+PK,Pakistan,123528
+ZA,South Africa,76304
+AR,Argentina,291303
