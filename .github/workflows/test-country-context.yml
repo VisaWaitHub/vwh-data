@@ -6,6 +6,8 @@ on:
 jobs:
   build-test-json:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Check out repo
@@ -29,8 +31,10 @@ jobs:
           echo "===== test JSON ====="
           cat docs/_country_context_test.json
 
-      - name: Upload test JSON artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: country-context-test
-          path: docs/_country_context_test.json
+      - name: Commit test JSON to repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/_country_context_test.json
+          git diff --cached --quiet || git commit -m "Add test country context JSON"
+          git push
