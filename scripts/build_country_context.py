@@ -20,8 +20,8 @@ LIVE_OUTPUT_PATH = DOCS_DIR / "country_context.json"
 
 # Put your real source URLs here later.
 # For the first safe manual test, we allow fallback sample mode.
-ISSUANCE_SOURCE_URL = None
-REFUSAL_SOURCE_URL = None
+ISSUANCE_SOURCE_PATH = BASE_DIR / "source_data" / "issuance_source.csv"
+REFUSAL_SOURCE_PATH = BASE_DIR / "source_data" / "refusal_source.csv"
 
 MIN_COUNTRY_COUNT = 20
 REQUEST_TIMEOUT = 60
@@ -128,14 +128,13 @@ def fetch_bytes(url: str) -> bytes:
 
 def parse_issuance_data() -> Dict[str, Dict[str, Any]]:
     """
-    Return shape:
-    {
-      "IN": {"country": "India", "issuance_volume_value": 123456},
-      ...
-    }
+    Reads source_data/issuance_source.csv
+
+    Expected CSV columns:
+    country_code,country,issuance_volume_value
     """
-    if not ISSUANCE_SOURCE_URL:
-        log("ISSUANCE_SOURCE_URL not set. Using sample issuance data for safe manual test.")
+    if not ISSUANCE_SOURCE_PATH.exists():
+        log("issuance_source.csv not found. Using sample issuance data for safe fallback.")
         return {
             "IN": {"country": "India", "issuance_volume_value": 1200000},
             "BR": {"country": "Brazil", "issuance_volume_value": 700000},
@@ -159,21 +158,35 @@ def parse_issuance_data() -> Dict[str, Dict[str, Any]]:
             "AR": {"country": "Argentina", "issuance_volume_value": 125000},
         }
 
-    # Real parser will go here later.
-    # For now we deliberately fail if a URL is set but parser is not implemented.
-    fail("Real issuance parser not implemented yet. Leave ISSUANCE_SOURCE_URL unset for the first manual test.")
+    import csv
 
+    output: Dict[str, Dict[str, Any]] = {}
+    with ISSUANCE_SOURCE_PATH.open("r", encoding="utf-8-sig", newline="") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            code = (row.get("country_code") or "").strip().upper()
+            country = (row.get("country") or "").strip()
+            raw_value = (row.get("issuance_volume_value") or "").strip()
+
+            if not code or not country or not raw_value:
+                continue
+
+            output[code] = {
+                "country": country,
+                "issuance_volume_value": int(float(raw_value)),
+            }
+
+    return output
 
 def parse_refusal_data() -> Dict[str, Dict[str, Any]]:
     """
-    Return shape:
-    {
-      "IN": {"country": "India", "refusal_rate_value": 22.04},
-      ...
-    }
+    Reads source_data/refusal_source.csv
+
+    Expected CSV columns:
+    country_code,country,refusal_rate_value
     """
-    if not REFUSAL_SOURCE_URL:
-        log("REFUSAL_SOURCE_URL not set. Using sample refusal data for safe manual test.")
+    if not REFUSAL_SOURCE_PATH.exists():
+        log("refusal_source.csv not found. Using sample refusal data for safe fallback.")
         return {
             "IN": {"country": "India", "refusal_rate_value": 22.04},
             "BR": {"country": "Brazil", "refusal_rate_value": 14.87},
@@ -197,9 +210,25 @@ def parse_refusal_data() -> Dict[str, Dict[str, Any]]:
             "AR": {"country": "Argentina", "refusal_rate_value": 15.10},
         }
 
-    # Real parser will go here later.
-    fail("Real refusal parser not implemented yet. Leave REFUSAL_SOURCE_URL unset for the first manual test.")
+    import csv
 
+    output: Dict[str, Dict[str, Any]] = {}
+    with REFUSAL_SOURCE_PATH.open("r", encoding="utf-8-sig", newline="") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            code = (row.get("country_code") or "").strip().upper()
+            country = (row.get("country") or "").strip()
+            raw_value = (row.get("refusal_rate_value") or "").strip()
+
+            if not code or not country or not raw_value:
+                continue
+
+            output[code] = {
+                "country": country,
+                "refusal_rate_value": float(raw_value),
+            }
+
+    return output
 
 # =========================
 # MERGE + BUILD
