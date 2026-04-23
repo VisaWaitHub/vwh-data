@@ -22,6 +22,13 @@ jobs:
       - name: Run builder
         run: python scripts/build_country_context.py
 
+      - name: Show docs folder
+        run: |
+          echo "===== docs folder ====="
+          ls -la docs
+          echo "===== test JSON ====="
+          cat docs/_country_context_test.json
+
       - name: Upload test JSON artifact
         uses: actions/upload-artifact@v4
         with:
