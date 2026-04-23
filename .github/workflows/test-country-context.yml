@@ -18,8 +18,8 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dependency
-        run: pip install requests
+      - name: Install dependencies
+        run: pip install requests openpyxl
 
       - name: Run builder
         run: python scripts/build_country_context.py
