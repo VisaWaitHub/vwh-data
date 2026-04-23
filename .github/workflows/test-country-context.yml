@@ -1,0 +1,29 @@
+name: Test Country Context Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-test-json:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependency
+        run: pip install requests
+
+      - name: Run builder
+        run: python scripts/build_country_context.py
+
+      - name: Upload test JSON artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: country-context-test
+          path: docs/_country_context_test.json
