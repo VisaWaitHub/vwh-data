@@ -148,12 +148,12 @@ def rebuild_issuance_csv_from_excel() -> None:
     Reads the official FY2024 NIV Detail Table Excel file and rebuilds:
     source_data/issuance_source.csv
 
-    IMPORTANT:
-    This first version assumes the workbook has:
-    - one worksheet with country rows
-    - one 'total' column we can identify from the header row
+    This State Department file does not have a simple "Total" column.
+    Row 1 contains visa-class headers.
+    Column 1 contains country / region names.
+    Columns 2+ contain issuance counts by visa class.
 
-    We are adding strong logging so we can inspect and adjust safely if needed.
+    We calculate each country's total by summing columns 2+.
     """
     if not RAW_ISSUANCE_XLSX_PATH.exists():
         log(f"Raw issuance Excel not found at {RAW_ISSUANCE_XLSX_PATH}. Skipping rebuild.")
@@ -162,55 +162,17 @@ def rebuild_issuance_csv_from_excel() -> None:
     log(f"Reading raw issuance Excel: {RAW_ISSUANCE_XLSX_PATH}")
     wb = load_workbook(RAW_ISSUANCE_XLSX_PATH, data_only=True)
     ws = wb.active
+
     log(f"Workbook sheets: {wb.sheetnames}")
     log(f"Active sheet: {ws.title}")
     log(f"Rows: {ws.max_row}, Columns: {ws.max_column}")
 
-    log("Previewing first 15 rows and first 20 columns:")
-    for preview_row in range(1, min(ws.max_row, 15) + 1):
-        preview_values = []
-        for preview_col in range(1, min(ws.max_column, 20) + 1):
-            value = ws.cell(row=preview_row, column=preview_col).value
-            preview_values.append("" if value is None else str(value))
-        log(f"ROW {preview_row}: {preview_values}")
-
-    header_row_index = None
-    total_col_index = None
-    country_col_index = None
-
-    # Look for a header row in the first 25 rows
-    for row_idx in range(1, 26):
-        values = [ws.cell(row=row_idx, column=col_idx).value for col_idx in range(1, min(ws.max_column, 50) + 1)]
-        normalized = [str(v).strip().lower() if v is not None else "" for v in values]
-
-        # Find likely country/nationality column
-        possible_country = None
-        possible_total = None
-
-        for i, val in enumerate(normalized, start=1):
-            if val in {"nationality", "country", "country/nationality"}:
-                possible_country = i
-            if "total" == val or val.startswith("total "):
-                possible_total = i
-
-        if possible_country and possible_total:
-            header_row_index = row_idx
-            country_col_index = possible_country
-            total_col_index = possible_total
-            break
-
-    if not header_row_index or not country_col_index or not total_col_index:
-        fail("Could not find the header row / country column / total column in the issuance Excel file.")
-
-    log(f"Found issuance header row: {header_row_index}")
-    log(f"Found country column: {country_col_index}")
-    log(f"Found total column: {total_col_index}")
-
     rows_out = []
 
-    for row_idx in range(header_row_index + 1, ws.max_row + 1):
-        country_raw = ws.cell(row=row_idx, column=country_col_index).value
-        total_raw = ws.cell(row=row_idx, column=total_col_index).value
+    # Row 1 is the visa-class header row.
+    # Real country rows start at row 2.
+    for row_idx in range(2, ws.max_row + 1):
+        country_raw = ws.cell(row=row_idx, column=1).value
 
         if country_raw is None:
             continue
@@ -219,34 +181,45 @@ def rebuild_issuance_csv_from_excel() -> None:
         if not country_name:
             continue
 
-        # Skip obvious non-country rows
-        lowered = country_name.lower()
-        if lowered in {"total", "grand total"}:
+        # Skip region/header rows like "Africa" because they have no issuance values.
+        row_total = 0
+        has_numeric_value = False
+
+        for col_idx in range(2, ws.max_column + 1):
+            value = ws.cell(row=row_idx, column=col_idx).value
+
+            if value is None or value == "":
+                continue
+
+            try:
+                numeric_value = int(float(value))
+            except Exception:
+                continue
+
+            row_total += numeric_value
+            has_numeric_value = True
+
+        if not has_numeric_value:
             continue
 
-        if total_raw is None:
-            continue
-
-        try:
-            total_value = int(float(total_raw))
-        except Exception:
-            continue
-
-        # Normalize names to your site conventions
         normalized_country = normalize_country_name(country_name)
         code = COUNTRY_NAME_TO_CODE.get(normalized_country)
 
+        # For now, only include countries we have mapped.
+        # Later, when we load the full 111-country map, this will scale automatically.
         if not code:
             continue
 
         rows_out.append({
             "country_code": code,
             "country": normalized_country,
-            "issuance_volume_value": total_value
+            "issuance_volume_value": row_total
         })
 
     if len(rows_out) < 20:
         fail(f"Issuance Excel rebuild produced too few rows: {len(rows_out)}")
+
+    rows_out = sorted(rows_out, key=lambda r: r["country"])
 
     with ISSUANCE_SOURCE_PATH.open("w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(
