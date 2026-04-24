@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 
+import csv
 import json
-import re
 import sys
 from pathlib import Path
-from typing import Dict, Any, Optional
+from typing import Dict, Any
 
 import requests
+from openpyxl import load_workbook
 
 
 # =========================
@@ -20,6 +21,8 @@ LIVE_OUTPUT_PATH = DOCS_DIR / "country_context.json"
 
 # Put your real source URLs here later.
 # For the first safe manual test, we allow fallback sample mode.
+RAW_ISSUANCE_XLSX_PATH = BASE_DIR / "source_data" / "raw" / "fy2024_niv_detail.xlsx"
+
 ISSUANCE_SOURCE_PATH = BASE_DIR / "source_data" / "issuance_source.csv"
 REFUSAL_SOURCE_PATH = BASE_DIR / "source_data" / "refusal_source.csv"
 
@@ -125,7 +128,124 @@ def fetch_bytes(url: str) -> bytes:
 # Replace these later with real source parsers.
 # For the first manual test, they can use sample data.
 # =========================
+def normalize_country_name(name: str) -> str:
+    """
+    Normalizes source names to the exact names used by your site / CSVs.
+    """
+    n = " ".join(str(name).strip().split())
 
+    replacements = {
+        "Great Britain and Northern Ireland": "United Kingdom",
+        "United Kingdom / Great Britain and Northern Ireland": "United Kingdom",
+        "Korea, South": "South Korea",
+        "Republic of Korea": "South Korea",
+        "UAE": "United Arab Emirates",
+    }
+
+    return replacements.get(n, n)
+def rebuild_issuance_csv_from_excel() -> None:
+    """
+    Reads the official FY2024 NIV Detail Table Excel file and rebuilds:
+    source_data/issuance_source.csv
+
+    IMPORTANT:
+    This first version assumes the workbook has:
+    - one worksheet with country rows
+    - one 'total' column we can identify from the header row
+
+    We are adding strong logging so we can inspect and adjust safely if needed.
+    """
+    if not RAW_ISSUANCE_XLSX_PATH.exists():
+        log(f"Raw issuance Excel not found at {RAW_ISSUANCE_XLSX_PATH}. Skipping rebuild.")
+        return
+
+    log(f"Reading raw issuance Excel: {RAW_ISSUANCE_XLSX_PATH}")
+    wb = load_workbook(RAW_ISSUANCE_XLSX_PATH, data_only=True)
+    ws = wb.active
+
+    header_row_index = None
+    total_col_index = None
+    country_col_index = None
+
+    # Look for a header row in the first 25 rows
+    for row_idx in range(1, 26):
+        values = [ws.cell(row=row_idx, column=col_idx).value for col_idx in range(1, min(ws.max_column, 50) + 1)]
+        normalized = [str(v).strip().lower() if v is not None else "" for v in values]
+
+        # Find likely country/nationality column
+        possible_country = None
+        possible_total = None
+
+        for i, val in enumerate(normalized, start=1):
+            if val in {"nationality", "country", "country/nationality"}:
+                possible_country = i
+            if "total" == val or val.startswith("total "):
+                possible_total = i
+
+        if possible_country and possible_total:
+            header_row_index = row_idx
+            country_col_index = possible_country
+            total_col_index = possible_total
+            break
+
+    if not header_row_index or not country_col_index or not total_col_index:
+        fail("Could not find the header row / country column / total column in the issuance Excel file.")
+
+    log(f"Found issuance header row: {header_row_index}")
+    log(f"Found country column: {country_col_index}")
+    log(f"Found total column: {total_col_index}")
+
+    rows_out = []
+
+    for row_idx in range(header_row_index + 1, ws.max_row + 1):
+        country_raw = ws.cell(row=row_idx, column=country_col_index).value
+        total_raw = ws.cell(row=row_idx, column=total_col_index).value
+
+        if country_raw is None:
+            continue
+
+        country_name = str(country_raw).strip()
+        if not country_name:
+            continue
+
+        # Skip obvious non-country rows
+        lowered = country_name.lower()
+        if lowered in {"total", "grand total"}:
+            continue
+
+        if total_raw is None:
+            continue
+
+        try:
+            total_value = int(float(total_raw))
+        except Exception:
+            continue
+
+        # Normalize names to your site conventions
+        normalized_country = normalize_country_name(country_name)
+        code = COUNTRY_NAME_TO_CODE.get(normalized_country)
+
+        if not code:
+            continue
+
+        rows_out.append({
+            "country_code": code,
+            "country": normalized_country,
+            "issuance_volume_value": total_value
+        })
+
+    if len(rows_out) < 20:
+        fail(f"Issuance Excel rebuild produced too few rows: {len(rows_out)}")
+
+    with ISSUANCE_SOURCE_PATH.open("w", encoding="utf-8", newline="") as f:
+        writer = csv.DictWriter(
+            f,
+            fieldnames=["country_code", "country", "issuance_volume_value"]
+        )
+        writer.writeheader()
+        writer.writerows(rows_out)
+
+    log(f"Rebuilt issuance CSV with {len(rows_out)} rows: {ISSUANCE_SOURCE_PATH}")
 def parse_issuance_data() -> Dict[str, Dict[str, Any]]:
     """
     Reads source_data/issuance_source.csv
@@ -338,6 +458,9 @@ def main() -> None:
     ensure_docs_dir()
 
     log("Starting build_country_context.py")
+
+    rebuild_issuance_csv_from_excel()
+
     issuance_map = parse_issuance_data()
     refusal_map = parse_refusal_data()
 
