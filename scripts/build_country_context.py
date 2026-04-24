@@ -140,6 +140,10 @@ def normalize_country_name(name: str) -> str:
         "Korea, South": "South Korea",
         "Republic of Korea": "South Korea",
         "UAE": "United Arab Emirates",
+        "China - mainland born": "China",
+        "China - Mainland born": "China",
+        "China (Mainland-born)": "China",
+        "China, mainland born": "China",
     }
 
     return replacements.get(n, n)
