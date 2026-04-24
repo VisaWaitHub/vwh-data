@@ -162,6 +162,17 @@ def rebuild_issuance_csv_from_excel() -> None:
     log(f"Reading raw issuance Excel: {RAW_ISSUANCE_XLSX_PATH}")
     wb = load_workbook(RAW_ISSUANCE_XLSX_PATH, data_only=True)
     ws = wb.active
+    log(f"Workbook sheets: {wb.sheetnames}")
+    log(f"Active sheet: {ws.title}")
+    log(f"Rows: {ws.max_row}, Columns: {ws.max_column}")
+
+    log("Previewing first 15 rows and first 20 columns:")
+    for preview_row in range(1, min(ws.max_row, 15) + 1):
+        preview_values = []
+        for preview_col in range(1, min(ws.max_column, 20) + 1):
+            value = ws.cell(row=preview_row, column=preview_col).value
+            preview_values.append("" if value is None else str(value))
+        log(f"ROW {preview_row}: {preview_values}")
 
     header_row_index = None
     total_col_index = None
