@@ -26,7 +26,7 @@ RAW_ISSUANCE_XLSX_PATH = BASE_DIR / "source_data" / "raw" / "fy2024_niv_detail.x
 ISSUANCE_SOURCE_PATH = BASE_DIR / "source_data" / "issuance_source.csv"
 REFUSAL_SOURCE_PATH = BASE_DIR / "source_data" / "refusal_source.csv"
 
-MIN_COUNTRY_COUNT = 19
+MIN_COUNTRY_COUNT = 20
 REQUEST_TIMEOUT = 60
 
 # Locked thresholds from your current system
