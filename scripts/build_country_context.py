@@ -216,7 +216,7 @@ def rebuild_issuance_csv_from_excel() -> None:
             "issuance_volume_value": row_total
         })
 
-    if len(rows_out) < 20:
+    if len(rows_out) < MIN_COUNTRY_COUNT:
         fail(f"Issuance Excel rebuild produced too few rows: {len(rows_out)}")
 
     rows_out = sorted(rows_out, key=lambda r: r["country"])
