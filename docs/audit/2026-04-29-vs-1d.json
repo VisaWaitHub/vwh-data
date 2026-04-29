@@ -1,0 +1,28 @@
+{
+  "generated_at": "2026-04-29T03:58:59+00:00",
+  "days_back": 1,
+  "today_date": "2026-04-29",
+  "prior_date": "2026-04-28",
+  "prior_snapshot_found": true,
+  "today_record_count": 1210,
+  "prior_record_count": 1210,
+  "summary": {
+    "changed": 0,
+    "unchanged": 1210,
+    "new": 0,
+    "missing": 0,
+    "wait_value_changed": 0,
+    "mapping_changed_only": 0,
+    "text_changed_only": 0,
+    "other_changed": 0
+  },
+  "examples": {
+    "changed": [],
+    "wait_value_changed": [],
+    "mapping_changed_only": [],
+    "text_changed_only": [],
+    "other_changed": [],
+    "new": [],
+    "missing": []
+  }
+}
