@@ -1,29 +1,42 @@
 {
-  "h": {
-    "label": "H petition-based visas",
-    "processing_time": "REPLACE_ME",
-    "processing_time_value": 0,
-    "processing_time_unit": "months",
-    "period": "latest available",
-    "scope": "USCIS processing for H petition-based cases",
-    "source": "U.S. Citizenship and Immigration Services"
-  },
-  "l": {
-    "label": "L petition-based visas",
-    "processing_time": "REPLACE_ME",
-    "processing_time_value": 0,
-    "processing_time_unit": "months",
-    "period": "latest available",
-    "scope": "USCIS processing for L petition-based cases",
-    "source": "U.S. Citizenship and Immigration Services"
-  },
-  "o": {
-    "label": "O petition-based visas",
-    "processing_time": "REPLACE_ME",
-    "processing_time_value": 0,
-    "processing_time_unit": "months",
-    "period": "latest available",
-    "scope": "USCIS processing for O petition-based cases",
-    "source": "U.S. Citizenship and Immigration Services"
+  "version": "1.0",
+  "generated_at": "2026-04-30",
+  "source": "USCIS Case Processing Times",
+  "source_url": "https://egov.uscis.gov/processing-times",
+  "scope_note": "USCIS processing times represent upstream petition adjudication timelines. These are not embassy interview wait times and vary by form, category, and service center.",
+  "petition_based": {
+    "h": {
+      "label": "H petition-based visas",
+      "uscis_form": "I-129",
+      "category": "Temporary worker petition",
+      "processing_time": null,
+      "processing_time_value": null,
+      "processing_time_unit": "months",
+      "period": "latest available",
+      "scope": "USCIS processing for H petition-based cases",
+      "status": "placeholder"
+    },
+    "l": {
+      "label": "L petition-based visas",
+      "uscis_form": "I-129",
+      "category": "Temporary worker petition",
+      "processing_time": null,
+      "processing_time_value": null,
+      "processing_time_unit": "months",
+      "period": "latest available",
+      "scope": "USCIS processing for L petition-based cases",
+      "status": "placeholder"
+    },
+    "o": {
+      "label": "O petition-based visas",
+      "uscis_form": "I-129",
+      "category": "Temporary worker petition",
+      "processing_time": null,
+      "processing_time_value": null,
+      "processing_time_unit": "months",
+      "period": "latest available",
+      "scope": "USCIS processing for O petition-based cases",
+      "status": "placeholder"
+    }
   }
 }
