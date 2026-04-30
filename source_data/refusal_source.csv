@@ -1,21 +1,21 @@
 country_code,country,refusal_rate_value
-IN,India,22.04
+AR,Argentina,7.47
+AU,Australia,22.93
 BR,Brazil,14.87
-NG,Nigeria,57.00
-MX,Mexico,21.36
+CA,Canada,53.1
+CL,Chile,16.38
+CN,China,20.21
+CO,Colombia,32.84
+EG,Egypt,47.61
 FR,France,9.67
 DE,Germany,12.22
-CO,Colombia,32.84
-TR,Turkey,22.25
-CL,Chile,16.38
-EG,Egypt,47.61
-GB,United Kingdom,20.44
-AE,United Arab Emirates,2.17
-CA,Canada,53.10
-AU,Australia,22.93
+IN,India,22.04
 JP,Japan,5.68
-KR,South Korea,24.73
-CN,China,20.21
+MX,Mexico,21.36
+NG,Nigeria,57.0
 PK,Pakistan,52.32
 ZA,South Africa,11.66
-AR,Argentina,7.47
+KR,South Korea,24.73
+TR,Turkey,22.25
+AE,United Arab Emirates,2.17
+GB,United Kingdom,20.44
