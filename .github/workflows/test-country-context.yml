@@ -2,6 +2,8 @@ name: Test Country Context Build
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * 1"
 
 jobs:
   build-test-json:
