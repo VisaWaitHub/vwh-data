@@ -334,6 +334,7 @@ def rebuild_issuance_csv_from_excel() -> None:
         # For now, only include countries we have mapped.
         # Later, when we load the full 111-country map, this will scale automatically.
         if not code:
+            log(f"UNMAPPED COUNTRY: {normalized_country}")
             continue
 
         rows_out.append({
