@@ -561,8 +561,8 @@ def main() -> None:
     country_context = build_country_context(issuance_map, refusal_map)
     validate_country_context(country_context)
 
-    write_json(TEST_OUTPUT_PATH, country_context)
-    log("Manual test build complete. Live file was NOT touched.")
+    write_json(LIVE_OUTPUT_PATH, country_context)
+    log("Live country_context.json updated successfully.")
 
 
 if __name__ == "__main__":
