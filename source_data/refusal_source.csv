@@ -1,21 +1,108 @@
 country_code,country,refusal_rate_value
+AF,Afghanistan,63.25
+DZ,Algeria,51.23
 AR,Argentina,7.47
+AM,Armenia,56.37
 AU,Australia,22.93
+AZ,Azerbaijan,20.91
+BD,Bangladesh,61.45
+BY,Belarus,26.58
+BO,Bolivia,29.83
+BW,Botswana,38.44
 BR,Brazil,14.87
+BG,Bulgaria,5.11
+KH,Cambodia,30.71
 CA,Canada,53.1
 CL,Chile,16.38
 CN,China,20.21
 CO,Colombia,32.84
+CR,Costa Rica,16.14
+HR,Croatia,14.75
+CY,Cyprus,2.55
+CZ,Czech Republic,8.66
+DK,Denmark,12.59
+DO,Dominican Republic,36.4
+EC,Ecuador,42.24
 EG,Egypt,47.61
+SV,El Salvador,58.22
+EE,Estonia,11.33
+ET,Ethiopia,53.64
+FI,Finland,18.09
 FR,France,9.67
+GE,Georgia,45.57
 DE,Germany,12.22
+GH,Ghana,64.34
+GR,Greece,9.3
+GT,Guatemala,39.21
+HN,Honduras,46.52
+HU,Hungary,7.91
+IS,Iceland,5.43
 IN,India,22.04
+ID,Indonesia,26.69
+IR,Iran,62.44
+IQ,Iraq,39.86
+IE,Ireland,25.12
+IL,Israel,11.32
+IT,Italy,12.65
+JM,Jamaica,44.26
 JP,Japan,5.68
+JO,Jordan,56.63
+KZ,Kazakhstan,51.75
+KE,Kenya,68.23
+KW,Kuwait,6.06
+LA,Laos,84.35
+LV,Latvia,19.0
+LB,Lebanon,39.42
+LT,Lithuania,21.32
+LU,Luxembourg,13.77
+MW,Malawi,53.42
+MY,Malaysia,7.92
+MT,Malta,10.3
 MX,Mexico,21.36
+MN,Mongolia,31.28
+MA,Morocco,26.91
+MZ,Mozambique,24.75
+NA,Namibia,16.54
+NP,Nepal,69.47
+NL,Netherlands,17.42
+NZ,New Zealand,21.94
+NI,Nicaragua,53.15
 NG,Nigeria,57.0
+NO,Norway,16.18
+OM,Oman,3.14
 PK,Pakistan,52.32
+PA,Panama,6.51
+PY,Paraguay,18.71
+PE,Peru,20.9
+PH,Philippines,30.76
+PL,Poland,11.63
+PT,Portugal,8.19
+QA,Qatar,9.69
+RO,Romania,8.41
+SA,Saudi Arabia,5.98
+SN,Senegal,73.96
+RS,Serbia,15.2
+SG,Singapore,18.64
+SK,Slovakia,14.33
+SI,Slovenia,14.57
 ZA,South Africa,11.66
 KR,South Korea,24.73
+ES,Spain,23.67
+LK,Sri Lanka,33.35
+SE,Sweden,21.77
+CH,Switzerland,5.82
+TZ,Tanzania,39.41
+TH,Thailand,25.67
+TT,Trinidad and Tobago,14.92
+TN,Tunisia,25.89
 TR,Turkey,22.25
+UG,Uganda,57.58
+UA,Ukraine,33.92
 AE,United Arab Emirates,2.17
 GB,United Kingdom,20.44
+UY,Uruguay,2.59
+UZ,Uzbekistan,52.46
+VE,Venezuela,48.22
+VN,Vietnam,22.08
+ZM,Zambia,52.45
+ZW,Zimbabwe,37.6

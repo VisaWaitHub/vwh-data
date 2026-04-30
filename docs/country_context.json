@@ -7,6 +7,22 @@
     "refusal_rate_value": 2.17,
     "demand_tier": "lower"
   },
+  "AF": {
+    "country": "Afghanistan",
+    "issuance_volume": "5,628",
+    "issuance_volume_value": 5628,
+    "refusal_rate": "63.25%",
+    "refusal_rate_value": 63.25,
+    "demand_tier": "lower"
+  },
+  "AM": {
+    "country": "Armenia",
+    "issuance_volume": "34,762",
+    "issuance_volume_value": 34762,
+    "refusal_rate": "56.37%",
+    "refusal_rate_value": 56.37,
+    "demand_tier": "lower"
+  },
   "AR": {
     "country": "Argentina",
     "issuance_volume": "582,606",
@@ -23,6 +39,38 @@
     "refusal_rate_value": 22.93,
     "demand_tier": "lower"
   },
+  "AZ": {
+    "country": "Azerbaijan",
+    "issuance_volume": "21,734",
+    "issuance_volume_value": 21734,
+    "refusal_rate": "20.91%",
+    "refusal_rate_value": 20.91,
+    "demand_tier": "lower"
+  },
+  "BD": {
+    "country": "Bangladesh",
+    "issuance_volume": "96,188",
+    "issuance_volume_value": 96188,
+    "refusal_rate": "61.45%",
+    "refusal_rate_value": 61.45,
+    "demand_tier": "lower"
+  },
+  "BG": {
+    "country": "Bulgaria",
+    "issuance_volume": "40,282",
+    "issuance_volume_value": 40282,
+    "refusal_rate": "5.11%",
+    "refusal_rate_value": 5.11,
+    "demand_tier": "lower"
+  },
+  "BO": {
+    "country": "Bolivia",
+    "issuance_volume": "61,686",
+    "issuance_volume_value": 61686,
+    "refusal_rate": "29.83%",
+    "refusal_rate_value": 29.83,
+    "demand_tier": "lower"
+  },
   "BR": {
     "country": "Brazil",
     "issuance_volume": "2,345,036",
@@ -31,12 +79,36 @@
     "refusal_rate_value": 14.87,
     "demand_tier": "high"
   },
+  "BW": {
+    "country": "Botswana",
+    "issuance_volume": "3,702",
+    "issuance_volume_value": 3702,
+    "refusal_rate": "38.44%",
+    "refusal_rate_value": 38.44,
+    "demand_tier": "lower"
+  },
+  "BY": {
+    "country": "Belarus",
+    "issuance_volume": "17,766",
+    "issuance_volume_value": 17766,
+    "refusal_rate": "26.58%",
+    "refusal_rate_value": 26.58,
+    "demand_tier": "lower"
+  },
   "CA": {
     "country": "Canada",
     "issuance_volume": "23,564",
     "issuance_volume_value": 23564,
     "refusal_rate": "53.10%",
     "refusal_rate_value": 53.1,
+    "demand_tier": "lower"
+  },
+  "CH": {
+    "country": "Switzerland",
+    "issuance_volume": "20,068",
+    "issuance_volume_value": 20068,
+    "refusal_rate": "5.82%",
+    "refusal_rate_value": 5.82,
     "demand_tier": "lower"
   },
   "CL": {
@@ -63,12 +135,76 @@
     "refusal_rate_value": 32.84,
     "demand_tier": "high"
   },
+  "CR": {
+    "country": "Costa Rica",
+    "issuance_volume": "166,160",
+    "issuance_volume_value": 166160,
+    "refusal_rate": "16.14%",
+    "refusal_rate_value": 16.14,
+    "demand_tier": "moderate"
+  },
+  "CY": {
+    "country": "Cyprus",
+    "issuance_volume": "10,808",
+    "issuance_volume_value": 10808,
+    "refusal_rate": "2.55%",
+    "refusal_rate_value": 2.55,
+    "demand_tier": "lower"
+  },
+  "CZ": {
+    "country": "Czech Republic",
+    "issuance_volume": "11,802",
+    "issuance_volume_value": 11802,
+    "refusal_rate": "8.66%",
+    "refusal_rate_value": 8.66,
+    "demand_tier": "lower"
+  },
   "DE": {
     "country": "Germany",
     "issuance_volume": "138,726",
     "issuance_volume_value": 138726,
     "refusal_rate": "12.22%",
     "refusal_rate_value": 12.22,
+    "demand_tier": "lower"
+  },
+  "DK": {
+    "country": "Denmark",
+    "issuance_volume": "15,456",
+    "issuance_volume_value": 15456,
+    "refusal_rate": "12.59%",
+    "refusal_rate_value": 12.59,
+    "demand_tier": "lower"
+  },
+  "DO": {
+    "country": "Dominican Republic",
+    "issuance_volume": "333,766",
+    "issuance_volume_value": 333766,
+    "refusal_rate": "36.40%",
+    "refusal_rate_value": 36.4,
+    "demand_tier": "moderate"
+  },
+  "DZ": {
+    "country": "Algeria",
+    "issuance_volume": "43,114",
+    "issuance_volume_value": 43114,
+    "refusal_rate": "51.23%",
+    "refusal_rate_value": 51.23,
+    "demand_tier": "lower"
+  },
+  "EC": {
+    "country": "Ecuador",
+    "issuance_volume": "483,764",
+    "issuance_volume_value": 483764,
+    "refusal_rate": "42.24%",
+    "refusal_rate_value": 42.24,
+    "demand_tier": "moderate"
+  },
+  "EE": {
+    "country": "Estonia",
+    "issuance_volume": "3,118",
+    "issuance_volume_value": 3118,
+    "refusal_rate": "11.33%",
+    "refusal_rate_value": 11.33,
     "demand_tier": "lower"
   },
   "EG": {
@@ -78,6 +214,30 @@
     "refusal_rate": "47.61%",
     "refusal_rate_value": 47.61,
     "demand_tier": "moderate"
+  },
+  "ES": {
+    "country": "Spain",
+    "issuance_volume": "96,674",
+    "issuance_volume_value": 96674,
+    "refusal_rate": "23.67%",
+    "refusal_rate_value": 23.67,
+    "demand_tier": "lower"
+  },
+  "ET": {
+    "country": "Ethiopia",
+    "issuance_volume": "51,694",
+    "issuance_volume_value": 51694,
+    "refusal_rate": "53.64%",
+    "refusal_rate_value": 53.64,
+    "demand_tier": "lower"
+  },
+  "FI": {
+    "country": "Finland",
+    "issuance_volume": "9,332",
+    "issuance_volume_value": 9332,
+    "refusal_rate": "18.09%",
+    "refusal_rate_value": 18.09,
+    "demand_tier": "lower"
   },
   "FR": {
     "country": "France",
@@ -95,6 +255,86 @@
     "refusal_rate_value": 20.44,
     "demand_tier": "moderate"
   },
+  "GE": {
+    "country": "Georgia",
+    "issuance_volume": "20,670",
+    "issuance_volume_value": 20670,
+    "refusal_rate": "45.57%",
+    "refusal_rate_value": 45.57,
+    "demand_tier": "lower"
+  },
+  "GH": {
+    "country": "Ghana",
+    "issuance_volume": "68,284",
+    "issuance_volume_value": 68284,
+    "refusal_rate": "64.34%",
+    "refusal_rate_value": 64.34,
+    "demand_tier": "lower"
+  },
+  "GR": {
+    "country": "Greece",
+    "issuance_volume": "16,478",
+    "issuance_volume_value": 16478,
+    "refusal_rate": "9.30%",
+    "refusal_rate_value": 9.3,
+    "demand_tier": "lower"
+  },
+  "GT": {
+    "country": "Guatemala",
+    "issuance_volume": "199,366",
+    "issuance_volume_value": 199366,
+    "refusal_rate": "39.21%",
+    "refusal_rate_value": 39.21,
+    "demand_tier": "moderate"
+  },
+  "HN": {
+    "country": "Honduras",
+    "issuance_volume": "156,326",
+    "issuance_volume_value": 156326,
+    "refusal_rate": "46.52%",
+    "refusal_rate_value": 46.52,
+    "demand_tier": "moderate"
+  },
+  "HR": {
+    "country": "Croatia",
+    "issuance_volume": "8,628",
+    "issuance_volume_value": 8628,
+    "refusal_rate": "14.75%",
+    "refusal_rate_value": 14.75,
+    "demand_tier": "lower"
+  },
+  "HU": {
+    "country": "Hungary",
+    "issuance_volume": "16,546",
+    "issuance_volume_value": 16546,
+    "refusal_rate": "7.91%",
+    "refusal_rate_value": 7.91,
+    "demand_tier": "lower"
+  },
+  "ID": {
+    "country": "Indonesia",
+    "issuance_volume": "161,456",
+    "issuance_volume_value": 161456,
+    "refusal_rate": "26.69%",
+    "refusal_rate_value": 26.69,
+    "demand_tier": "moderate"
+  },
+  "IE": {
+    "country": "Ireland",
+    "issuance_volume": "31,850",
+    "issuance_volume_value": 31850,
+    "refusal_rate": "25.12%",
+    "refusal_rate_value": 25.12,
+    "demand_tier": "lower"
+  },
+  "IL": {
+    "country": "Israel",
+    "issuance_volume": "89,788",
+    "issuance_volume_value": 89788,
+    "refusal_rate": "11.32%",
+    "refusal_rate_value": 11.32,
+    "demand_tier": "lower"
+  },
   "IN": {
     "country": "India",
     "issuance_volume": "2,749,550",
@@ -103,12 +343,76 @@
     "refusal_rate_value": 22.04,
     "demand_tier": "high"
   },
+  "IQ": {
+    "country": "Iraq",
+    "issuance_volume": "15,214",
+    "issuance_volume_value": 15214,
+    "refusal_rate": "39.86%",
+    "refusal_rate_value": 39.86,
+    "demand_tier": "lower"
+  },
+  "IR": {
+    "country": "Iran",
+    "issuance_volume": "34,610",
+    "issuance_volume_value": 34610,
+    "refusal_rate": "62.44%",
+    "refusal_rate_value": 62.44,
+    "demand_tier": "lower"
+  },
+  "IS": {
+    "country": "Iceland",
+    "issuance_volume": "3,524",
+    "issuance_volume_value": 3524,
+    "refusal_rate": "5.43%",
+    "refusal_rate_value": 5.43,
+    "demand_tier": "lower"
+  },
+  "IT": {
+    "country": "Italy",
+    "issuance_volume": "83,312",
+    "issuance_volume_value": 83312,
+    "refusal_rate": "12.65%",
+    "refusal_rate_value": 12.65,
+    "demand_tier": "lower"
+  },
+  "JM": {
+    "country": "Jamaica",
+    "issuance_volume": "237,076",
+    "issuance_volume_value": 237076,
+    "refusal_rate": "44.26%",
+    "refusal_rate_value": 44.26,
+    "demand_tier": "moderate"
+  },
+  "JO": {
+    "country": "Jordan",
+    "issuance_volume": "67,082",
+    "issuance_volume_value": 67082,
+    "refusal_rate": "56.63%",
+    "refusal_rate_value": 56.63,
+    "demand_tier": "lower"
+  },
   "JP": {
     "country": "Japan",
     "issuance_volume": "128,062",
     "issuance_volume_value": 128062,
     "refusal_rate": "5.68%",
     "refusal_rate_value": 5.68,
+    "demand_tier": "lower"
+  },
+  "KE": {
+    "country": "Kenya",
+    "issuance_volume": "48,556",
+    "issuance_volume_value": 48556,
+    "refusal_rate": "68.23%",
+    "refusal_rate_value": 68.23,
+    "demand_tier": "lower"
+  },
+  "KH": {
+    "country": "Cambodia",
+    "issuance_volume": "24,846",
+    "issuance_volume_value": 24846,
+    "refusal_rate": "30.71%",
+    "refusal_rate_value": 30.71,
     "demand_tier": "lower"
   },
   "KR": {
@@ -119,6 +423,102 @@
     "refusal_rate_value": 24.73,
     "demand_tier": "lower"
   },
+  "KW": {
+    "country": "Kuwait",
+    "issuance_volume": "29,224",
+    "issuance_volume_value": 29224,
+    "refusal_rate": "6.06%",
+    "refusal_rate_value": 6.06,
+    "demand_tier": "lower"
+  },
+  "KZ": {
+    "country": "Kazakhstan",
+    "issuance_volume": "60,334",
+    "issuance_volume_value": 60334,
+    "refusal_rate": "51.75%",
+    "refusal_rate_value": 51.75,
+    "demand_tier": "lower"
+  },
+  "LA": {
+    "country": "Laos",
+    "issuance_volume": "4,232",
+    "issuance_volume_value": 4232,
+    "refusal_rate": "84.35%",
+    "refusal_rate_value": 84.35,
+    "demand_tier": "lower"
+  },
+  "LB": {
+    "country": "Lebanon",
+    "issuance_volume": "35,676",
+    "issuance_volume_value": 35676,
+    "refusal_rate": "39.42%",
+    "refusal_rate_value": 39.42,
+    "demand_tier": "lower"
+  },
+  "LK": {
+    "country": "Sri Lanka",
+    "issuance_volume": "27,618",
+    "issuance_volume_value": 27618,
+    "refusal_rate": "33.35%",
+    "refusal_rate_value": 33.35,
+    "demand_tier": "lower"
+  },
+  "LT": {
+    "country": "Lithuania",
+    "issuance_volume": "5,944",
+    "issuance_volume_value": 5944,
+    "refusal_rate": "21.32%",
+    "refusal_rate_value": 21.32,
+    "demand_tier": "lower"
+  },
+  "LU": {
+    "country": "Luxembourg",
+    "issuance_volume": "1,016",
+    "issuance_volume_value": 1016,
+    "refusal_rate": "13.77%",
+    "refusal_rate_value": 13.77,
+    "demand_tier": "lower"
+  },
+  "LV": {
+    "country": "Latvia",
+    "issuance_volume": "5,714",
+    "issuance_volume_value": 5714,
+    "refusal_rate": "19.00%",
+    "refusal_rate_value": 19.0,
+    "demand_tier": "lower"
+  },
+  "MA": {
+    "country": "Morocco",
+    "issuance_volume": "69,748",
+    "issuance_volume_value": 69748,
+    "refusal_rate": "26.91%",
+    "refusal_rate_value": 26.91,
+    "demand_tier": "lower"
+  },
+  "MN": {
+    "country": "Mongolia",
+    "issuance_volume": "38,188",
+    "issuance_volume_value": 38188,
+    "refusal_rate": "31.28%",
+    "refusal_rate_value": 31.28,
+    "demand_tier": "lower"
+  },
+  "MT": {
+    "country": "Malta",
+    "issuance_volume": "766",
+    "issuance_volume_value": 766,
+    "refusal_rate": "10.30%",
+    "refusal_rate_value": 10.3,
+    "demand_tier": "lower"
+  },
+  "MW": {
+    "country": "Malawi",
+    "issuance_volume": "6,298",
+    "issuance_volume_value": 6298,
+    "refusal_rate": "53.42%",
+    "refusal_rate_value": 53.42,
+    "demand_tier": "lower"
+  },
   "MX": {
     "country": "Mexico",
     "issuance_volume": "4,817,578",
@@ -126,6 +526,30 @@
     "refusal_rate": "21.36%",
     "refusal_rate_value": 21.36,
     "demand_tier": "high"
+  },
+  "MY": {
+    "country": "Malaysia",
+    "issuance_volume": "77,740",
+    "issuance_volume_value": 77740,
+    "refusal_rate": "7.92%",
+    "refusal_rate_value": 7.92,
+    "demand_tier": "lower"
+  },
+  "MZ": {
+    "country": "Mozambique",
+    "issuance_volume": "4,740",
+    "issuance_volume_value": 4740,
+    "refusal_rate": "24.75%",
+    "refusal_rate_value": 24.75,
+    "demand_tier": "lower"
+  },
+  "NA": {
+    "country": "Namibia",
+    "issuance_volume": "3,070",
+    "issuance_volume_value": 3070,
+    "refusal_rate": "16.54%",
+    "refusal_rate_value": 16.54,
+    "demand_tier": "lower"
   },
   "NG": {
     "country": "Nigeria",
@@ -135,6 +559,78 @@
     "refusal_rate_value": 57.0,
     "demand_tier": "moderate"
   },
+  "NI": {
+    "country": "Nicaragua",
+    "issuance_volume": "34,982",
+    "issuance_volume_value": 34982,
+    "refusal_rate": "53.15%",
+    "refusal_rate_value": 53.15,
+    "demand_tier": "lower"
+  },
+  "NL": {
+    "country": "Netherlands",
+    "issuance_volume": "32,810",
+    "issuance_volume_value": 32810,
+    "refusal_rate": "17.42%",
+    "refusal_rate_value": 17.42,
+    "demand_tier": "lower"
+  },
+  "NO": {
+    "country": "Norway",
+    "issuance_volume": "15,058",
+    "issuance_volume_value": 15058,
+    "refusal_rate": "16.18%",
+    "refusal_rate_value": 16.18,
+    "demand_tier": "lower"
+  },
+  "NP": {
+    "country": "Nepal",
+    "issuance_volume": "84,082",
+    "issuance_volume_value": 84082,
+    "refusal_rate": "69.47%",
+    "refusal_rate_value": 69.47,
+    "demand_tier": "lower"
+  },
+  "NZ": {
+    "country": "New Zealand",
+    "issuance_volume": "17,426",
+    "issuance_volume_value": 17426,
+    "refusal_rate": "21.94%",
+    "refusal_rate_value": 21.94,
+    "demand_tier": "lower"
+  },
+  "OM": {
+    "country": "Oman",
+    "issuance_volume": "7,144",
+    "issuance_volume_value": 7144,
+    "refusal_rate": "3.14%",
+    "refusal_rate_value": 3.14,
+    "demand_tier": "lower"
+  },
+  "PA": {
+    "country": "Panama",
+    "issuance_volume": "64,322",
+    "issuance_volume_value": 64322,
+    "refusal_rate": "6.51%",
+    "refusal_rate_value": 6.51,
+    "demand_tier": "lower"
+  },
+  "PE": {
+    "country": "Peru",
+    "issuance_volume": "306,922",
+    "issuance_volume_value": 306922,
+    "refusal_rate": "20.90%",
+    "refusal_rate_value": 20.9,
+    "demand_tier": "moderate"
+  },
+  "PH": {
+    "country": "Philippines",
+    "issuance_volume": "603,846",
+    "issuance_volume_value": 603846,
+    "refusal_rate": "30.76%",
+    "refusal_rate_value": 30.76,
+    "demand_tier": "high"
+  },
   "PK": {
     "country": "Pakistan",
     "issuance_volume": "247,056",
@@ -142,6 +638,126 @@
     "refusal_rate": "52.32%",
     "refusal_rate_value": 52.32,
     "demand_tier": "moderate"
+  },
+  "PL": {
+    "country": "Poland",
+    "issuance_volume": "36,026",
+    "issuance_volume_value": 36026,
+    "refusal_rate": "11.63%",
+    "refusal_rate_value": 11.63,
+    "demand_tier": "lower"
+  },
+  "PT": {
+    "country": "Portugal",
+    "issuance_volume": "22,990",
+    "issuance_volume_value": 22990,
+    "refusal_rate": "8.19%",
+    "refusal_rate_value": 8.19,
+    "demand_tier": "lower"
+  },
+  "PY": {
+    "country": "Paraguay",
+    "issuance_volume": "31,348",
+    "issuance_volume_value": 31348,
+    "refusal_rate": "18.71%",
+    "refusal_rate_value": 18.71,
+    "demand_tier": "lower"
+  },
+  "QA": {
+    "country": "Qatar",
+    "issuance_volume": "15,802",
+    "issuance_volume_value": 15802,
+    "refusal_rate": "9.69%",
+    "refusal_rate_value": 9.69,
+    "demand_tier": "lower"
+  },
+  "RO": {
+    "country": "Romania",
+    "issuance_volume": "183,788",
+    "issuance_volume_value": 183788,
+    "refusal_rate": "8.41%",
+    "refusal_rate_value": 8.41,
+    "demand_tier": "moderate"
+  },
+  "RS": {
+    "country": "Serbia",
+    "issuance_volume": "44,542",
+    "issuance_volume_value": 44542,
+    "refusal_rate": "15.20%",
+    "refusal_rate_value": 15.2,
+    "demand_tier": "lower"
+  },
+  "SA": {
+    "country": "Saudi Arabia",
+    "issuance_volume": "139,050",
+    "issuance_volume_value": 139050,
+    "refusal_rate": "5.98%",
+    "refusal_rate_value": 5.98,
+    "demand_tier": "lower"
+  },
+  "SE": {
+    "country": "Sweden",
+    "issuance_volume": "28,282",
+    "issuance_volume_value": 28282,
+    "refusal_rate": "21.77%",
+    "refusal_rate_value": 21.77,
+    "demand_tier": "lower"
+  },
+  "SG": {
+    "country": "Singapore",
+    "issuance_volume": "20,104",
+    "issuance_volume_value": 20104,
+    "refusal_rate": "18.64%",
+    "refusal_rate_value": 18.64,
+    "demand_tier": "lower"
+  },
+  "SI": {
+    "country": "Slovenia",
+    "issuance_volume": "2,698",
+    "issuance_volume_value": 2698,
+    "refusal_rate": "14.57%",
+    "refusal_rate_value": 14.57,
+    "demand_tier": "lower"
+  },
+  "SK": {
+    "country": "Slovakia",
+    "issuance_volume": "8,164",
+    "issuance_volume_value": 8164,
+    "refusal_rate": "14.33%",
+    "refusal_rate_value": 14.33,
+    "demand_tier": "lower"
+  },
+  "SN": {
+    "country": "Senegal",
+    "issuance_volume": "13,332",
+    "issuance_volume_value": 13332,
+    "refusal_rate": "73.96%",
+    "refusal_rate_value": 73.96,
+    "demand_tier": "lower"
+  },
+  "SV": {
+    "country": "El Salvador",
+    "issuance_volume": "127,580",
+    "issuance_volume_value": 127580,
+    "refusal_rate": "58.22%",
+    "refusal_rate_value": 58.22,
+    "demand_tier": "lower"
+  },
+  "TH": {
+    "country": "Thailand",
+    "issuance_volume": "133,258",
+    "issuance_volume_value": 133258,
+    "refusal_rate": "25.67%",
+    "refusal_rate_value": 25.67,
+    "demand_tier": "lower"
+  },
+  "TN": {
+    "country": "Tunisia",
+    "issuance_volume": "17,756",
+    "issuance_volume_value": 17756,
+    "refusal_rate": "25.89%",
+    "refusal_rate_value": 25.89,
+    "demand_tier": "lower"
   },
   "TR": {
     "country": "Turkey",
@@ -151,6 +767,70 @@
     "refusal_rate_value": 22.25,
     "demand_tier": "moderate"
   },
+  "TT": {
+    "country": "Trinidad and Tobago",
+    "issuance_volume": "111,172",
+    "issuance_volume_value": 111172,
+    "refusal_rate": "14.92%",
+    "refusal_rate_value": 14.92,
+    "demand_tier": "lower"
+  },
+  "TZ": {
+    "country": "Tanzania",
+    "issuance_volume": "17,296",
+    "issuance_volume_value": 17296,
+    "refusal_rate": "39.41%",
+    "refusal_rate_value": 39.41,
+    "demand_tier": "lower"
+  },
+  "UA": {
+    "country": "Ukraine",
+    "issuance_volume": "83,104",
+    "issuance_volume_value": 83104,
+    "refusal_rate": "33.92%",
+    "refusal_rate_value": 33.92,
+    "demand_tier": "lower"
+  },
+  "UG": {
+    "country": "Uganda",
+    "issuance_volume": "19,332",
+    "issuance_volume_value": 19332,
+    "refusal_rate": "57.58%",
+    "refusal_rate_value": 57.58,
+    "demand_tier": "lower"
+  },
+  "UY": {
+    "country": "Uruguay",
+    "issuance_volume": "58,638",
+    "issuance_volume_value": 58638,
+    "refusal_rate": "2.59%",
+    "refusal_rate_value": 2.59,
+    "demand_tier": "lower"
+  },
+  "UZ": {
+    "country": "Uzbekistan",
+    "issuance_volume": "20,272",
+    "issuance_volume_value": 20272,
+    "refusal_rate": "52.46%",
+    "refusal_rate_value": 52.46,
+    "demand_tier": "lower"
+  },
+  "VE": {
+    "country": "Venezuela",
+    "issuance_volume": "132,836",
+    "issuance_volume_value": 132836,
+    "refusal_rate": "48.22%",
+    "refusal_rate_value": 48.22,
+    "demand_tier": "lower"
+  },
+  "VN": {
+    "country": "Vietnam",
+    "issuance_volume": "298,292",
+    "issuance_volume_value": 298292,
+    "refusal_rate": "22.08%",
+    "refusal_rate_value": 22.08,
+    "demand_tier": "moderate"
+  },
   "ZA": {
     "country": "South Africa",
     "issuance_volume": "152,608",
@@ -158,5 +838,21 @@
     "refusal_rate": "11.66%",
     "refusal_rate_value": 11.66,
     "demand_tier": "moderate"
+  },
+  "ZM": {
+    "country": "Zambia",
+    "issuance_volume": "7,396",
+    "issuance_volume_value": 7396,
+    "refusal_rate": "52.45%",
+    "refusal_rate_value": 52.45,
+    "demand_tier": "lower"
+  },
+  "ZW": {
+    "country": "Zimbabwe",
+    "issuance_volume": "31,988",
+    "issuance_volume_value": 31988,
+    "refusal_rate": "37.60%",
+    "refusal_rate_value": 37.6,
+    "demand_tier": "lower"
   }
 }

@@ -1,21 +1,108 @@
 country_code,country,issuance_volume_value
+AF,Afghanistan,5628
+DZ,Algeria,43114
 AR,Argentina,582606
+AM,Armenia,34762
 AU,Australia,77608
+AZ,Azerbaijan,21734
+BD,Bangladesh,96188
+BY,Belarus,17766
+BO,Bolivia,61686
+BW,Botswana,3702
 BR,Brazil,2345036
+BG,Bulgaria,40282
+KH,Cambodia,24846
 CA,Canada,23564
 CL,Chile,49178
 CN,China,1637454
 CO,Colombia,946500
+CR,Costa Rica,166160
+HR,Croatia,8628
+CY,Cyprus,10808
+CZ,Czech Republic,11802
+DK,Denmark,15456
+DO,Dominican Republic,333766
+EC,Ecuador,483764
 EG,Egypt,151032
+SV,El Salvador,127580
+EE,Estonia,3118
+ET,Ethiopia,51694
+FI,Finland,9332
 FR,France,106840
+GE,Georgia,20670
 DE,Germany,138726
+GH,Ghana,68284
+GR,Greece,16478
+GT,Guatemala,199366
+HN,Honduras,156326
+HU,Hungary,16546
+IS,Iceland,3524
 IN,India,2749550
+ID,Indonesia,161456
+IR,Iran,34610
+IQ,Iraq,15214
+IE,Ireland,31850
+IL,Israel,89788
+IT,Italy,83312
+JM,Jamaica,237076
 JP,Japan,128062
+JO,Jordan,67082
+KZ,Kazakhstan,60334
+KE,Kenya,48556
+KW,Kuwait,29224
+LA,Laos,4232
+LV,Latvia,5714
+LB,Lebanon,35676
+LT,Lithuania,5944
+LU,Luxembourg,1016
+MW,Malawi,6298
+MY,Malaysia,77740
+MT,Malta,766
 MX,Mexico,4817578
+MN,Mongolia,38188
+MA,Morocco,69748
+MZ,Mozambique,4740
+NA,Namibia,3070
+NP,Nepal,84082
+NL,Netherlands,32810
+NZ,New Zealand,17426
+NI,Nicaragua,34982
 NG,Nigeria,174558
+NO,Norway,15058
+OM,Oman,7144
 PK,Pakistan,247056
+PA,Panama,64322
+PY,Paraguay,31348
+PE,Peru,306922
+PH,Philippines,603846
+PL,Poland,36026
+PT,Portugal,22990
+QA,Qatar,15802
+RO,Romania,183788
+SA,Saudi Arabia,139050
+SN,Senegal,13332
+RS,Serbia,44542
+SG,Singapore,20104
+SK,Slovakia,8164
+SI,Slovenia,2698
 ZA,South Africa,152608
 KR,South Korea,149656
+ES,Spain,96674
+LK,Sri Lanka,27618
+SE,Sweden,28282
+CH,Switzerland,20068
+TZ,Tanzania,17296
+TH,Thailand,133258
+TT,Trinidad and Tobago,111172
+TN,Tunisia,17756
 TR,Turkey,269042
+UG,Uganda,19332
+UA,Ukraine,83104
 AE,United Arab Emirates,39450
 GB,United Kingdom,187566
+UY,Uruguay,58638
+UZ,Uzbekistan,20272
+VE,Venezuela,132836
+VN,Vietnam,298292
+ZM,Zambia,7396
+ZW,Zimbabwe,31988
