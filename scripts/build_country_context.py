@@ -8,6 +8,7 @@ from typing import Dict, Any
 
 import requests
 from openpyxl import load_workbook
+import pdfplumber
 
 
 # =========================
@@ -22,6 +23,7 @@ LIVE_OUTPUT_PATH = DOCS_DIR / "country_context.json"
 # Put your real source URLs here later.
 # For the first safe manual test, we allow fallback sample mode.
 RAW_ISSUANCE_XLSX_PATH = BASE_DIR / "source_data" / "raw" / "fy2024_niv_detail.xlsx"
+RAW_REFUSAL_PDF_PATH = BASE_DIR / "source_data" / "raw" / "fy2025_b_refusal_rates.pdf"
 
 ISSUANCE_SOURCE_PATH = BASE_DIR / "source_data" / "issuance_source.csv"
 REFUSAL_SOURCE_PATH = BASE_DIR / "source_data" / "refusal_source.csv"
@@ -148,6 +150,34 @@ def normalize_country_name(name: str) -> str:
     }
 
     return replacements.get(n, n)
+def get_refusal_pdf_name_variants(site_country: str) -> list[str]:
+    """
+    Returns possible country names as they may appear in the State Dept refusal PDF.
+    """
+    variants = {
+        "United Kingdom": [
+            "United Kingdom",
+            "Great Britain and Northern Ireland",
+        ],
+        "South Korea": [
+            "South Korea",
+            "Korea, South",
+            "Republic of Korea",
+        ],
+        "United Arab Emirates": [
+            "United Arab Emirates",
+            "UAE",
+        ],
+        "China": [
+            "China",
+            "China - mainland",
+            "China - mainland born",
+            "China, mainland born",
+            "China (Mainland-born)",
+        ],
+    }
+
+    return variants.get(site_country, [site_country])    
 def rebuild_issuance_csv_from_excel() -> None:
     """
     Reads the official FY2024 NIV Detail Table Excel file and rebuilds:
@@ -286,7 +316,80 @@ def parse_issuance_data() -> Dict[str, Dict[str, Any]]:
             }
 
     return output
+def rebuild_refusal_csv_from_pdf() -> None:
+    """
+    Reads the official FY2025 B-visa adjusted refusal rates PDF and rebuilds:
+    source_data/refusal_source.csv
 
+    Expected pattern in extracted text:
+    Country name followed by a percent value.
+    Example:
+    India 22.04%
+    """
+    if not RAW_REFUSAL_PDF_PATH.exists():
+        log(f"Raw refusal PDF not found at {RAW_REFUSAL_PDF_PATH}. Skipping rebuild.")
+        return
+
+    log(f"Reading raw refusal PDF: {RAW_REFUSAL_PDF_PATH}")
+
+    text_chunks = []
+    with pdfplumber.open(RAW_REFUSAL_PDF_PATH) as pdf:
+        log(f"PDF pages: {len(pdf.pages)}")
+        for page_num, page in enumerate(pdf.pages, start=1):
+            text = page.extract_text() or ""
+            log(f"Extracted text from refusal PDF page {page_num}: {len(text)} characters")
+            text_chunks.append(text)
+
+    full_text = "\n".join(text_chunks)
+
+    rows_out = []
+
+    # We use your mapped country names as the target list.
+    # This keeps the first parser safe and aligned with the countries your site currently supports.
+    for site_country, code in COUNTRY_NAME_TO_CODE.items():
+        possible_names = get_refusal_pdf_name_variants(site_country)
+
+        found_rate = None
+        matched_name = None
+
+        for pdf_name in possible_names:
+            # Match: country name + number + %
+            pattern = re.compile(
+                r"(^|\n)\s*" + re.escape(pdf_name) + r"\s+([0-9]{1,2}(?:\.[0-9]+)?|100(?:\.0+)?)\s*%",
+                re.IGNORECASE
+            )
+            match = pattern.search(full_text)
+
+            if match:
+                found_rate = float(match.group(2))
+                matched_name = pdf_name
+                break
+
+        if found_rate is None:
+            continue
+
+        rows_out.append({
+            "country_code": code,
+            "country": site_country,
+            "refusal_rate_value": found_rate
+        })
+
+        log(f"Mapped refusal rate: {site_country} ({matched_name}) = {found_rate}%")
+
+    if len(rows_out) < MIN_COUNTRY_COUNT:
+        fail(f"Refusal PDF rebuild produced too few rows: {len(rows_out)}")
+
+    rows_out = sorted(rows_out, key=lambda r: r["country"])
+
+    with REFUSAL_SOURCE_PATH.open("w", encoding="utf-8", newline="") as f:
+        writer = csv.DictWriter(
+            f,
+            fieldnames=["country_code", "country", "refusal_rate_value"]
+        )
+        writer.writeheader()
+        writer.writerows(rows_out)
+
+    log(f"Rebuilt refusal CSV with {len(rows_out)} rows: {REFUSAL_SOURCE_PATH}")
 def parse_refusal_data() -> Dict[str, Dict[str, Any]]:
     """
     Reads source_data/refusal_source.csv
@@ -449,6 +552,7 @@ def main() -> None:
     log("Starting build_country_context.py")
 
     rebuild_issuance_csv_from_excel()
+    rebuild_refusal_csv_from_pdf()
 
     issuance_map = parse_issuance_data()
     refusal_map = parse_refusal_data()
