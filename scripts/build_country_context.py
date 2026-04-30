@@ -29,7 +29,7 @@ RAW_REFUSAL_PDF_PATH = BASE_DIR / "source_data" / "raw" / "fy2025_b_refusal_rate
 ISSUANCE_SOURCE_PATH = BASE_DIR / "source_data" / "issuance_source.csv"
 REFUSAL_SOURCE_PATH = BASE_DIR / "source_data" / "refusal_source.csv"
 
-MIN_COUNTRY_COUNT = 100
+MIN_COUNTRY_COUNT = 105
 REQUEST_TIMEOUT = 60
 
 # Locked thresholds from your current system
@@ -333,8 +333,7 @@ def rebuild_issuance_csv_from_excel() -> None:
 
         # For now, only include countries we have mapped.
         # Later, when we load the full 111-country map, this will scale automatically.
-        if not code:
-            log(f"UNMAPPED COUNTRY: {normalized_country}")
+        if not code:            
             continue
 
         rows_out.append({
