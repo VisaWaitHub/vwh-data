@@ -9,36 +9,45 @@
       "label": "H petition-based visas",
       "uscis_form": "I-129",
       "category": "Temporary worker petition",
-      "processing_time": "Varies by petition type and USCIS office",
-      "processing_time_value": null,
+      "processing_time": "2–8 months",
+      "processing_time_min": 2,
+      "processing_time_max": 8,
+      "processing_time_unit": "months",
+      "status": "range_estimate",
+      "last_updated": "2026-04-30"
       "processing_time_unit": "months",
       "period": "latest available",
       "scope": "USCIS processing for H petition-based cases",
-      "status": "variable",
       "source": "U.S. Citizenship and Immigration Services"
     },
     "l": {
       "label": "L petition-based visas",
       "uscis_form": "I-129",
       "category": "Temporary worker petition",
-      "processing_time": "Varies by petition type and USCIS office",
-      "processing_time_value": null,
+      "processing_time": "2–8 months",
+      "processing_time_min": 2,
+      "processing_time_max": 8,
+      "processing_time_unit": "months",
+      "status": "range_estimate",
+      "last_updated": "2026-04-30"
       "processing_time_unit": "months",
       "period": "latest available",
-      "scope": "USCIS processing for L petition-based cases",
-      "status": "variable",
+      "scope": "USCIS processing for L petition-based cases", 
       "source": "U.S. Citizenship and Immigration Services"
     },
     "o": {
       "label": "O petition-based visas",
       "uscis_form": "I-129",
       "category": "Temporary worker petition",
-      "processing_time": "Varies by petition type and USCIS office",
-      "processing_time_value": null,
+      "processing_time": "2–8 months",
+      "processing_time_min": 2,
+      "processing_time_max": 8,
+      "processing_time_unit": "months",
+      "status": "range_estimate",
+      "last_updated": "2026-04-30"
       "processing_time_unit": "months",
       "period": "latest available",
-      "scope": "USCIS processing for O petition-based cases",
-      "status": "variable",
+      "scope": "USCIS processing for O petition-based cases",      
       "source": "U.S. Citizenship and Immigration Services"
     }
   }
