@@ -1,0 +1,35 @@
+name: Test USCIS Context Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-uscis-json:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run USCIS builder
+        run: python scripts/build_uscis_context.py
+
+      - name: Show USCIS JSON
+        run: |
+          echo "===== USCIS JSON ====="
+          cat docs/uscis_context.json
+
+      - name: Commit USCIS JSON
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/uscis_context.json
+          git diff --cached --quiet || git commit -m "Update USCIS context JSON"
+          git push
