@@ -1,0 +1,5 @@
+visa_key,label,processing_time_min,processing_time_max,source
+combined,Petition-based visas,2,8,U.S. Citizenship and Immigration Services
+h,H petition-based visas,2,8,U.S. Citizenship and Immigration Services
+l,L petition-based visas,2,8,U.S. Citizenship and Immigration Services
+o,O petition-based visas,2,8,U.S. Citizenship and Immigration Services
