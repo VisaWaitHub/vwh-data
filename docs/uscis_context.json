@@ -14,7 +14,7 @@
       "processing_time_max": 8,
       "processing_time_unit": "months",
       "status": "range_estimate",
-      "last_updated": "2026-04-30"
+      "last_updated": "2026-04-30",
       "processing_time_unit": "months",
       "period": "latest available",
       "scope": "USCIS processing for H petition-based cases",
@@ -29,7 +29,7 @@
       "processing_time_max": 8,
       "processing_time_unit": "months",
       "status": "range_estimate",
-      "last_updated": "2026-04-30"
+      "last_updated": "2026-04-30",
       "processing_time_unit": "months",
       "period": "latest available",
       "scope": "USCIS processing for L petition-based cases", 
@@ -44,7 +44,7 @@
       "processing_time_max": 8,
       "processing_time_unit": "months",
       "status": "range_estimate",
-      "last_updated": "2026-04-30"
+      "last_updated": "2026-04-30",
       "processing_time_unit": "months",
       "period": "latest available",
       "scope": "USCIS processing for O petition-based cases",      
