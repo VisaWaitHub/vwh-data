@@ -482,30 +482,110 @@ def normalize_post_name(s: str) -> str:
 import time
 
 
-def http_get(url: str, headers=None, timeout=(10, 30), retries=2, backoff=2.0) -> str:
+def http_get(
+    url: str,
+    headers=None,
+    timeout=(15, 45),
+    retries=2,
+    backoff=15.0
+) -> str:
     """
+    Fetch an HTML page using a persistent session and complete headers.
+
     timeout=(connect_seconds, read_seconds)
-    retries=2 => up to 3 attempts total
+    retries=2 means up to 3 attempts total.
     """
-    hdrs = headers or {"User-Agent": UA}
+
+    default_headers = {
+        "User-Agent": UA,
+        "Accept": (
+            "text/html,application/xhtml+xml,application/xml;q=0.9,"
+            "image/avif,image/webp,*/*;q=0.8"
+        ),
+        "Accept-Language": "en-US,en;q=0.9",
+        "Accept-Encoding": "gzip, deflate",
+        "Cache-Control": "no-cache",
+        "Pragma": "no-cache",
+        "Connection": "keep-alive",
+        "Upgrade-Insecure-Requests": "1",
+        "Referer": "https://travel.state.gov/"
+    }
+
+    # Preserve the defaults while allowing a caller to add or override headers.
+    if headers:
+        default_headers.update(headers)
+
     last_err = None
 
-    for attempt in range(retries + 1):
-        try:
-            print(f"[INFO] Fetching ({attempt+1}/{retries+1}): {url}")
-            r = requests.get(url, headers=hdrs, timeout=timeout)
-            r.raise_for_status()
-            print(f"[INFO] Done: {url} ({len(r.text)} bytes)")
-            return r.text
-        except Exception as e:
-            last_err = e
-            print(f"[WARN] Fetch failed: {url} — {e}")
-            if attempt < retries:
-                sleep_s = backoff * (attempt + 1)
-                print(f"[INFO] Retrying in {sleep_s:.1f}s...")
-                time.sleep(sleep_s)
+    with requests.Session() as session:
+        session.headers.update(default_headers)
 
-    raise RuntimeError(f"Failed to fetch after retries: {url}") from last_err
+        for attempt in range(retries + 1):
+            try:
+                print(
+                    f"[INFO] Fetching "
+                    f"({attempt + 1}/{retries + 1}): {url}"
+                )
+
+                response = session.get(
+                    url,
+                    timeout=timeout,
+                    allow_redirects=True
+                )
+
+                print(
+                    f"[DEBUG] HTTP {response.status_code} "
+                    f"| final URL: {response.url}"
+                )
+
+                # Helpful diagnostic information if the server blocks us again.
+                if response.status_code == 403:
+                    preview = " ".join(response.text[:500].split())
+                    print(f"[DEBUG] 403 response preview: {preview}")
+
+                    server = response.headers.get("server", "unknown")
+                    request_id = (
+                        response.headers.get("x-request-id")
+                        or response.headers.get("x-akamai-request-id")
+                        or response.headers.get("cf-ray")
+                        or "not provided"
+                    )
+
+                    print(f"[DEBUG] Response server: {server}")
+                    print(f"[DEBUG] Request ID: {request_id}")
+
+                response.raise_for_status()
+
+                if not response.text.strip():
+                    raise RuntimeError(
+                        f"Received an empty response from: {url}"
+                    )
+
+                print(
+                    f"[INFO] Done: {url} "
+                    f"({len(response.text)} bytes)"
+                )
+
+                return response.text
+
+            except Exception as exc:
+                last_err = exc
+                print(f"[WARN] Fetch failed: {url} — {exc}")
+
+                if attempt < retries:
+                    # Wait 15 seconds, then 30 seconds rather than 2 and 4.
+                    sleep_seconds = backoff * (2 ** attempt)
+
+                    print(
+                        f"[INFO] Retrying in "
+                        f"{sleep_seconds:.1f}s..."
+                    )
+
+                    time.sleep(sleep_seconds)
+
+    raise RuntimeError(
+        f"Failed to fetch after retries: {url}"
+    ) from last_err
     # --- CACHE HELPER FOR RECIPROCITY PAGES ---
 def cached_get(url: str, cache_key: str, max_age_hours: int = 168) -> str:
     """
